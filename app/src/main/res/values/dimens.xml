@@ -9,5 +9,9 @@
     <dimen name="spacing_6x">24dp</dimen>
     <dimen name="spacing_14x">56dp</dimen>
 
-    <dimen name="size_1x">4dp</dimen>
+    <dimen name="text_size_headline">40sp</dimen>
+    <dimen name="text_size_sub_title">14sp</dimen>
+    <dimen name="text_size_body">12sp</dimen>
+
+    <dimen name="movie_logo_image_height">298dp</dimen>
 </resources>
