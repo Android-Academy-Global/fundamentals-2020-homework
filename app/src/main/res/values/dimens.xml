@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_0_5x">2dp</dimen>
+    <dimen name="spacing_1x">4dp</dimen>
+    <dimen name="spacing_2x">8dp</dimen>
+    <dimen name="spacing_3x">12dp</dimen>
+    <dimen name="spacing_4x">16dp</dimen>
+    <dimen name="spacing_4_5x">18dp</dimen>
+    <dimen name="spacing_6x">24dp</dimen>
+    <dimen name="spacing_14x">56dp</dimen>
+
+    <dimen name="text_size_headline">40sp</dimen>
+    <dimen name="text_size_sub_title">14sp</dimen>
+    <dimen name="text_size_body">12sp</dimen>
+
+    <dimen name="movie_logo_image_height">298dp</dimen>
+</resources>
