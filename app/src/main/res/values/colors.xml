@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
@@ -7,11 +8,14 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_white_transparent">#BFFFFFFF</color>
 
-    <color name="background_color">#191926</color>
-
     <color name="gray_light">#D8D8D8</color>
     <color name="gray_dark">#6D6D80</color>
 
     <color name="pink_light">#FF3365</color>
     <color name="pink_dark">#FF3466</color>
+
+    <color name="background_color">#191926</color>
+    <color name="background_card_color">#222232</color>
+    <color name="stroke_card_color">#636375</color>
+
 </resources>

@@ -1,6 +1,21 @@
 <resources>
-    <string name="app_name">FundamentalsHomework</string>
 
+    <string name="app_name">Fundamentals Homework</string>
+
+    <!-- Movies list screen -->
+    <string name="movies_list_title">Movies app</string>
+    <string name="movies_list_header_text">Movies app</string>
+    <string name="movies_list_header_icon_description">Target icon</string>
+    <string name="movies_list_header_image_description">Avengers poster</string>
+    <string name="movies_list_allowed_age">13+</string>
+    <string name="movies_list_film_genre">Action, Adventure, Fantasy</string>
+    <string name="movies_list_rating_bar_description">Rating bar</string>
+    <string name="movies_list_reviews_counter">125 Reviews</string>
+    <string name="movies_list_film_name">Avengers: End Game</string>
+    <string name="movies_list_film_time">137 MIN</string>
+    <!-- Movies list screen -->
+
+    <!-- Movie Details screen -->
     <string name="back">Back</string>
     <string name="avengers_movie_name">Avengers:\nEnd Game</string>
     <string name="avengers_movie_tags">Action, Adventure, Fantasy</string>
@@ -14,4 +29,6 @@
     <string name="movie_cast_2_name">Chris Evans</string>
     <string name="movie_cast_3_name">Mark Ruffalo</string>
     <string name="movie_cast_4_name">Chris Hemsworth</string>
+    <!-- Movie Details screen -->
+
 </resources>
