@@ -7,7 +7,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.io.BufferedReader
 
 
 private val jsonFormat = Json { ignoreUnknownKeys = true }
@@ -43,29 +42,48 @@ private class JsonMovie(
 
 private suspend fun loadGenres(context: Context): List<Genre> = withContext(Dispatchers.IO) {
     val data = readAssetFileToString(context, "genres.json")
+    parseGenres(data)
+}
+
+internal fun parseGenres(data: String): List<Genre> {
     val jsonGenres = jsonFormat.decodeFromString<List<JsonGenre>>(data)
-    jsonGenres.map { Genre(id = it.id, name = it.name) }
+    return jsonGenres.map { Genre(id = it.id, name = it.name) }
 }
 
 private fun readAssetFileToString(context: Context, fileName: String): String {
     val stream = context.assets.open(fileName)
-    return stream.bufferedReader().use(BufferedReader::readText)
+    return stream.bufferedReader().readText()
 }
 
 private suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
     val data = readAssetFileToString(context, "people.json")
+    parseActors(data)
+}
+
+internal fun parseActors(data: String): List<Actor> {
     val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(data)
-    jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
+    return jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
 }
 
 internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
-    val genresMap = loadGenres(context).associateBy { it.id }
-    val actorsMap = loadActors(context).associateBy { it.id }
+    val genresMap = loadGenres(context)
+    val actorsMap = loadActors(context)
 
     val data = readAssetFileToString(context, "data.json")
+    parseMovies(data, genresMap, actorsMap)
+}
+
+internal fun parseMovies(
+    data: String,
+    genres: List<Genre>,
+    actors: List<Actor>
+): List<Movie> {
+    val genresMap = genres.associateBy { it.id }
+    val actorsMap = actors.associateBy { it.id }
+
     val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(data)
 
-    jsonMovies.map { jsonMovie ->
+    return jsonMovies.map { jsonMovie ->
         Movie(
             id = jsonMovie.id,
             title = jsonMovie.title,
