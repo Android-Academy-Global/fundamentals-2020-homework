@@ -15,17 +15,6 @@ private val jsonFormat = Json { ignoreUnknownKeys = true }
 @Serializable
 class JsonGenre(val id: Int, val name: String)
 
-suspend fun loadGenres(context: Context): List<Genre> = withContext(Dispatchers.IO) {
-    val data = readAssetFileToString(context, "genres.json")
-    val jsonGenres = jsonFormat.decodeFromString<List<JsonGenre>>(data)
-    jsonGenres.map { Genre(id = it.id, name = it.name) }
-}
-
-private fun readAssetFileToString(context: Context, fileName: String): String {
-    val stream = context.assets.open(fileName)
-    return stream.bufferedReader().use(BufferedReader::readText)
-}
-
 @Serializable
 class JsonActor(
     val id: Int,
@@ -33,12 +22,6 @@ class JsonActor(
     @SerialName("profile_path")
     val profilePicture: String
 )
-
-suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
-    val data = readAssetFileToString(context, "people.json")
-    val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(data)
-    jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
-}
 
 @Serializable
 class JsonMovie(
@@ -58,8 +41,24 @@ class JsonMovie(
     val adult: Boolean
 )
 
+private suspend fun loadGenres(context: Context): List<Genre> = withContext(Dispatchers.IO) {
+    val data = readAssetFileToString(context, "genres.json")
+    val jsonGenres = jsonFormat.decodeFromString<List<JsonGenre>>(data)
+    jsonGenres.map { Genre(id = it.id, name = it.name) }
+}
 
-suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
+private fun readAssetFileToString(context: Context, fileName: String): String {
+    val stream = context.assets.open(fileName)
+    return stream.bufferedReader().use(BufferedReader::readText)
+}
+
+private suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
+    val data = readAssetFileToString(context, "people.json")
+    val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(data)
+    jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
+}
+
+internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
     val genresMap = loadGenres(context).associateBy { it.id }
     val actorsMap = loadActors(context).associateBy { it.id }
 
