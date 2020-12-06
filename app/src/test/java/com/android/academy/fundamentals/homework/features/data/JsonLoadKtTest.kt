@@ -23,7 +23,7 @@ class JsonLoadKtTest {
             Actor(
                 id = 62,
                 name = "Bruce Willis",
-                picture = "/A1XBu3CffBpSK8HEIJM8q7Mn4lz.jpg"
+                picture = "https://image.tmdb.org/t/p/w342/A1XBu3CffBpSK8HEIJM8q7Mn4lz.jpg"
             )
         )
     }
@@ -59,32 +59,32 @@ class JsonLoadKtTest {
                     Actor(
                         id = 84433,
                         name = "Lannick Gautry",
-                        picture = "/h94QUkKrwUncYhJ1eMz23kBAJuc.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/h94QUkKrwUncYhJ1eMz23kBAJuc.jpg"
                     ),
                     Actor(
                         id = 37919,
                         name = "Stanislas Merhar",
-                        picture = "/k5XQM1XXG71GLd41hFcx8yhkxRy.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/k5XQM1XXG71GLd41hFcx8yhkxRy.jpg"
                     ),
                     Actor(
                         id = 1407184,
                         name = "Kaaris",
-                        picture = "/zHxqojtMgk5aBqMQyTqcoPc4TRG.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/zHxqojtMgk5aBqMQyTqcoPc4TRG.jpg"
                     ),
                     Actor(
                         id = 1003,
                         name = "Jean Reno",
-                        picture = "/q7dYamebioHRuvb9EWeSw8yTEfS.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/q7dYamebioHRuvb9EWeSw8yTEfS.jpg"
                     ),
                     Actor(
                         id = 62439,
                         name = "David Belle",
-                        picture = "/nxRnf3O6Y3Yldd0pibuo43x3RZ.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/nxRnf3O6Y3Yldd0pibuo43x3RZ.jpg"
                     ),
                     Actor(
                         id = 70165,
                         name = "Gérard Lanvin",
-                        picture = "/3FSr4VW7JF3mBcVwPnJmOeR09NB.jpg"
+                        picture = "https://image.tmdb.org/t/p/w342/3FSr4VW7JF3mBcVwPnJmOeR09NB.jpg"
                     ),
                 )
             )
