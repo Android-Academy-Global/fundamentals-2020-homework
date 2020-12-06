@@ -13,10 +13,10 @@ import java.io.BufferedReader
 private val jsonFormat = Json { ignoreUnknownKeys = true }
 
 @Serializable
-class JsonGenre(val id: Int, val name: String)
+private class JsonGenre(val id: Int, val name: String)
 
 @Serializable
-class JsonActor(
+private class JsonActor(
     val id: Int,
     val name: String,
     @SerialName("profile_path")
@@ -24,7 +24,7 @@ class JsonActor(
 )
 
 @Serializable
-class JsonMovie(
+private class JsonMovie(
     val id: Int,
     val title: String,
     @SerialName("poster_path")
