@@ -47,7 +47,8 @@ class JsonLoadKtTest {
                 poster = "https://image.tmdb.org/t/p/w342/9HT9982bzgN5on1sLRmc1GMn6ZC.jpg",
                 backdrop = "https://image.tmdb.org/t/p/w342/gnf4Cb2rms69QbCnGFJyqwBWsxv.jpg",
                 ratings = 6.1F,
-                adult = false,
+                numberOfRatings = 200,
+                minimumAge = 13,
                 runtime = 116,
                 genres = listOf(
                     Genre(id = 53, name = "Thriller"),

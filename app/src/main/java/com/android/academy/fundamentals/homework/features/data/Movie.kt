@@ -7,7 +7,8 @@ data class Movie(
     val poster: String,
     val backdrop: String,
     val ratings: Float,
-    val adult: Boolean,
+    val numberOfRatings: Int,
+    val minimumAge: Int,
     val runtime: Int,
     val genres: List<Genre>,
     val actors: List<Actor>

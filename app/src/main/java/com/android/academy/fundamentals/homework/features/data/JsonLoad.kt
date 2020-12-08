@@ -36,6 +36,8 @@ private class JsonMovie(
     val actors: List<Int>,
     @SerialName("vote_average")
     val ratings: Float,
+    @SerialName("vote_count")
+    val votesCount: Int,
     val overview: String,
     val adult: Boolean
 )
@@ -65,6 +67,7 @@ internal fun parseActors(data: String): List<Actor> {
     return jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
 }
 
+@Suppress("unused")
 internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
     val genresMap = loadGenres(context)
     val actorsMap = loadActors(context)
@@ -84,6 +87,7 @@ internal fun parseMovies(
     val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(data)
 
     return jsonMovies.map { jsonMovie ->
+        @Suppress("unused")
         Movie(
             id = jsonMovie.id,
             title = jsonMovie.title,
@@ -91,7 +95,8 @@ internal fun parseMovies(
             poster = jsonMovie.posterPicture,
             backdrop = jsonMovie.backdropPicture,
             ratings = jsonMovie.ratings,
-            adult = jsonMovie.adult,
+            numberOfRatings = jsonMovie.votesCount,
+            minimumAge = if (jsonMovie.adult) 18 else 13,
             runtime = jsonMovie.runtime,
             genres = jsonMovie.genreIds.map {
                 genresMap[it] ?: throw IllegalArgumentException("Genre not found")
