@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.features.movies.MoviesListFragment
+import com.android.academy.fundamentals.homework.model.MovieData
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.MoviesListItemClickListener,
-    MovieDetailsFragment.MovieDetailsBackClickListener
-{
+    MovieDetailsFragment.MovieDetailsBackClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onMovieSelected() {
-        routeToMovieDetails()
+    override fun onMovieSelected(movieData: MovieData) {
+        routeToMovieDetails(movieData)
     }
 
     override fun onMovieDeselected() {
@@ -29,14 +29,22 @@ class MainActivity : AppCompatActivity(),
 
     private fun routeToMoviesList() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, MoviesListFragment.create(), MoviesListFragment::class.java.simpleName)
+            .replace(
+                R.id.container,
+                MoviesListFragment.create(),
+                MoviesListFragment::class.java.simpleName
+            )
             .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
             .commit()
     }
 
-    private fun routeToMovieDetails() {
+    private fun routeToMovieDetails(movieData: MovieData) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, MovieDetailsFragment.create(), MovieDetailsFragment::class.java.simpleName)
+            .add(
+                R.id.container,
+                MovieDetailsFragment.create(movieData),
+                MovieDetailsFragment::class.java.simpleName
+            )
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
             .commit()
     }
