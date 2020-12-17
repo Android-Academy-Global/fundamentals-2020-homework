@@ -27,4 +27,9 @@
     <dimen name="movies_list_rating_star_icon_space">8dp</dimen>
     <!-- Movies List screen -->
 
+    <!-- Movie Detail screen -->
+    <dimen name="actor_card_width">80dp</dimen>
+    <dimen name="actor_card_divider">8dp</dimen>
+    <!-- Movie Detail screen -->
+
 </resources>
