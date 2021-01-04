@@ -14,6 +14,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.model.MovieData
 
@@ -69,8 +70,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun updateMovieDetailsInfo(movieData: MovieData) {
-//        view?.findViewById<ImageView>(R.id.movie_logo_image)
-//            ?.setImageResource(movieData.detailImageRes)
+        view?.findViewById<ImageView>(R.id.movie_logo_image)?.load(movieData.detailImageUrl)
 
         view?.findViewById<TextView>(R.id.movie_age_restrictions_text)?.text =
             context?.getString(R.string.movies_list_allowed_age_template, movieData.pgAge)

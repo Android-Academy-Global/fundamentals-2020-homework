@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.model.ActorData
 
@@ -32,7 +33,7 @@ class ActorsListAdapter : ListAdapter<ActorData, ActorsListAdapter.ViewHolder>(D
         private val actorName: TextView = itemView.findViewById(R.id.actor_name)
 
         fun bind(item: ActorData) {
-//            actorImage.setImageResource(item.imageUrl)
+            actorImage.load(item.imageUrl)
             actorName.text = item.name
         }
     }

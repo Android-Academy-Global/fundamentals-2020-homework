@@ -29,11 +29,14 @@
 
         <ImageView
             android:id="@+id/movie_logo_image"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/movie_logo_image_height"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_movie_details_header"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="3:2"
             tools:ignore="ContentDescription" />
 
         <View

@@ -11,6 +11,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.model.MovieData
 
@@ -47,7 +48,7 @@ class MoviesListAdapter(private val onClickCard: (item: MovieData) -> Unit) :
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
 
         fun bind(item: MovieData, onClickCard: (item: MovieData) -> Unit) {
-//            movieImage.setImageResource(item.imageRes)
+            movieImage.load(item.imageUrl)
 
             val context = itemView.context
             pgText.text =

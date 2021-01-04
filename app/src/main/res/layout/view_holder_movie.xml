@@ -18,6 +18,7 @@
         android:layout_marginEnd="1dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/movies_list_header_image_description"
+        app:layout_constraintDimensionRatio="1:1.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
