@@ -32,12 +32,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_movie_details_header"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="3:2"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/img_movie_details_header" />
 
         <View
             android:layout_width="0dp"
@@ -90,37 +90,37 @@
             android:background="@drawable/ic_rectangle"
             android:backgroundTint="@color/background_color"
             android:gravity="center"
-            tools:text="@string/age_restrictions"
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_body"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/movie_name_text"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline" />
+            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
+            tools:text="13+" />
 
         <TextView
             android:id="@+id/movie_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="254dp"
-            android:text="@string/avengers_movie_name"
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_headline"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
             app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toTopOf="@+id/movie_logo_image" />
+            app:layout_constraintTop_toTopOf="@+id/movie_logo_image"
+            tools:text="Avengers" />
 
         <TextView
             android:id="@+id/movie_tags_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_1x"
-            android:text="@string/avengers_movie_tags"
             android:textColor="@color/pink_dark"
             android:textSize="@dimen/text_size_sub_title"
             app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
             app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_name_text" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_name_text"
+            tools:text="Action, Fiction" />
 
         <ImageView
             android:id="@+id/star1_image"
@@ -188,14 +188,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_2x"
             android:layout_marginTop="@dimen/spacing_1x"
-            android:text="@string/reviews_count"
             android:textAllCaps="true"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_sub_title"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
             app:layout_constraintStart_toEndOf="@+id/star5_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_tags_text" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_tags_text"
+            tools:text="125 reviews" />
 
         <TextView
             android:id="@+id/movie_storyline_title_text"
@@ -215,12 +215,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_1x"
-            android:text="@string/storyline"
             android:textColor="@color/color_white_transparent"
             android:textSize="@dimen/text_size_sub_title"
             app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
             app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_storyline_title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_storyline_title_text"
+            tools:text="Some long description about Avengers movie" />
 
         <TextView
             android:id="@+id/movie_cast_title_text"

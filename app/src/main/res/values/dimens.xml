@@ -5,20 +5,15 @@
     <dimen name="spacing_2x">8dp</dimen>
     <dimen name="spacing_3x">12dp</dimen>
     <dimen name="spacing_4x">16dp</dimen>
-    <dimen name="spacing_4_5x">18dp</dimen>
     <dimen name="spacing_6x">24dp</dimen>
     <dimen name="spacing_13x">52dp</dimen>
-    <dimen name="spacing_14x">56dp</dimen>
 
     <dimen name="text_size_headline">40sp</dimen>
     <dimen name="text_size_sub_title">14sp</dimen>
     <dimen name="text_size_body">12sp</dimen>
     <dimen name="text_size_description">8sp</dimen>
 
-    <dimen name="movie_logo_image_height">298dp</dimen>
-
     <!-- Movies List screen -->
-    <dimen name="movies_list_card_width">170dp</dimen>
     <dimen name="movies_list_card_corners">8dp</dimen>
     <dimen name="movies_list_top_margin">102dp</dimen>
     <dimen name="movies_list_allowed_age_space">24dp</dimen>
