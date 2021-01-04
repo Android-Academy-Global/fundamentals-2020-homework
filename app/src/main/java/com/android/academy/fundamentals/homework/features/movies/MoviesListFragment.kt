@@ -6,7 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.model.DataGenerator
+import com.android.academy.fundamentals.homework.model.MovieData
+
 
 class MoviesListFragment : Fragment() {
 
@@ -27,13 +32,22 @@ class MoviesListFragment : Fragment() {
     ): View? {
 
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
+
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        view?.findViewById<View>(R.id.movies_list_item_layout)?.setOnClickListener {
-            listener?.onMovieSelected()
+        view.findViewById<RecyclerView>(R.id.recycler_movies).apply {
+            this.layoutManager = GridLayoutManager(this.context, 2)
+
+            val adapter = MoviesListAdapter { movieData ->
+                listener?.onMovieSelected(movieData)
+            }
+
+            this.adapter = adapter
+
+            adapter.submitList(DataGenerator.generateMovieList())
         }
     }
 
@@ -44,7 +58,7 @@ class MoviesListFragment : Fragment() {
     }
 
     interface MoviesListItemClickListener {
-        fun onMovieSelected()
+        fun onMovieSelected(movieData: MovieData)
     }
 
     companion object {
