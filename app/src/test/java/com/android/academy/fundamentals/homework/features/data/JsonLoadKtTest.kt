@@ -1,5 +1,6 @@
 package com.android.academy.fundamentals.homework.features.data
 
+import com.android.academy.fundamentals.homework.model.GenreData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -10,7 +11,7 @@ class JsonLoadKtTest {
 
         val genres = parseGenres(data!!)
 
-        assertThat(genres).contains(Genre(id = 18, name = "Drama"))
+        assertThat(genres).contains(GenreData(id = 18, name = "Drama"))
     }
 
     @Test
@@ -50,11 +51,11 @@ class JsonLoadKtTest {
                 numberOfRatings = 200,
                 minimumAge = 13,
                 runtime = 116,
-                genres = listOf(
-                    Genre(id = 53, name = "Thriller"),
-                    Genre(id = 28, name = "Action"),
-                    Genre(id = 18, name = "Drama"),
-                    Genre(id = 80, name = "Crime"),
+                genreData = listOf(
+                    GenreData(id = 53, name = "Thriller"),
+                    GenreData(id = 28, name = "Action"),
+                    GenreData(id = 18, name = "Drama"),
+                    GenreData(id = 80, name = "Crime"),
                 ),
                 actors = listOf(
                     Actor(

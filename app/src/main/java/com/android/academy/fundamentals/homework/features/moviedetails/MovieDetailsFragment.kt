@@ -69,14 +69,15 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun updateMovieDetailsInfo(movieData: MovieData) {
-        view?.findViewById<ImageView>(R.id.movie_logo_image)
-            ?.setImageResource(movieData.detailImageRes)
+//        view?.findViewById<ImageView>(R.id.movie_logo_image)
+//            ?.setImageResource(movieData.detailImageRes)
 
         view?.findViewById<TextView>(R.id.movie_age_restrictions_text)?.text =
             context?.getString(R.string.movies_list_allowed_age_template, movieData.pgAge)
 
         view?.findViewById<TextView>(R.id.movie_name_text)?.text = movieData.title
-        view?.findViewById<TextView>(R.id.movie_tags_text)?.text = movieData.genre
+        view?.findViewById<TextView>(R.id.movie_tags_text)?.text =
+            movieData.genres.joinToString { it.name }
         view?.findViewById<TextView>(R.id.movie_reviews_count_text)?.text =
             context?.getString(R.string.movies_list_reviews_template, movieData.reviewCount)
         view?.findViewById<TextView>(R.id.movie_storyline_text)?.text = movieData.storyLine

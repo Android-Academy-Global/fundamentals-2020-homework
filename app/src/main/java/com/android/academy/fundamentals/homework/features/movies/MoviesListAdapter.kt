@@ -47,15 +47,16 @@ class MoviesListAdapter(private val onClickCard: (item: MovieData) -> Unit) :
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
 
         fun bind(item: MovieData, onClickCard: (item: MovieData) -> Unit) {
-            movieImage.setImageResource(item.imageRes)
+//            movieImage.setImageResource(item.imageRes)
 
+            val context = itemView.context
             pgText.text =
-                itemView.context.getString(R.string.movies_list_allowed_age_template, item.pgAge)
-            genreText.text = item.genre
+                context.getString(R.string.movies_list_allowed_age_template, item.pgAge)
+            genreText.text = item.genres.joinToString { it.name }
             reviewsText.text =
-                itemView.context.getString(R.string.movies_list_reviews_template, item.reviewCount)
+                context.getString(R.string.movies_list_reviews_template, item.reviewCount)
             titleText.text = item.title
-            movieLenText.text = item.runningTime
+            movieLenText.text = context.getString(R.string.movies_list_film_time, item.runningTime)
 
             val likeColor = if (item.isLiked) {
                 R.color.pink_light
