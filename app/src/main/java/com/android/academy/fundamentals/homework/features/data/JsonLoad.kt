@@ -10,7 +10,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.random.Random
 
 
 private val jsonFormat = Json { ignoreUnknownKeys = true }
@@ -108,7 +107,7 @@ internal fun parseMovies(
             actors = jsonMovie.actors.map {
                 actorsMap[it] ?: throw IllegalArgumentException("Actor not found")
             },
-            isLiked = Random.nextBoolean()
+            isLiked = false
         )
     }
 }
