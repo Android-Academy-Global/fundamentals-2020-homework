@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.features.data.loadMovies
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.*
 
 
@@ -19,7 +19,7 @@ class MoviesListFragment : Fragment() {
     var listener: MoviesListItemClickListener? = null
 
     private var coroutinesScope = CoroutineScope(Dispatchers.Main)
-    private var movies: List<MovieData>? = null
+    private var movies: List<Movie>? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -80,7 +80,7 @@ class MoviesListFragment : Fragment() {
     }
 
     interface MoviesListItemClickListener {
-        fun onMovieSelected(movieData: MovieData)
+        fun onMovieSelected(movie: Movie)
     }
 
     companion object {

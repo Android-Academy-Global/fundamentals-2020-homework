@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.model.Movie
 
 
 class MovieDetailsFragment : Fragment() {
@@ -43,7 +43,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieData = arguments?.getSerializable(PARAM_MOVIE_DATA) as? MovieData ?: return
+        val movieData = arguments?.getSerializable(PARAM_MOVIE_DATA) as? Movie ?: return
 
         updateMovieDetailsInfo(movieData)
 
@@ -69,18 +69,18 @@ class MovieDetailsFragment : Fragment() {
         super.onDetach()
     }
 
-    private fun updateMovieDetailsInfo(movieData: MovieData) {
-        view?.findViewById<ImageView>(R.id.movie_logo_image)?.load(movieData.detailImageUrl)
+    private fun updateMovieDetailsInfo(movie: Movie) {
+        view?.findViewById<ImageView>(R.id.movie_logo_image)?.load(movie.detailImageUrl)
 
         view?.findViewById<TextView>(R.id.movie_age_restrictions_text)?.text =
-            context?.getString(R.string.movies_list_allowed_age_template, movieData.pgAge)
+            context?.getString(R.string.movies_list_allowed_age_template, movie.pgAge)
 
-        view?.findViewById<TextView>(R.id.movie_name_text)?.text = movieData.title
+        view?.findViewById<TextView>(R.id.movie_name_text)?.text = movie.title
         view?.findViewById<TextView>(R.id.movie_tags_text)?.text =
-            movieData.genres.joinToString { it.name }
+            movie.genres.joinToString { it.name }
         view?.findViewById<TextView>(R.id.movie_reviews_count_text)?.text =
-            context?.getString(R.string.movies_list_reviews_template, movieData.reviewCount)
-        view?.findViewById<TextView>(R.id.movie_storyline_text)?.text = movieData.storyLine
+            context?.getString(R.string.movies_list_reviews_template, movie.reviewCount)
+        view?.findViewById<TextView>(R.id.movie_storyline_text)?.text = movie.storyLine
 
         val starsImages = listOf<ImageView?>(
             view?.findViewById(R.id.star1_image),
@@ -92,7 +92,7 @@ class MovieDetailsFragment : Fragment() {
         starsImages.forEachIndexed { index, imageView ->
             imageView?.let {
                 val colorId =
-                    if (movieData.rating > index) R.color.pink_light else R.color.gray_dark
+                    if (movie.rating > index) R.color.pink_light else R.color.gray_dark
                 ImageViewCompat.setImageTintList(
                     imageView, ColorStateList.valueOf(
                         ContextCompat.getColor(imageView.context, colorId)
@@ -109,9 +109,9 @@ class MovieDetailsFragment : Fragment() {
     companion object {
         private const val PARAM_MOVIE_DATA = "movie_data"
 
-        fun create(movieData: MovieData) = MovieDetailsFragment().also {
+        fun create(movie: Movie) = MovieDetailsFragment().also {
             val args = bundleOf(
-                PARAM_MOVIE_DATA to movieData
+                PARAM_MOVIE_DATA to movie
             )
             it.arguments = args
         }

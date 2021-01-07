@@ -2,11 +2,11 @@ package com.android.academy.fundamentals.homework.model
 
 import java.io.Serializable
 
-data class MovieData(
+data class Movie(
     val id: Int,
     val pgAge: Int,
     val title: String,
-    val genres: List<GenreData>,
+    val genres: List<Genre>,
     val runningTime: Int,
     val reviewCount: Int,
     val isLiked: Boolean,
@@ -14,6 +14,6 @@ data class MovieData(
     val imageUrl: String,
     val detailImageUrl: String,
     val storyLine: String,
-    val actors: List<ActorData>
+    val actors: List<Actor>
 
 ) : Serializable

@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.model.Movie
 
-class MoviesListAdapter(private val onClickCard: (item: MovieData) -> Unit) :
-    ListAdapter<MovieData, MoviesListAdapter.ViewHolder>(DiffCallback()) {
+class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
+    ListAdapter<Movie, MoviesListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -47,7 +47,7 @@ class MoviesListAdapter(private val onClickCard: (item: MovieData) -> Unit) :
         private val titleText: TextView = itemView.findViewById(R.id.film_name_text)
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
 
-        fun bind(item: MovieData, onClickCard: (item: MovieData) -> Unit) {
+        fun bind(item: Movie, onClickCard: (item: Movie) -> Unit) {
             movieImage.load(item.imageUrl)
 
             val context = itemView.context
@@ -86,12 +86,12 @@ class MoviesListAdapter(private val onClickCard: (item: MovieData) -> Unit) :
         }
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<MovieData>() {
-        override fun areItemsTheSame(oldItem: MovieData, newItem: MovieData): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: MovieData, newItem: MovieData): Boolean {
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
         }
     }

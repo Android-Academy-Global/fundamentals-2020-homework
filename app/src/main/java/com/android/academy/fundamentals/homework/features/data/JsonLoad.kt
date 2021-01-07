@@ -1,9 +1,9 @@
 package com.android.academy.fundamentals.homework.features.data
 
 import android.content.Context
-import com.android.academy.fundamentals.homework.model.ActorData
-import com.android.academy.fundamentals.homework.model.GenreData
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.model.Actor
+import com.android.academy.fundamentals.homework.model.Genre
+import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 private val jsonFormat = Json { ignoreUnknownKeys = true }
 
 @Suppress("unused")
-internal suspend fun loadMovies(context: Context): List<MovieData> = withContext(Dispatchers.IO) {
+internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
     val genresMap = loadGenres(context)
     val actorsMap = loadActors(context)
 
@@ -20,7 +20,7 @@ internal suspend fun loadMovies(context: Context): List<MovieData> = withContext
     parseMovies(data, genresMap, actorsMap)
 }
 
-private suspend fun loadGenres(context: Context): List<GenreData> = withContext(Dispatchers.IO) {
+private suspend fun loadGenres(context: Context): List<Genre> = withContext(Dispatchers.IO) {
     val data = readAssetFileToString(context, "genres.json")
     parseGenres(data)
 }
@@ -30,20 +30,20 @@ private fun readAssetFileToString(context: Context, fileName: String): String {
     return stream.bufferedReader().readText()
 }
 
-internal fun parseGenres(jsonString: String): List<GenreData> {
+internal fun parseGenres(jsonString: String): List<Genre> {
     val jsonGenres = jsonFormat.decodeFromString<List<JsonGenre>>(jsonString)
-    return jsonGenres.map { jsonGenre -> GenreData(id = jsonGenre.id, name = jsonGenre.name) }
+    return jsonGenres.map { jsonGenre -> Genre(id = jsonGenre.id, name = jsonGenre.name) }
 }
 
-private suspend fun loadActors(context: Context): List<ActorData> = withContext(Dispatchers.IO) {
+private suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
     val data = readAssetFileToString(context, "people.json")
     parseActors(data)
 }
 
-internal fun parseActors(jsonString: String): List<ActorData> {
+internal fun parseActors(jsonString: String): List<Actor> {
     val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(jsonString)
     return jsonActors.map { jsonActor ->
-        ActorData(
+        Actor(
             id = jsonActor.id,
             name = jsonActor.name,
             imageUrl = jsonActor.profilePicture
@@ -53,17 +53,17 @@ internal fun parseActors(jsonString: String): List<ActorData> {
 
 internal fun parseMovies(
     jsonString: String,
-    genreData: List<GenreData>,
-    actors: List<ActorData>
-): List<MovieData> {
-    val genresMap = genreData.associateBy(GenreData::id)
-    val actorsMap = actors.associateBy(ActorData::id)
+    genreData: List<Genre>,
+    actors: List<Actor>
+): List<Movie> {
+    val genresMap = genreData.associateBy(Genre::id)
+    val actorsMap = actors.associateBy(Actor::id)
 
     val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(jsonString)
 
     return jsonMovies.map { jsonMovie ->
         @Suppress("unused")
-        MovieData(
+        Movie(
             id = jsonMovie.id,
             title = jsonMovie.title,
             storyLine = jsonMovie.overview,

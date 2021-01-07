@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.features.movies.MoviesListFragment
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.model.Movie
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.MoviesListItemClickListener,
@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onMovieSelected(movieData: MovieData) {
-        routeToMovieDetails(movieData)
+    override fun onMovieSelected(movie: Movie) {
+        routeToMovieDetails(movie)
     }
 
     override fun onMovieDeselected() {
@@ -38,11 +38,11 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
-    private fun routeToMovieDetails(movieData: MovieData) {
+    private fun routeToMovieDetails(movie: Movie) {
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container,
-                MovieDetailsFragment.create(movieData),
+                MovieDetailsFragment.create(movie),
                 MovieDetailsFragment::class.java.simpleName
             )
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
