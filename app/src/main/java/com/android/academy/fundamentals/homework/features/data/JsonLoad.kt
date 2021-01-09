@@ -84,6 +84,6 @@ internal fun parseMovies(
     }
 }
 
-private fun <T : Any> T?.orThrow(lambda: () -> Exception): T {
-    return this ?: throw lambda()
+private fun <T : Any> T?.orThrow(createThrowable: () -> Throwable): T {
+    return this ?: throw createThrowable()
 }
