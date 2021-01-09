@@ -6,19 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.features.data.loadMovies
 import com.android.academy.fundamentals.homework.model.Movie
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MoviesListFragment : Fragment() {
 
-    var listener: MoviesListItemClickListener? = null
+    private var listener: MoviesListItemClickListener? = null
 
-    private var coroutinesScope = CoroutineScope(Dispatchers.Main)
     private var movies: List<Movie>? = null
 
     override fun onAttach(context: Context) {
@@ -56,7 +58,7 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun loadDataToAdapter(adapter: MoviesListAdapter) {
-        coroutinesScope.launch {
+        lifecycleScope.launch {
             val moviesData = movies ?: loadMovies(requireContext())
 
             withContext(Dispatchers.Main) {
@@ -70,13 +72,6 @@ class MoviesListFragment : Fragment() {
         listener = null
 
         super.onDetach()
-    }
-
-    override fun onDestroyView() {
-        coroutinesScope.cancel()
-        coroutinesScope = CoroutineScope(Dispatchers.Main)
-
-        super.onDestroyView()
     }
 
     interface MoviesListItemClickListener {
