@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.data
+package com.android.academy.fundamentals.homework.data
 
 import android.content.Context
 import com.android.academy.fundamentals.homework.model.Actor

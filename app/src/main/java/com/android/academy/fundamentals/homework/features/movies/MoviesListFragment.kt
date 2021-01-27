@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.features.data.loadMovies
+import com.android.academy.fundamentals.homework.data.loadMovies
 import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

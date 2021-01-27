@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.data
+package com.android.academy.fundamentals.homework.data
 
 import com.android.academy.fundamentals.homework.model.Actor
 import com.android.academy.fundamentals.homework.model.Genre
@@ -13,7 +13,7 @@ class JsonLoadKtTest {
 
         val genres = parseGenres(data!!)
 
-        assertThat(genres).contains(Genre(id = 18, name = "Drama"))
+        assertThat(genres).contains(buildGenre())
     }
 
     @Test
@@ -56,7 +56,7 @@ class JsonLoadKtTest {
                 genres = listOf(
                     Genre(id = 53, name = "Thriller"),
                     Genre(id = 28, name = "Action"),
-                    Genre(id = 18, name = "Drama"),
+                    buildGenre(),
                     Genre(id = 80, name = "Crime"),
                 ),
                 actors = listOf(
@@ -95,4 +95,6 @@ class JsonLoadKtTest {
             )
         )
     }
+
+    private fun buildGenre() = Genre(id = 18, name = "Drama")
 }
