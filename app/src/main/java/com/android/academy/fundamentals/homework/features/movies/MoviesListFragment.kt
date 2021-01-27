@@ -21,8 +21,6 @@ class MoviesListFragment : Fragment() {
 
     private var listener: MoviesListItemClickListener? = null
 
-    private var movies: List<Movie>? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -63,7 +61,6 @@ class MoviesListFragment : Fragment() {
             val moviesData = repository.loadMovies()
 
             withContext(Dispatchers.Main) {
-                movies = moviesData
                 adapter.submitList(moviesData)
             }
         }
