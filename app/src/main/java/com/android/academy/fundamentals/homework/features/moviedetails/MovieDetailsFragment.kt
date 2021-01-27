@@ -12,16 +12,21 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MovieDetailsFragment : Fragment() {
 
-    var listener: MovieDetailsBackClickListener? = null
+    private var listener: MovieDetailsBackClickListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,24 +48,33 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieData = arguments?.getSerializable(PARAM_MOVIE_DATA) as? Movie ?: return
-
-        updateMovieDetailsInfo(movieData)
+        val movieId = arguments?.getSerializable(PARAM_MOVIE_ID) as? Int ?: return
 
         view.findViewById<RecyclerView>(R.id.recycler_movies).apply {
 
             this.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
-            val adapter = ActorsListAdapter()
-
-            this.adapter = adapter
-
-            adapter.submitList(movieData.actors)
+            this.adapter = ActorsListAdapter()
         }
 
         view.findViewById<View>(R.id.back_button_layout)?.setOnClickListener {
             listener?.onMovieDeselected()
         }
+        lifecycleScope.launch {
+            val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
+            val movie = repository.loadMovie(movieId)
+
+            withContext(Dispatchers.Main) {
+                bindUI(view, movie)
+            }
+        }
+    }
+
+    private fun bindUI(view: View, movie: Movie) {
+        updateMovieDetailsInfo(movie)
+        val adapter =
+            view.findViewById<RecyclerView>(R.id.recycler_movies).adapter as ActorsListAdapter
+        adapter.submitList(movie.actors)
     }
 
     override fun onDetach() {
@@ -107,11 +121,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
     companion object {
-        private const val PARAM_MOVIE_DATA = "movie_data"
+        private const val PARAM_MOVIE_ID = "movie_id"
 
-        fun create(movie: Movie) = MovieDetailsFragment().also {
+        fun create(movieId: Int) = MovieDetailsFragment().also {
             val args = bundleOf(
-                PARAM_MOVIE_DATA to movie
+                PARAM_MOVIE_ID to movieId
             )
             it.arguments = args
         }

@@ -2,13 +2,19 @@ package com.android.academy.fundamentals.homework
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.android.academy.fundamentals.homework.data.JsonMovieRepository
+import com.android.academy.fundamentals.homework.data.MovieRepository
+import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.features.movies.MoviesListFragment
 import com.android.academy.fundamentals.homework.model.Movie
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.MoviesListItemClickListener,
-    MovieDetailsFragment.MovieDetailsBackClickListener {
+    MovieDetailsFragment.MovieDetailsBackClickListener,
+    MovieRepositoryProvider {
+
+    private val jsonMovieRepository = JsonMovieRepository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +48,7 @@ class MainActivity : AppCompatActivity(),
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container,
-                MovieDetailsFragment.create(movie),
+                MovieDetailsFragment.create(movie.id),
                 MovieDetailsFragment::class.java.simpleName
             )
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
@@ -52,4 +58,6 @@ class MainActivity : AppCompatActivity(),
     private fun routeBack() {
         supportFragmentManager.popBackStack()
     }
+
+    override fun provideMovieRepository(): MovieRepository = jsonMovieRepository
 }

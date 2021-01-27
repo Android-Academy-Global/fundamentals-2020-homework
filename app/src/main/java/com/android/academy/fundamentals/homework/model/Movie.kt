@@ -1,7 +1,5 @@
 package com.android.academy.fundamentals.homework.model
 
-import java.io.Serializable
-
 data class Movie(
     val id: Int,
     val pgAge: Int,
@@ -15,4 +13,4 @@ data class Movie(
     val detailImageUrl: String,
     val storyLine: String,
     val actors: List<Actor>,
-) : Serializable
+)
