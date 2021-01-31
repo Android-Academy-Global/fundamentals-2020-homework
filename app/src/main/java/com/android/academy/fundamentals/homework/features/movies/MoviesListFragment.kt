@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class MoviesListFragment : Fragment() {
@@ -60,9 +58,7 @@ class MoviesListFragment : Fragment() {
         lifecycleScope.launch {
             val moviesData = repository.loadMovies()
 
-            withContext(Dispatchers.Main) {
-                adapter.submitList(moviesData)
-            }
+            adapter.submitList(moviesData)
         }
     }
 

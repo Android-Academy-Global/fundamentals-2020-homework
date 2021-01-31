@@ -64,9 +64,7 @@ class MovieDetailsFragment : Fragment() {
             val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
             val movie = repository.loadMovie(movieId)
 
-            withContext(Dispatchers.Main) {
-                bindUI(view, movie)
-            }
+            bindUI(view, movie)
         }
     }
 
