@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
@@ -19,9 +20,7 @@ import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class MovieDetailsFragment : Fragment() {
@@ -64,8 +63,17 @@ class MovieDetailsFragment : Fragment() {
             val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
             val movie = repository.loadMovie(movieId)
 
-            bindUI(view, movie)
+            if (movie != null) {
+                bindUI(view, movie)
+            } else {
+                showMovieNotFoundError()
+            }
         }
+    }
+
+    private fun showMovieNotFoundError() {
+        Toast.makeText(requireContext(), R.string.error_movie_not_found, Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun bindUI(view: View, movie: Movie) {

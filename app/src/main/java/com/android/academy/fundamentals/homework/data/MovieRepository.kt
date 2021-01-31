@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 
 interface MovieRepository {
     suspend fun loadMovies(): List<Movie>
-    suspend fun loadMovie(movieId: Int): Movie
+    suspend fun loadMovie(movieId: Int): Movie?
 }
 
 internal class JsonMovieRepository(private val context: Context) : MovieRepository {
@@ -94,9 +94,9 @@ internal class JsonMovieRepository(private val context: Context) : MovieReposito
         }
     }
 
-    override suspend fun loadMovie(movieId: Int): Movie {
+    override suspend fun loadMovie(movieId: Int): Movie? {
         val cachedMovies = movies ?: loadMovies()
-        return cachedMovies.find { it.id == movieId }!!
+        return cachedMovies.find { it.id == movieId }
     }
 
     private fun <T : Any> T?.orThrow(createThrowable: () -> Throwable): T {
