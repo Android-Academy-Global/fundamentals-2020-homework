@@ -10,16 +10,16 @@
         android:id="@+id/actor_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1,1"
         android:layout_marginTop="@dimen/spacing_2x"
         android:layout_marginEnd="@dimen/spacing_1x"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/img_movie_cast_1"
+        app:layout_constraintDimensionRatio="1,1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/img_movie_cast_1" />
 
     <TextView
         android:id="@+id/actor_name"

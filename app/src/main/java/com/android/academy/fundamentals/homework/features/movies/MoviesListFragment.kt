@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.model.DataGenerator
-import com.android.academy.fundamentals.homework.model.MovieData
+import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
+import com.android.academy.fundamentals.homework.model.Movie
+import kotlinx.coroutines.launch
 
 
 class MoviesListFragment : Fragment() {
 
-    var listener: MoviesListItemClickListener? = null
+    private var listener: MoviesListItemClickListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,7 +49,16 @@ class MoviesListFragment : Fragment() {
 
             this.adapter = adapter
 
-            adapter.submitList(DataGenerator.generateMovieList())
+            loadDataToAdapter(adapter)
+        }
+    }
+
+    private fun loadDataToAdapter(adapter: MoviesListAdapter) {
+        val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
+        lifecycleScope.launch {
+            val moviesData = repository.loadMovies()
+
+            adapter.submitList(moviesData)
         }
     }
 
@@ -58,7 +69,7 @@ class MoviesListFragment : Fragment() {
     }
 
     interface MoviesListItemClickListener {
-        fun onMovieSelected(movieData: MovieData)
+        fun onMovieSelected(movie: Movie)
     }
 
     companion object {
