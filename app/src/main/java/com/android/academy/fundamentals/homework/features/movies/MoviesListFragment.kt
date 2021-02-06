@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.launch
 
-
 class MoviesListFragment : Fragment() {
+
+    private val viewModel by lazy { ViewModelProvider(requireActivity()).get(MoviesListViewModel::class.java) }
 
     private var listener: MoviesListItemClickListener? = null
 
@@ -32,7 +33,6 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
 
     }
@@ -54,11 +54,10 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun loadDataToAdapter(adapter: MoviesListAdapter) {
-        val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
         lifecycleScope.launch {
-            val moviesData = repository.loadMovies()
-
-            adapter.submitList(moviesData)
+            viewModel.movies.observe(viewLifecycleOwner, { movieList ->
+                adapter.submitList(movieList)
+            })
         }
     }
 
