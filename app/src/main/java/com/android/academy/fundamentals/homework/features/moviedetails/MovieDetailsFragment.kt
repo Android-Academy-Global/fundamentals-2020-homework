@@ -14,12 +14,15 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : Fragment() {
 
@@ -59,9 +62,11 @@ class MovieDetailsFragment : Fragment() {
 
         viewModel.loadDetails(movieId)
 
-        viewModel.movie.observe(viewLifecycleOwner, { movie ->
-            movie?.let { bindUI(view, it) } ?: showMovieNotFoundError()
-        })
+        lifecycleScope.launch {
+            viewModel.movie.collect { movie ->
+                movie?.let { bindUI(view, it) } ?: showMovieNotFoundError()
+            }
+        }
     }
 
     private fun showMovieNotFoundError() {

@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MoviesListFragment : Fragment() {
 
@@ -52,9 +55,11 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun loadDataToAdapter(adapter: MoviesListAdapter) {
-        viewModel.movies.observe(viewLifecycleOwner, { movieList ->
-            adapter.submitList(movieList)
-        })
+        lifecycleScope.launch {
+            viewModel.movies.collect { movieList ->
+                adapter.submitList(movieList)
+            }
+        }
     }
 
     override fun onDetach() {
