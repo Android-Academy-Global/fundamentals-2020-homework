@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -22,7 +23,10 @@ import com.android.academy.fundamentals.homework.model.Movie
 
 class MovieDetailsFragment : Fragment() {
 
-    private lateinit var viewModel: MovieDetailsViewModel
+    private val viewModel: MovieDetailsViewModel by viewModels {
+        MovieDetailsViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
+    }
+
     private var listener: MovieDetailsBackClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -53,7 +57,6 @@ class MovieDetailsFragment : Fragment() {
             listener?.onMovieDeselected()
         }
 
-        viewModel = MovieDetailsViewModel((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
         viewModel.loadDetails(movieId)
 
         viewModel.movie.observe(viewLifecycleOwner, { movie ->
@@ -112,6 +115,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     interface MovieDetailsBackClickListener {
+
         fun onMovieDeselected()
     }
 

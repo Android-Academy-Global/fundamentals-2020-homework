@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
@@ -14,7 +15,9 @@ import com.android.academy.fundamentals.homework.model.Movie
 
 class MoviesListFragment : Fragment() {
 
-    private lateinit var viewModel: MoviesListViewModel
+    private val viewModel: MoviesListViewModel by viewModels {
+        MovieListViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
+    }
     private var listener: MoviesListItemClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -44,7 +47,6 @@ class MoviesListFragment : Fragment() {
 
             this.adapter = adapter
 
-            viewModel = MoviesListViewModel((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
             loadDataToAdapter(adapter)
         }
     }
