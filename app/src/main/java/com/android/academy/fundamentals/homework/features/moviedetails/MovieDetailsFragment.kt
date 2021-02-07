@@ -13,18 +13,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.launch
 
 class MovieDetailsFragment : Fragment() {
 
-    private val viewModel by lazy { ViewModelProvider(requireActivity()).get(MovieDetailsViewModel::class.java) }
+    private lateinit var viewModel :MovieDetailsViewModel
     private var listener: MovieDetailsBackClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -55,6 +55,7 @@ class MovieDetailsFragment : Fragment() {
             listener?.onMovieDeselected()
         }
 
+        viewModel = MovieDetailsViewModel((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
         viewModel.loadDetails(movieId)
 
         lifecycleScope.launch {
