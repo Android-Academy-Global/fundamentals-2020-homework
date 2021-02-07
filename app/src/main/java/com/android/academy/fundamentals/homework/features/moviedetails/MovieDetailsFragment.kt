@@ -58,11 +58,9 @@ class MovieDetailsFragment : Fragment() {
         viewModel = MovieDetailsViewModel((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
         viewModel.loadDetails(movieId)
 
-        lifecycleScope.launch {
-            viewModel.movie.observe(viewLifecycleOwner, { movie ->
-                movie?.let { bindUI(view, it) } ?: showMovieNotFoundError()
-            })
-        }
+        viewModel.movie.observe(viewLifecycleOwner, { movie ->
+            movie?.let { bindUI(view, it) } ?: showMovieNotFoundError()
+        })
     }
 
     private fun showMovieNotFoundError() {
