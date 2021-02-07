@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class MoviesListViewModel(private val repository: MovieRepository) : ViewModel() {
 
-    private val _movies = MutableLiveData<List<Movie>>(emptyList())
+    private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies
 
     init {
@@ -21,6 +21,5 @@ class MoviesListViewModel(private val repository: MovieRepository) : ViewModel()
         viewModelScope.launch {
             _movies.postValue(repository.loadMovies())
         }
-
     }
 }
