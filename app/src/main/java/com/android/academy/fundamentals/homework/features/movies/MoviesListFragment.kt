@@ -15,7 +15,7 @@ import com.android.academy.fundamentals.homework.model.Movie
 
 class MoviesListFragment : Fragment() {
 
-    private val viewModel: MoviesListViewModel by viewModels {
+    private val viewModel: MoviesListViewModelImpl by viewModels {
         MovieListViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
     }
     private var listener: MoviesListItemClickListener? = null
@@ -52,7 +52,7 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun loadDataToAdapter(adapter: MoviesListAdapter) {
-        viewModel.movies.observe(viewLifecycleOwner, { movieList ->
+        viewModel.moviesOutput.observe(viewLifecycleOwner, { movieList ->
             adapter.submitList(movieList)
         })
     }

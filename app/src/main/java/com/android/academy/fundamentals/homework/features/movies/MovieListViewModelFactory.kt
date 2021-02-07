@@ -6,5 +6,5 @@ import com.android.academy.fundamentals.homework.data.MovieRepository
 
 class MovieListViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = MoviesListViewModel(repository) as T
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T = MoviesListViewModelImpl(repository) as T
 }
