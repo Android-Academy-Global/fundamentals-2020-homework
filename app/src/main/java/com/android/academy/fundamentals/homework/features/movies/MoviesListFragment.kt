@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.model.Movie
-import kotlinx.coroutines.launch
-
 
 class MoviesListFragment : Fragment() {
 
+    private val viewModel: MoviesListViewModelImpl by viewModels {
+        MovieListViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
+    }
     private var listener: MoviesListItemClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -32,9 +33,7 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +41,6 @@ class MoviesListFragment : Fragment() {
 
         view.findViewById<RecyclerView>(R.id.recycler_movies).apply {
             this.layoutManager = GridLayoutManager(this.context, 2)
-
             val adapter = MoviesListAdapter { movieData ->
                 listener?.onMovieSelected(movieData)
             }
@@ -54,12 +52,9 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun loadDataToAdapter(adapter: MoviesListAdapter) {
-        val repository = (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
-        lifecycleScope.launch {
-            val moviesData = repository.loadMovies()
-
-            adapter.submitList(moviesData)
-        }
+        viewModel.moviesOutput.observe(viewLifecycleOwner, { movieList ->
+            adapter.submitList(movieList)
+        })
     }
 
     override fun onDetach() {
