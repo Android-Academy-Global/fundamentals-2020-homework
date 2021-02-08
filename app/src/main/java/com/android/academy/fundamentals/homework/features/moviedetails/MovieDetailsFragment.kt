@@ -19,11 +19,12 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
+import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.Movie
 
 class MovieDetailsFragment : Fragment() {
 
-    private val viewModel: MovieDetailsViewModel by viewModels {
+    private val viewModel: MovieDetailsViewModelImpl by viewModels {
         MovieDetailsViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
     }
 
@@ -38,7 +39,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
@@ -59,8 +60,11 @@ class MovieDetailsFragment : Fragment() {
 
         viewModel.loadDetails(movieId)
 
-        viewModel.movie.observe(viewLifecycleOwner, { movie ->
-            movie?.let { bindUI(view, it) } ?: showMovieNotFoundError()
+        viewModel.stateOutput.observe(viewLifecycleOwner, { state ->
+            when (state) {
+                is MovieDetailsViewState.MovieLoaded -> bindUI(view, state.movie)
+                MovieDetailsViewState.NoMovie -> showMovieNotFoundError()
+            }.exhaustive
         })
     }
 
@@ -74,6 +78,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun bindUI(view: View, movie: Movie) {
         updateMovieDetailsInfo(movie)
+
         val adapter = view.findViewById<RecyclerView>(R.id.recycler_movies).adapter as ActorsListAdapter
         adapter.submitList(movie.actors)
     }
