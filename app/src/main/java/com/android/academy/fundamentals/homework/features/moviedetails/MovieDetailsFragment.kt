@@ -41,7 +41,11 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
+        arguments?.getString(SHARED_ELEMENT_TRANSITION_NAME)?.let{ sharedElementTransitionName ->
+            view?.transitionName = sharedElementTransitionName
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -127,10 +131,12 @@ class MovieDetailsFragment : Fragment() {
     companion object {
 
         private const val PARAM_MOVIE_ID = "movie_id"
+        private const val SHARED_ELEMENT_TRANSITION_NAME = "shared_element_transition_name"
 
-        fun create(movieId: Int) = MovieDetailsFragment().also {
+        fun create(movieId: Int, sharedElementTransitionName: String) = MovieDetailsFragment().also {
             val args = bundleOf(
-                PARAM_MOVIE_ID to movieId
+                PARAM_MOVIE_ID to movieId,
+                SHARED_ELEMENT_TRANSITION_NAME to sharedElementTransitionName
             )
             it.arguments = args
         }
