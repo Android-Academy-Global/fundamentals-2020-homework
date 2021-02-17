@@ -1,6 +1,7 @@
 package com.android.academy.fundamentals.homework
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.android.academy.fundamentals.homework.data.JsonMovieRepository
 import com.android.academy.fundamentals.homework.data.MovieRepository
@@ -8,6 +9,7 @@ import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.features.movies.MoviesListFragment
 import com.android.academy.fundamentals.homework.model.Movie
+import com.google.android.material.transition.MaterialElevationScale
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.MoviesListItemClickListener,
@@ -25,8 +27,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onMovieSelected(movie: Movie) {
-        routeToMovieDetails(movie)
+    override fun onMovieSelected(movie: Movie, sharedView: View) {
+        routeToMovieDetails(movie, sharedView)
     }
 
     override fun onMovieDeselected() {
@@ -34,21 +36,35 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun routeToMoviesList() {
+        val fragment = MoviesListFragment.create()
+
+        fragment.exitTransition = MaterialElevationScale(false).apply {
+            duration = resources.getInteger(R.integer.movies_motion_duration_large).toLong()
+        }
+        fragment.reenterTransition = MaterialElevationScale(true).apply {
+            duration = resources.getInteger(R.integer.movies_motion_duration_large).toLong()
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
-                MoviesListFragment.create(),
+                fragment,
                 MoviesListFragment::class.java.simpleName
             )
-            .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
             .commit()
     }
 
-    private fun routeToMovieDetails(movie: Movie) {
+    private fun routeToMovieDetails(movie: Movie, sharedElement: View) {
+        val movieDetailTransitionName = getString(R.string.movie_detail_transition_name)
+
+        val fragment = MovieDetailsFragment.create(movie.id)
+
         supportFragmentManager.beginTransaction()
-            .add(
+            .setReorderingAllowed(true)
+            .addSharedElement(sharedElement, movieDetailTransitionName)
+            .replace(
                 R.id.container,
-                MovieDetailsFragment.create(movie.id),
+                fragment,
                 MovieDetailsFragment::class.java.simpleName
             )
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")

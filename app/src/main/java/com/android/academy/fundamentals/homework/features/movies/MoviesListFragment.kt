@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -39,10 +40,13 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         view.findViewById<RecyclerView>(R.id.recycler_movies).apply {
             this.layoutManager = GridLayoutManager(this.context, 2)
-            val adapter = MoviesListAdapter { movieData ->
-                listener?.onMovieSelected(movieData)
+            val adapter = MoviesListAdapter { movieData, sharedView ->
+                listener?.onMovieSelected(movieData, sharedView)
             }
 
             this.adapter = adapter
@@ -64,7 +68,7 @@ class MoviesListFragment : Fragment() {
     }
 
     interface MoviesListItemClickListener {
-        fun onMovieSelected(movie: Movie)
+        fun onMovieSelected(movie: Movie, sharedView: View)
     }
 
     companion object {

@@ -15,7 +15,9 @@ import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.model.Movie
 
-class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
+private const val SHARED_ELEMENT_TRANSITION_NAME_PREFIX = "transition_element_"
+
+class MoviesListAdapter(private val onClickCard: (item: Movie, sharedView: View) -> Unit) :
     ListAdapter<Movie, MoviesListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,7 +49,9 @@ class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
         private val titleText: TextView = itemView.findViewById(R.id.film_name_text)
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
 
-        fun bind(item: Movie, onClickCard: (item: Movie) -> Unit) {
+        fun bind(item: Movie, onClickCard: (item: Movie, sharedElement: View) -> Unit) {
+            itemView.transitionName = SHARED_ELEMENT_TRANSITION_NAME_PREFIX + item.id
+
             movieImage.load(item.imageUrl)
 
             val context = itemView.context
@@ -81,7 +85,7 @@ class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
             }
 
             itemView.setOnClickListener {
-                onClickCard(item)
+                onClickCard(item, itemView)
             }
         }
     }
