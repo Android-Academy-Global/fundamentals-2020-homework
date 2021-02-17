@@ -2,6 +2,7 @@ package com.android.academy.fundamentals.homework.features.moviedetails
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.Movie
+import com.google.android.material.transition.MaterialContainerTransform
 
 class MovieDetailsFragment : Fragment() {
 
@@ -38,14 +40,21 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.container
+            duration = resources.getInteger(R.integer.movies_motion_duration_large).toLong()
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(ContextCompat.getColor(requireContext(), R.color.background_color))
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
-        arguments?.getString(SHARED_ELEMENT_TRANSITION_NAME)?.let{ sharedElementTransitionName ->
-            view?.transitionName = sharedElementTransitionName
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,12 +140,10 @@ class MovieDetailsFragment : Fragment() {
     companion object {
 
         private const val PARAM_MOVIE_ID = "movie_id"
-        private const val SHARED_ELEMENT_TRANSITION_NAME = "shared_element_transition_name"
 
-        fun create(movieId: Int, sharedElementTransitionName: String) = MovieDetailsFragment().also {
+        fun create(movieId: Int) = MovieDetailsFragment().also {
             val args = bundleOf(
                 PARAM_MOVIE_ID to movieId,
-                SHARED_ELEMENT_TRANSITION_NAME to sharedElementTransitionName
             )
             it.arguments = args
         }

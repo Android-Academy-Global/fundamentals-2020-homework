@@ -1,6 +1,5 @@
 package com.android.academy.fundamentals.homework
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,28 +9,12 @@ import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.features.movies.MoviesListFragment
 import com.android.academy.fundamentals.homework.model.Movie
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
-
-private const val ANIMATION_DURATION: Long = 2000
-private const val LONG_ANIMATION_DURATION: Long = 3000
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.MoviesListItemClickListener,
     MovieDetailsFragment.MovieDetailsBackClickListener,
     MovieRepositoryProvider {
-
-    private val movieDetailsSharedElementTransaction = MaterialContainerTransform().apply {
-        scrimColor = Color.TRANSPARENT
-        duration = ANIMATION_DURATION
-    }
-
-    private val movieListSharedElementExitTransition =  MaterialElevationScale(true)
-        .setDuration( LONG_ANIMATION_DURATION)
-
-    private val movieListSharedElementReenterTransition =  MaterialElevationScale(false)
-        .setDuration( LONG_ANIMATION_DURATION)
-
 
     private val jsonMovieRepository = JsonMovieRepository(this)
 
@@ -54,9 +37,13 @@ class MainActivity : AppCompatActivity(),
 
     private fun routeToMoviesList() {
         val fragment = MoviesListFragment.create()
-        fragment.exitTransition = movieListSharedElementExitTransition
 
-        fragment.reenterTransition = movieListSharedElementReenterTransition
+        fragment.exitTransition = MaterialElevationScale(false).apply {
+            duration = resources.getInteger(R.integer.movies_motion_duration_large).toLong()
+        }
+        fragment.reenterTransition = MaterialElevationScale(true).apply {
+            duration = resources.getInteger(R.integer.movies_motion_duration_large).toLong()
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(
@@ -68,15 +55,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun routeToMovieDetails(movie: Movie, sharedElement: View) {
-        val sharedElementTransitionName = sharedElement.transitionName
+        val movieDetailTransitionName = getString(R.string.movie_detail_transition_name)
 
-        val fragment = MovieDetailsFragment.create(movie.id, sharedElementTransitionName)
-
-        fragment.sharedElementEnterTransition = movieDetailsSharedElementTransaction
-        fragment.sharedElementReturnTransition = movieDetailsSharedElementTransaction
+        val fragment = MovieDetailsFragment.create(movie.id)
 
         supportFragmentManager.beginTransaction()
-            .addSharedElement(sharedElement, sharedElementTransitionName)
+            .setReorderingAllowed(true)
+            .addSharedElement(sharedElement, movieDetailTransitionName)
             .replace(
                 R.id.container,
                 fragment,

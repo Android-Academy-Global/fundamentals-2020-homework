@@ -19,4 +19,6 @@
     <string name="error_movie_not_found">Sorry! Something went wrong - we can not find this movie in the system.</string>
     <!-- Movie Details screen -->
 
+    <string name="movie_detail_transition_name">movie_detail</string>
+
 </resources>
