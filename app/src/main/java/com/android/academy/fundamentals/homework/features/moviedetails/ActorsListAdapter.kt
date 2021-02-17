@@ -33,7 +33,13 @@ class ActorsListAdapter : ListAdapter<Actor, ActorsListAdapter.ViewHolder>(DiffC
         private val actorName: TextView = itemView.findViewById(R.id.actor_name)
 
         fun bind(item: Actor) {
-            actorImage.load(item.imageUrl)
+            actorImage.load(
+                item.imageUrl,
+                // https://github.com/coil-kt/coil/issues/650#issuecomment-774776210
+                builder = {
+                    target { result -> actorImage.setImageDrawable(result) }
+                }
+            )
             actorName.text = item.name
         }
     }
