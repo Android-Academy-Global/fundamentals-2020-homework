@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.moviedetails
+package com.android.academy.fundamentals.homework.presentation.features.moviedetails.view
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -20,7 +20,10 @@ import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.extensions.exhaustive
-import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.model.MovieDetails
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewModelFactory
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewModelImpl
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState
 
 class MovieDetailsFragment : Fragment() {
 
@@ -76,7 +79,7 @@ class MovieDetailsFragment : Fragment() {
         ).show()
     }
 
-    private fun bindUI(view: View, movie: Movie) {
+    private fun bindUI(view: View, movie: MovieDetails) {
         updateMovieDetailsInfo(movie)
 
         val adapter = view.findViewById<RecyclerView>(R.id.recycler_movies).adapter as ActorsListAdapter
@@ -89,7 +92,7 @@ class MovieDetailsFragment : Fragment() {
         super.onDetach()
     }
 
-    private fun updateMovieDetailsInfo(movie: Movie) {
+    private fun updateMovieDetailsInfo(movie: MovieDetails) {
         view?.findViewById<ImageView>(R.id.movie_logo_image)?.load(movie.detailImageUrl)
 
         view?.findViewById<TextView>(R.id.movie_age_restrictions_text)?.text =

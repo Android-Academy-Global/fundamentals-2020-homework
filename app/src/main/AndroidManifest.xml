@@ -10,10 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.features.main.MainActivity"
             android:label="@string/movies_list_title">
 
             <intent-filter>

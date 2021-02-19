@@ -1,36 +1,41 @@
-package com.android.academy.fundamentals.homework.data
+package com.android.academy.fundamentals.homework.data.locale.json
 
 import android.content.Context
+import com.android.academy.fundamentals.homework.data.JsonActor
+import com.android.academy.fundamentals.homework.data.JsonGenre
+import com.android.academy.fundamentals.homework.data.JsonMovie
+import com.android.academy.fundamentals.homework.data.locale.LocalDataSource
 import com.android.academy.fundamentals.homework.model.Actor
 import com.android.academy.fundamentals.homework.model.Genre
-import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.model.MovieOld
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-interface MovieRepository {
-    suspend fun loadMovies(): List<Movie>
-    suspend fun loadMovie(movieId: Int): Movie?
-}
+class JsonStorage(private val context: Context): LocalDataSource {
 
-internal class JsonMovieRepository(private val context: Context) : MovieRepository {
     private val jsonFormat = Json { ignoreUnknownKeys = true }
 
-    private var movies: List<Movie>? = null
+    private var movies: List<MovieOld>? = null
 
-    override suspend fun loadMovies(): List<Movie> = withContext(Dispatchers.IO) {
+    override suspend fun loadMovies(): List<MovieOld> = withContext(Dispatchers.IO) {
         val cachedMovies = movies
-        if (cachedMovies != null) {
-            cachedMovies
-        } else {
-            val moviesFromJson = loadMoviesFromJsonFile()
-            movies = moviesFromJson
-            moviesFromJson
-        }
+                if (cachedMovies != null) {
+                    cachedMovies
+                } else {
+                    val moviesFromJson = loadMoviesFromJsonFile()
+                    movies = moviesFromJson
+                    moviesFromJson
+                }
     }
 
-    private suspend fun loadMoviesFromJsonFile(): List<Movie> {
+    override suspend fun loadMovie(movieId: Int): MovieOld? {
+        val cachedMovies = movies ?: loadMovies()
+        return cachedMovies.find { it.id == movieId }
+    }
+
+    private suspend fun loadMoviesFromJsonFile(): List<MovieOld> {
         val genresMap = loadGenres()
         val actorsMap = loadActors()
 
@@ -66,14 +71,14 @@ internal class JsonMovieRepository(private val context: Context) : MovieReposito
         jsonString: String,
         genreData: List<Genre>,
         actors: List<Actor>
-    ): List<Movie> {
+    ): List<MovieOld> {
         val genresMap = genreData.associateBy(Genre::id)
         val actorsMap = actors.associateBy(Actor::id)
 
         val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(jsonString)
 
         return jsonMovies.map { jsonMovie ->
-            Movie(
+            MovieOld(
                 id = jsonMovie.id,
                 title = jsonMovie.title,
                 storyLine = jsonMovie.overview,
@@ -92,11 +97,6 @@ internal class JsonMovieRepository(private val context: Context) : MovieReposito
                 isLiked = false
             )
         }
-    }
-
-    override suspend fun loadMovie(movieId: Int): Movie? {
-        val cachedMovies = movies ?: loadMovies()
-        return cachedMovies.find { it.id == movieId }
     }
 
     private fun <T : Any> T?.orThrow(createThrowable: () -> Throwable): T {

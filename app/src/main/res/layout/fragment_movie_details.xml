@@ -43,10 +43,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/ic_mask"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_logo_image"
-            app:layout_constraintEnd_toEndOf="@+id/movie_logo_image"
-            app:layout_constraintStart_toStartOf="@+id/movie_logo_image"
-            app:layout_constraintTop_toTopOf="@+id/movie_logo_image" />
+            app:layout_constraintBottom_toBottomOf="@id/movie_logo_image"
+            app:layout_constraintEnd_toEndOf="@id/movie_logo_image"
+            app:layout_constraintStart_toStartOf="@id/movie_logo_image"
+            app:layout_constraintTop_toTopOf="@id/movie_logo_image" />
 
         <LinearLayout
             android:id="@+id/back_button_layout"
@@ -57,8 +57,8 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/spacing_2x"
             android:paddingBottom="@dimen/spacing_2x"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -93,8 +93,8 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_body"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/movie_name_text"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
+            app:layout_constraintBottom_toTopOf="@id/movie_name_text"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
             tools:text="13+" />
 
         <TextView
@@ -105,9 +105,9 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_headline"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toTopOf="@+id/movie_logo_image"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toTopOf="@id/movie_logo_image"
             tools:text="Avengers" />
 
         <TextView
@@ -117,9 +117,9 @@
             android:layout_marginTop="@dimen/spacing_1x"
             android:textColor="@color/pink_dark"
             android:textSize="@dimen/text_size_sub_title"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_name_text"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/movie_name_text"
             tools:text="Action, Fiction" />
 
         <ImageView
@@ -128,9 +128,9 @@
             android:layout_height="0dp"
             android:padding="@dimen/spacing_0_5x"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_reviews_count_text"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toTopOf="@+id/movie_reviews_count_text"
+            app:layout_constraintBottom_toBottomOf="@id/movie_reviews_count_text"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toTopOf="@id/movie_reviews_count_text"
             app:tint="@color/pink_light"
             tools:ignore="ContentDescription" />
 
@@ -140,9 +140,9 @@
             android:layout_height="0dp"
             android:padding="@dimen/spacing_0_5x"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-            app:layout_constraintStart_toEndOf="@+id/star1_image"
-            app:layout_constraintTop_toTopOf="@+id/star1_image"
+            app:layout_constraintBottom_toBottomOf="@id/star1_image"
+            app:layout_constraintStart_toEndOf="@id/star1_image"
+            app:layout_constraintTop_toTopOf="@id/star1_image"
             app:tint="@color/pink_light"
             tools:ignore="ContentDescription" />
 
@@ -152,9 +152,9 @@
             android:layout_height="0dp"
             android:padding="@dimen/spacing_0_5x"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-            app:layout_constraintStart_toEndOf="@+id/star2_image"
-            app:layout_constraintTop_toTopOf="@+id/star1_image"
+            app:layout_constraintBottom_toBottomOf="@id/star1_image"
+            app:layout_constraintStart_toEndOf="@id/star2_image"
+            app:layout_constraintTop_toTopOf="@id/star1_image"
             app:tint="@color/pink_light"
             tools:ignore="ContentDescription" />
 
@@ -164,9 +164,9 @@
             android:layout_height="0dp"
             android:padding="@dimen/spacing_0_5x"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-            app:layout_constraintStart_toEndOf="@+id/star3_image"
-            app:layout_constraintTop_toTopOf="@+id/star1_image"
+            app:layout_constraintBottom_toBottomOf="@id/star1_image"
+            app:layout_constraintStart_toEndOf="@id/star3_image"
+            app:layout_constraintTop_toTopOf="@id/star1_image"
             app:tint="@color/pink_light"
             tools:ignore="ContentDescription" />
 
@@ -176,9 +176,9 @@
             android:layout_height="0dp"
             android:padding="@dimen/spacing_0_5x"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-            app:layout_constraintStart_toEndOf="@+id/star4_image"
-            app:layout_constraintTop_toTopOf="@+id/star1_image"
+            app:layout_constraintBottom_toBottomOf="@id/star1_image"
+            app:layout_constraintStart_toEndOf="@id/star4_image"
+            app:layout_constraintTop_toTopOf="@id/star1_image"
             app:tint="@color/gray_dark"
             tools:ignore="ContentDescription" />
 
@@ -192,9 +192,9 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/text_size_sub_title"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/star5_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_tags_text"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/star5_image"
+            app:layout_constraintTop_toBottomOf="@id/movie_tags_text"
             tools:text="125 reviews" />
 
         <TextView
@@ -206,9 +206,9 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_sub_title"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_reviews_count_text" />
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/movie_reviews_count_text" />
 
         <TextView
             android:id="@+id/movie_storyline_text"
@@ -217,9 +217,9 @@
             android:layout_marginTop="@dimen/spacing_1x"
             android:textColor="@color/color_white_transparent"
             android:textSize="@dimen/text_size_sub_title"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_storyline_title_text"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/movie_storyline_title_text"
             tools:text="Some long description about Avengers movie" />
 
         <TextView
@@ -231,16 +231,16 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/text_size_sub_title"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/movie_storyline_text" />
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/movie_storyline_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_movies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline"
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
             app:layout_constraintTop_toBottomOf="@id/movie_cast_title_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,11 @@
-package com.android.academy.fundamentals.homework.features.moviedetails
+package com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.academy.fundamentals.homework.data.MovieRepository
-import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsViewState.MovieLoaded
-import com.android.academy.fundamentals.homework.features.moviedetails.MovieDetailsViewState.NoMovie
-import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.model.MovieDetails
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.MovieLoaded
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.NoMovie
+import com.android.academy.fundamentals.homework.repository.MovieRepository
 import kotlinx.coroutines.launch
 
 internal class MovieDetailsViewModelImpl(private val repository: MovieRepository) : MovieDetailsViewModel() {
@@ -20,7 +20,7 @@ internal class MovieDetailsViewModelImpl(private val repository: MovieRepository
         }
     }
 
-    private fun handleMovieLoadResult(movie: Movie?) {
+    private fun handleMovieLoadResult(movie: MovieDetails?) {
         if (movie != null) {
             stateOutput.postValue(MovieLoaded(movie))
         } else {

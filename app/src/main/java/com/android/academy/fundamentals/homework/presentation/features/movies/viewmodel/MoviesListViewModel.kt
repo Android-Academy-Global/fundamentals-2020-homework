@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.movies
+package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

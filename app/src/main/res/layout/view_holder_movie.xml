@@ -27,10 +27,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/ic_mask"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_image"
-        app:layout_constraintEnd_toEndOf="@+id/movie_image"
-        app:layout_constraintStart_toStartOf="@+id/movie_image"
-        app:layout_constraintTop_toTopOf="@+id/movie_image" />
+        app:layout_constraintBottom_toBottomOf="@id/movie_image"
+        app:layout_constraintEnd_toEndOf="@id/movie_image"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
+        app:layout_constraintTop_toTopOf="@id/movie_image" />
 
     <TextView
         android:id="@+id/pg_text"
@@ -62,7 +62,7 @@
         android:gravity="center_vertical|start"
         android:textColor="@color/pink_dark"
         android:textSize="@dimen/text_size_description"
-        app:layout_constraintBottom_toTopOf="@+id/movie_reviews_count_text"
+        app:layout_constraintBottom_toTopOf="@id/movie_reviews_count_text"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Action, Fiction" />
 
@@ -73,9 +73,9 @@
         android:layout_marginStart="@dimen/spacing_2x"
         android:padding="@dimen/spacing_0_5x"
         android:src="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_reviews_count_text"
+        app:layout_constraintBottom_toBottomOf="@id/movie_reviews_count_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/movie_reviews_count_text"
+        app:layout_constraintTop_toTopOf="@id/movie_reviews_count_text"
         app:tint="@color/pink_light"
         tools:ignore="ContentDescription" />
 
@@ -85,9 +85,9 @@
         android:layout_height="0dp"
         android:padding="@dimen/spacing_0_5x"
         android:src="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-        app:layout_constraintStart_toEndOf="@+id/star1_image"
-        app:layout_constraintTop_toTopOf="@+id/star1_image"
+        app:layout_constraintBottom_toBottomOf="@id/star1_image"
+        app:layout_constraintStart_toEndOf="@id/star1_image"
+        app:layout_constraintTop_toTopOf="@id/star1_image"
         app:tint="@color/pink_light"
         tools:ignore="ContentDescription" />
 
@@ -97,9 +97,9 @@
         android:layout_height="0dp"
         android:padding="@dimen/spacing_0_5x"
         android:src="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-        app:layout_constraintStart_toEndOf="@+id/star2_image"
-        app:layout_constraintTop_toTopOf="@+id/star1_image"
+        app:layout_constraintBottom_toBottomOf="@id/star1_image"
+        app:layout_constraintStart_toEndOf="@id/star2_image"
+        app:layout_constraintTop_toTopOf="@id/star1_image"
         app:tint="@color/pink_light"
         tools:ignore="ContentDescription" />
 
@@ -109,9 +109,9 @@
         android:layout_height="0dp"
         android:padding="@dimen/spacing_0_5x"
         android:src="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-        app:layout_constraintStart_toEndOf="@+id/star3_image"
-        app:layout_constraintTop_toTopOf="@+id/star1_image"
+        app:layout_constraintBottom_toBottomOf="@id/star1_image"
+        app:layout_constraintStart_toEndOf="@id/star3_image"
+        app:layout_constraintTop_toTopOf="@id/star1_image"
         app:tint="@color/pink_light"
         tools:ignore="ContentDescription" />
 
@@ -121,9 +121,9 @@
         android:layout_height="0dp"
         android:padding="@dimen/spacing_0_5x"
         android:src="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/star1_image"
-        app:layout_constraintStart_toEndOf="@+id/star4_image"
-        app:layout_constraintTop_toTopOf="@+id/star1_image"
+        app:layout_constraintBottom_toBottomOf="@id/star1_image"
+        app:layout_constraintStart_toEndOf="@id/star4_image"
+        app:layout_constraintTop_toTopOf="@id/star1_image"
         app:tint="@color/gray_dark"
         tools:ignore="ContentDescription" />
 
@@ -138,9 +138,9 @@
         android:textColor="@color/gray_dark"
         android:textSize="@dimen/text_size_description"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_image"
+        app:layout_constraintBottom_toBottomOf="@id/movie_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/star5_image"
+        app:layout_constraintStart_toEndOf="@id/star5_image"
         tools:text="125 Reviews" />
 
     <TextView
@@ -153,7 +153,7 @@
         android:textSize="@dimen/text_size_sub_title"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_image"
+        app:layout_constraintTop_toBottomOf="@id/movie_image"
         tools:text="Avengers" />
 
     <TextView
@@ -167,6 +167,6 @@
         android:textSize="@dimen/text_size_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/film_name_text" />
+        app:layout_constraintTop_toBottomOf="@id/film_name_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

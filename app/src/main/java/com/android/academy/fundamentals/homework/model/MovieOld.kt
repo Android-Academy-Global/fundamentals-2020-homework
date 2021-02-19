@@ -1,6 +1,6 @@
 package com.android.academy.fundamentals.homework.model
 
-data class Movie(
+data class MovieOld(
     val id: Int,
     val pgAge: Int,
     val title: String,
@@ -9,5 +9,8 @@ data class Movie(
     val reviewCount: Int,
     val isLiked: Boolean,
     val rating: Int,
-    val imageUrl: String
+    val imageUrl: String,
+    val detailImageUrl: String,
+    val storyLine: String,
+    val actors: List<Actor>
 )
