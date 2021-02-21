@@ -41,19 +41,4 @@ interface MovieApiService {
     suspend fun loadMovieCredits(
         @Path("movie_id") movieId: Int
     ): MovieCastResponse
-
-    /**
-     * for receiving information about some people.
-     */
-    @GET("person/{person_id}")
-    suspend fun fetchPersonInfo(
-        @Path("person_id") personId: String
-    ): PersonInfoResponse
-
-    /**
-     * for searching films by user search request. Use it if you want additional task for your experience.
-     */
-    @GET("search/movie")
-    suspend fun searchMovie(
-    ): MovieResponse
 }

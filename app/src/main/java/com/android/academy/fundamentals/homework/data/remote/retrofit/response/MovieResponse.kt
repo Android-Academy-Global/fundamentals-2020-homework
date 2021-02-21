@@ -5,8 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class MovieResponse(
-    @SerialName("page") val page : Int,
-    @SerialName("results") val results : List<ResultResponse>,
-    @SerialName("total_results") val totalResults : Int,
-    @SerialName("total_pages") val totalPages : Int
+    @SerialName("poster_path") val posterPath : String,
+    @SerialName("adult") val adult : Boolean,
+    @SerialName("genre_ids") val genreIds : List<Int>,
+    @SerialName("id") val id : Int,
+    @SerialName("title") val title : String,
+    @SerialName("vote_count") val voteCount : Int,
+    @SerialName("vote_average") val voteAverage : Double
 )
