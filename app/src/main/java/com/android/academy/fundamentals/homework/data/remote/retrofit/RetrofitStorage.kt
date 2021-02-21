@@ -4,8 +4,8 @@ import com.android.academy.fundamentals.homework.data.remote.RemoteDataSource
 import com.android.academy.fundamentals.homework.data.remote.retrofit.response.ImageResponse
 import com.android.academy.fundamentals.homework.model.Actor
 import com.android.academy.fundamentals.homework.model.Genre
-import com.android.academy.fundamentals.homework.model.MovieDetails
 import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.model.MovieDetails
 
 class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
 
@@ -16,16 +16,18 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
     private var profileSize: String? = null
 
     override suspend fun loadMovies(): List<Movie> {
-        imageResponse = api.fetchConfiguration().images
-        baseUrl = imageResponse?.baseUrl
+        imageResponse = api.loadConfiguration().images
+        baseUrl = imageResponse?.secureBaseUrl
         // TODO придумать более изящный вариант
         posterSize = imageResponse?.posterSizes?.find { it == "w500" }
         // TODO придумать более изящный вариант
         backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
         // TODO придумать более изящный вариант
         profileSize = imageResponse?.profileSizes?.find { it == "w185" }
+        val genres = api.loadGenres().genres
         // TODO пагинация
         return api.fetchUpcoming(page = 1).results.map { movie ->
+        return api.loadUpcoming(page = 1).results.map { movie ->
             Movie(
                 id = movie.id,
                 title = movie.title,
@@ -37,12 +39,16 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
                 pgAge = if (movie.adult) 16 else 13,
                 runningTime = 100,
                 isLiked = false,
-                genres = api.fetchGenres().genres.map { genre ->
-                    Genre(
-                        genre.id,
-                        genre.name
-                    )
-                },
+                genres = genres
+                    .filter { genreResponse ->
+                        movie.genreIds.contains(genreResponse.id)
+                    }
+                    .map { genre ->
+                        Genre(
+                            genre.id,
+                            genre.name
+                        )
+                    },
             )
         }
     }

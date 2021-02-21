@@ -11,32 +11,19 @@ interface MovieApiService {
      * method for receiving app configurations, like base image URLs. You need this method for downloading images for films.
      */
     @GET("configuration")
-    suspend fun fetchConfiguration(): ConfigurationResponse
+    suspend fun loadConfiguration(): ConfigurationResponse
 
     /**
      * Get the list of official genres for movies.
      */
     @GET("genre/movie/list")
-    suspend fun fetchGenres(): GenresResponse
-
-    /**
-     * Get a list of movies in theatres. This is a release type query that looks for all movies that have a release
-     * type of 2 or 3 within the specified date range.
-     */
-    @GET("movie/now_playong")
-    suspend fun nowPlayong(): PlayongResponse
-
-    @GET("movie/popular")
-    suspend fun loadPopular(): PopularResponse
-
-    @GET("movie/top_rated")
-    suspend fun loadTopRated(): PopularResponse
+    suspend fun loadGenres(): GenresResponse
 
     /**
      * use one of these methods for receiving films. You can use all of these if you want to show different categories of films.
      */
     @GET("movie/upcoming")
-    suspend fun fetchUpcoming(
+    suspend fun loadUpcoming(
         @Query("page") page: Int
     ): UpComingResponse
     /**
