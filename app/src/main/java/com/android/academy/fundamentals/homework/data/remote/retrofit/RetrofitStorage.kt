@@ -9,6 +9,10 @@ import com.android.academy.fundamentals.homework.model.MovieDetails
 
 class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
 
+    companion object {
+        const val DEFAULT_SIZE = "original"
+    }
+
     private var imageResponse: ImageResponse? = null
     private var baseUrl: String? = null
     private var posterSize: String? = null
@@ -26,14 +30,11 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
         profileSize = imageResponse?.profileSizes?.find { it == "w185" }
         val genres = api.loadGenres().genres
         // TODO пагинация
-        return api.fetchUpcoming(page = 1).results.map { movie ->
         return api.loadUpcoming(page = 1).results.map { movie ->
             Movie(
                 id = movie.id,
                 title = movie.title,
-                imageUrl = baseUrl.orEmpty()
-                    .plus(posterSize.orEmpty())
-                    .plus(movie.posterPath),
+                imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
                 rating = movie.voteAverage.toInt(),
                 reviewCount = movie.voteCount,
                 pgAge = if (movie.adult) 16 else 13,
@@ -55,25 +56,32 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
 
     override suspend fun loadMovie(movieId: Int): MovieDetails {
         val details = api.fetchMovieDetails(movieId)
-        return MovieDetails(id = details.id,
+        return MovieDetails(
+            id = details.id,
             pgAge = if (details.adult) 16 else 13,
             title = details.title,
             genres = details.genres.map { Genre(it.id, it.name) },
             reviewCount = details.revenue,
             isLiked = false,
             rating = details.popularity.toInt(),
-            detailImageUrl = baseUrl.orEmpty()
-                .plus(backdropSize.orEmpty())
-                .plus(details.backdropPath.orEmpty()),
+            detailImageUrl = formingUrl(baseUrl, backdropSize, details.backdropPath),
             storyLine = details.overview.orEmpty(),
             actors = api.fetchMovieCasts(movieId).casts.map { actor ->
                 Actor(
                     id = actor.id,
                     name = actor.name,
-                    imageUrl = baseUrl.orEmpty()
-                        .plus(profileSize.orEmpty())
-                        .plus(actor.profilePath.orEmpty())
+                    imageUrl = formingUrl(baseUrl, profileSize, actor.profilePath)
                 )
-            })
+            }
+        )
+    }
+
+    private fun formingUrl(url: String?, size: String?, path: String?) : String {
+        return if (url == null || path == null) {
+            ""
+        } else {
+            url.plus(size.takeUnless { it.isNullOrEmpty() }?: DEFAULT_SIZE)
+                .plus(path)
+        }
     }
 }
