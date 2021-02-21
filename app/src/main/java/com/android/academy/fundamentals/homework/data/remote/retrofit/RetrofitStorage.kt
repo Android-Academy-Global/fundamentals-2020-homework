@@ -55,7 +55,7 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
     }
 
     override suspend fun loadMovie(movieId: Int): MovieDetails {
-        val details = api.fetchMovieDetails(movieId)
+        val details = api.loadMovieDetails(movieId)
         return MovieDetails(
             id = details.id,
             pgAge = if (details.adult) 16 else 13,
@@ -66,7 +66,7 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
             rating = details.popularity.toInt(),
             detailImageUrl = formingUrl(baseUrl, backdropSize, details.backdropPath),
             storyLine = details.overview.orEmpty(),
-            actors = api.fetchMovieCasts(movieId).casts.map { actor ->
+            actors = api.loadMovieCredits(movieId).casts.map { actor ->
                 Actor(
                     id = actor.id,
                     name = actor.name,

@@ -30,7 +30,7 @@ interface MovieApiService {
      * for receiving movie details information.
      */
     @GET("movie/{movie_id}")
-    suspend fun fetchMovieDetails(
+    suspend fun loadMovieDetails(
         @Path("movie_id") movieId: Int
     ): MovieDetailsResponse
 
@@ -38,7 +38,7 @@ interface MovieApiService {
      * Get the cast and crew for a movie.
      */
     @GET("movie/{movie_id}/credits")
-    suspend fun fetchMovieCasts(
+    suspend fun loadMovieCredits(
         @Path("movie_id") movieId: Int
     ): MovieCastResponse
 
