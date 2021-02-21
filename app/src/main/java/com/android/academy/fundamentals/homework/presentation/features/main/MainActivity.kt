@@ -3,7 +3,6 @@ package com.android.academy.fundamentals.homework.presentation.features.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.data.locale.json.JsonStorage
 import com.android.academy.fundamentals.homework.data.remote.retrofit.RetrofitStorage
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.di.NetworkModule
@@ -19,8 +18,7 @@ class MainActivity : AppCompatActivity(),
 
     private val networkModule = NetworkModule()
     private val remoteDataSource = RetrofitStorage(networkModule.api)
-    private val localDataSource = JsonStorage(this)
-    private val movieRepository = MovieRepositoryImpl(localDataSource, remoteDataSource)
+    private val movieRepository = MovieRepositoryImpl(remoteDataSource)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
