@@ -15,17 +15,6 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
     private var backdropSize: String? = null
     private var profileSize: String? = null
 
-    override suspend fun fetchConfiguration() {
-        val imagesResponse = api.fetchConfiguration().images
-        baseUrl = imagesResponse.secureBaseUrl
-        // TODO придумать более изящный вариант
-        posterSize = imagesResponse.posterSizes.find { it == "w342" }
-        // TODO придумать более изящный вариант
-        backdropSize = imagesResponse.backdropSizes.find { it == "w780" }
-        // TODO придумать более изящный вариант
-        profileSize = imagesResponse.profileSizes.find { it == "w185" }
-    }
-
     override suspend fun loadMovies(): List<Movie> {
         imageResponse = api.fetchConfiguration().images
         baseUrl = imageResponse?.baseUrl
