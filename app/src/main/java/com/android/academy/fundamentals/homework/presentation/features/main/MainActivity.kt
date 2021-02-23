@@ -3,7 +3,7 @@ package com.android.academy.fundamentals.homework.presentation.features.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.academy.fundamentals.homework.R
-import com.android.academy.fundamentals.homework.data.remote.retrofit.RetrofitStorage
+import com.android.academy.fundamentals.homework.data.remote.retrofit.RetrofitDataSource
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.di.NetworkModule
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.view.MovieDetailsFragment
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(),
                      MovieRepositoryProvider {
 
     private val networkModule = NetworkModule()
-    private val remoteDataSource = RetrofitStorage(networkModule.api)
+    private val remoteDataSource = RetrofitDataSource(networkModule.api)
     private val movieRepository = MovieRepositoryImpl(remoteDataSource)
 
     override fun onCreate(savedInstanceState: Bundle?) {

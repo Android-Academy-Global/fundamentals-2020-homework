@@ -7,7 +7,7 @@ import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
 
-class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
+class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     companion object {
         const val DEFAULT_SIZE = "original"
@@ -20,14 +20,7 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
     private var profileSize: String? = null
 
     override suspend fun loadMovies(): List<Movie> {
-        imageResponse = api.loadConfiguration().images
-        baseUrl = imageResponse?.secureBaseUrl
-        // TODO придумать более изящный вариант
-        posterSize = imageResponse?.posterSizes?.find { it == "w500" }
-        // TODO придумать более изящный вариант
-        backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
-        // TODO придумать более изящный вариант
-        profileSize = imageResponse?.profileSizes?.find { it == "w185" }
+        loadConfiguration()
         val genres = api.loadGenres().genres
         // TODO пагинация
         return api.loadUpcoming(page = 1).results.map { movie ->
@@ -55,6 +48,7 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
     }
 
     override suspend fun loadMovie(movieId: Int): MovieDetails {
+        loadConfiguration()
         val details = api.loadMovieDetails(movieId)
         return MovieDetails(
             id = details.id,
@@ -76,9 +70,22 @@ class RetrofitStorage(private val api: MovieApiService) : RemoteDataSource {
         )
     }
 
-    private fun formingUrl(url: String?, size: String?, path: String?) : String {
+    private suspend fun loadConfiguration() {
+        if (imageResponse == null) {
+            imageResponse = api.loadConfiguration().images
+            baseUrl = imageResponse?.secureBaseUrl
+            // TODO придумать более изящный вариант
+            posterSize = imageResponse?.posterSizes?.find { it == "w500" }
+            // TODO придумать более изящный вариант
+            backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
+            // TODO придумать более изящный вариант
+            profileSize = imageResponse?.profileSizes?.find { it == "w185" }
+        }
+    }
+
+    private fun formingUrl(url: String?, size: String?, path: String?) : String? {
         return if (url == null || path == null) {
-            ""
+            null
         } else {
             url.plus(size.takeUnless { it.isNullOrEmpty() }?: DEFAULT_SIZE)
                 .plus(path)

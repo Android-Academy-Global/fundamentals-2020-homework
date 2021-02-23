@@ -9,5 +9,5 @@ data class Movie(
     val reviewCount: Int,
     val isLiked: Boolean,
     val rating: Int,
-    val imageUrl: String
+    val imageUrl: String?
 )
