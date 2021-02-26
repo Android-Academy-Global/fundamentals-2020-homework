@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.moviedetails
+package com.android.academy.fundamentals.homework.presentation.features.moviedetails.view
 
 import android.view.LayoutInflater
 import android.view.View

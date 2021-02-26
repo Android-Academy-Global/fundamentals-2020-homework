@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".MainActivity">
+    tools:context=".presentation.features.main.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,8 +37,8 @@
             android:gravity="center_vertical|start"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/root_left_guideline"
-            app:layout_constraintEnd_toStartOf="@+id/root_right_guideline">
+            app:layout_constraintStart_toEndOf="@id/root_left_guideline"
+            app:layout_constraintEnd_toStartOf="@id/root_right_guideline">
 
             <ImageView
                 android:id="@+id/movies_list_header_icon_image"

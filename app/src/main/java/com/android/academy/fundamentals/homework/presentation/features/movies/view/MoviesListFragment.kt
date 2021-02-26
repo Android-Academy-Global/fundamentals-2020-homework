@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.movies
+package com.android.academy.fundamentals.homework.presentation.features.movies.view
 
 import android.content.Context
 import android.os.Bundle
@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
-import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel.MovieListViewModelFactory
+import com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel.MoviesListViewModelImpl
 
 class MoviesListFragment : Fragment() {
 
     private val viewModel: MoviesListViewModelImpl by viewModels {
         MovieListViewModelFactory((requireActivity() as MovieRepositoryProvider).provideMovieRepository())
     }
+
     private var listener: MoviesListItemClickListener? = null
 
     override fun onAttach(context: Context) {
@@ -64,7 +66,7 @@ class MoviesListFragment : Fragment() {
     }
 
     interface MoviesListItemClickListener {
-        fun onMovieSelected(movie: Movie)
+        fun onMovieSelected(movieId: Int)
     }
 
     companion object {

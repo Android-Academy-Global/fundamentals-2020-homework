@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.features.movies
+package com.android.academy.fundamentals.homework.presentation.features.movies.view
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import coil.load
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.model.Movie
 
-class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
+class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
     ListAdapter<Movie, MoviesListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,8 +47,11 @@ class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
         private val titleText: TextView = itemView.findViewById(R.id.film_name_text)
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
 
-        fun bind(item: Movie, onClickCard: (item: Movie) -> Unit) {
-            movieImage.load(item.imageUrl)
+        fun bind(item: Movie, onClickCard: (movieId: Int) -> Unit) {
+
+            movieImage.load(item.imageUrl) {
+                crossfade(true)
+            }
 
             val context = itemView.context
             pgText.text =
@@ -81,7 +84,7 @@ class MoviesListAdapter(private val onClickCard: (item: Movie) -> Unit) :
             }
 
             itemView.setOnClickListener {
-                onClickCard(item)
+                onClickCard(item.id)
             }
         }
     }
