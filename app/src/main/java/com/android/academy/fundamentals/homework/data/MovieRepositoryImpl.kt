@@ -16,6 +16,6 @@ internal class MovieRepositoryImpl(
     }
 
     override suspend fun loadMovie(movieId: Int): Result<MovieDetails> {
-        return runCatchingResult{remoteDataResource.loadMovie(movieId)}
+        return runCatchingResult { remoteDataResource.loadMovie(movieId) }
     }
 }
