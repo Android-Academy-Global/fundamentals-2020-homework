@@ -2,11 +2,13 @@ package com.android.academy.fundamentals.homework.presentation.features.moviedet
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.academy.fundamentals.homework.data.MovieRepository
 import com.android.academy.fundamentals.homework.model.MovieDetails
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.FailedToLoad
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.MovieLoaded
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.NoMovie
-import com.android.academy.fundamentals.homework.repository.MovieRepository
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 internal class MovieDetailsViewModelImpl(private val repository: MovieRepository) : MovieDetailsViewModel() {
 
@@ -14,9 +16,12 @@ internal class MovieDetailsViewModelImpl(private val repository: MovieRepository
 
     fun loadDetails(movieId: Int) {
         viewModelScope.launch {
-            val movie = repository.loadMovie(movieId)
-
-            handleMovieLoadResult(movie)
+            try {
+                val movie = repository.loadMovie(movieId)
+                handleMovieLoadResult(movie)
+            } catch (e: IOException) {
+                stateOutput.postValue(FailedToLoad(e))
+            }
         }
     }
 

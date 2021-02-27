@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Fundamentals Homework</string>
+    <string name="error_network_failed">Check your network connection!</string>
 
     <!-- Movies list screen -->
     <string name="movies_list_title">Movies app</string>

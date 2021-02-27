@@ -1,4 +1,4 @@
-package com.android.academy.fundamentals.homework.repository
+package com.android.academy.fundamentals.homework.data
 
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails

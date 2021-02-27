@@ -7,11 +7,9 @@ import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
 
-class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
+private const val DEFAULT_SIZE = "original"
 
-    companion object {
-        const val DEFAULT_SIZE = "original"
-    }
+class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     private var imageResponse: ImageResponse? = null
     private var baseUrl: String? = null
@@ -21,6 +19,7 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     override suspend fun loadMovies(): List<Movie> {
         loadConfiguration()
+
         val genres = api.loadGenres().genres
         // TODO пагинация
         return api.loadUpcoming(page = 1).results.map { movie ->
@@ -49,7 +48,9 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     override suspend fun loadMovie(movieId: Int): MovieDetails {
         loadConfiguration()
+
         val details = api.loadMovieDetails(movieId)
+
         return MovieDetails(
             id = details.id,
             pgAge = if (details.adult) 16 else 13,

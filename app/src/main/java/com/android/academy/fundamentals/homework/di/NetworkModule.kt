@@ -2,6 +2,7 @@ package com.android.academy.fundamentals.homework.di
 
 import com.android.academy.fundamentals.homework.data.remote.retrofit.MovieApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -35,6 +36,7 @@ class NetworkModule {
         .addInterceptor(ApiKeyInterceptor())
         .build()
 
+    @ExperimentalSerializationApi
     private val retrofitBuilder = Retrofit.Builder()
         .baseUrl(baseUrl + version)
         .addConverterFactory(json.asConverterFactory(contentType))

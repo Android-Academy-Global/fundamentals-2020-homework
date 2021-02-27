@@ -23,7 +23,9 @@ import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.MovieDetails
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewModelFactory
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewModelImpl
-import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.FailedToLoad
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.MovieLoaded
+import com.android.academy.fundamentals.homework.presentation.features.moviedetails.viewmodel.MovieDetailsViewState.NoMovie
 
 class MovieDetailsFragment : Fragment() {
 
@@ -65,8 +67,13 @@ class MovieDetailsFragment : Fragment() {
 
         viewModel.stateOutput.observe(viewLifecycleOwner, { state ->
             when (state) {
-                is MovieDetailsViewState.MovieLoaded -> bindUI(view, state.movie)
-                MovieDetailsViewState.NoMovie -> showMovieNotFoundError()
+                is MovieLoaded -> bindUI(view, state.movie)
+                NoMovie -> showMovieNotFoundError()
+                is FailedToLoad -> Toast.makeText(
+                    requireContext(),
+                    R.string.error_network_failed,
+                    Toast.LENGTH_SHORT
+                ).show()
             }.exhaustive
         })
     }
