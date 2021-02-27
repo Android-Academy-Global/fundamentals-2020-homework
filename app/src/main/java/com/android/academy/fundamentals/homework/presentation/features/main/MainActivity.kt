@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity(),
                 MoviesListFragment.create(),
                 MoviesListFragment::class.java.simpleName
             )
-            .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
             .commit()
     }
 

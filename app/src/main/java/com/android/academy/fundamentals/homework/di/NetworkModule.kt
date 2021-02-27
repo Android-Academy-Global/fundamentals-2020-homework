@@ -36,7 +36,6 @@ class NetworkModule {
         .addInterceptor(ApiKeyInterceptor())
         .build()
 
-    @ExperimentalSerializationApi
     private val retrofitBuilder = Retrofit.Builder()
         .baseUrl(baseUrl + version)
         .addConverterFactory(json.asConverterFactory(contentType))

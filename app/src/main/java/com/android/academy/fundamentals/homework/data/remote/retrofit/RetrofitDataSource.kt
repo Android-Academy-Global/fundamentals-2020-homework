@@ -9,6 +9,9 @@ import com.android.academy.fundamentals.homework.model.MovieDetails
 
 private const val DEFAULT_SIZE = "original"
 
+private const val ADULT_AGE = 16
+private const val CHILD_AGE = 13
+
 class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     private var imageResponse: ImageResponse? = null
@@ -29,19 +32,12 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
                 imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
                 rating = movie.voteAverage.toInt(),
                 reviewCount = movie.voteCount,
-                pgAge = if (movie.adult) 16 else 13,
+                pgAge = if (movie.adult) ADULT_AGE else CHILD_AGE,
                 runningTime = 100,
                 isLiked = false,
                 genres = genres
-                    .filter { genreResponse ->
-                        movie.genreIds.contains(genreResponse.id)
-                    }
-                    .map { genre ->
-                        Genre(
-                            genre.id,
-                            genre.name
-                        )
-                    },
+                    .filter { genreResponse -> movie.genreIds.contains(genreResponse.id) }
+                    .map { genre -> Genre(genre.id, genre.name) },
             )
         }
     }
@@ -53,7 +49,7 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
         return MovieDetails(
             id = details.id,
-            pgAge = if (details.adult) 16 else 13,
+            pgAge = if (details.adult) ADULT_AGE else CHILD_AGE,
             title = details.title,
             genres = details.genres.map { Genre(it.id, it.name) },
             reviewCount = details.revenue,
@@ -71,24 +67,25 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
         )
     }
 
+    @Synchronized
     private suspend fun loadConfiguration() {
-        if (imageResponse == null) {
-            imageResponse = api.loadConfiguration().images
-            baseUrl = imageResponse?.secureBaseUrl
-            // TODO придумать более изящный вариант
-            posterSize = imageResponse?.posterSizes?.find { it == "w500" }
-            // TODO придумать более изящный вариант
-            backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
-            // TODO придумать более изящный вариант
-            profileSize = imageResponse?.profileSizes?.find { it == "w185" }
-        }
+        if (imageResponse != null) return
+
+        imageResponse = api.loadConfiguration().images
+        baseUrl = imageResponse?.secureBaseUrl
+        // TODO придумать более изящный вариант
+        posterSize = imageResponse?.posterSizes?.find { it == "w500" }
+        // TODO придумать более изящный вариант
+        backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
+        // TODO придумать более изящный вариант
+        profileSize = imageResponse?.profileSizes?.find { it == "w185" }
     }
 
-    private fun formingUrl(url: String?, size: String?, path: String?) : String? {
+    private fun formingUrl(url: String?, size: String?, path: String?): String? {
         return if (url == null || path == null) {
             null
         } else {
-            url.plus(size.takeUnless { it.isNullOrEmpty() }?: DEFAULT_SIZE)
+            url.plus(size.takeUnless { it.isNullOrEmpty() } ?: DEFAULT_SIZE)
                 .plus(path)
         }
     }
