@@ -9,9 +9,9 @@ import com.android.academy.fundamentals.homework.model.MovieDetails
 private const val ADULT_AGE = 16
 private const val CHILD_AGE = 13
 
-class RetrofitDataSource(
+internal class RetrofitDataSource(
     private val api: MovieApiService,
-    private val imageUrlLoader: ImageUrlLoader,
+    private val imageUrlAppender: ImageUrlAppender,
 ) : RemoteDataSource {
 
     override suspend fun loadMovies(): List<Movie> {
@@ -21,7 +21,7 @@ class RetrofitDataSource(
             Movie(
                 id = movie.id,
                 title = movie.title,
-                imageUrl = imageUrlLoader.getMoviePosterImageUrl(movie.posterPath),
+                imageUrl = imageUrlAppender.getMoviePosterImageUrl(movie.posterPath),
                 rating = movie.voteAverage.toInt(),
                 reviewCount = movie.voteCount,
                 pgAge = movie.adult.toSpectatorAge(),
@@ -45,13 +45,13 @@ class RetrofitDataSource(
             reviewCount = details.revenue,
             isLiked = false,
             rating = details.popularity.toInt(),
-            detailImageUrl = imageUrlLoader.getDetailImageUrl(details.backdropPath),
+            detailImageUrl = imageUrlAppender.getDetailImageUrl(details.backdropPath),
             storyLine = details.overview.orEmpty(),
             actors = api.loadMovieCredits(movieId).casts.map { actor ->
                 Actor(
                     id = actor.id,
                     name = actor.name,
-                    imageUrl = imageUrlLoader.getActorImageUrl(actor.profilePath)
+                    imageUrl = imageUrlAppender.getActorImageUrl(actor.profilePath)
                 )
             }
         )
