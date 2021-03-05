@@ -7,11 +7,12 @@ import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
 
-class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
+private const val DEFAULT_SIZE = "original"
 
-    companion object {
-        const val DEFAULT_SIZE = "original"
-    }
+private const val ADULT_AGE = 16
+private const val CHILD_AGE = 13
+
+class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     private var imageResponse: ImageResponse? = null
     private var baseUrl: String? = null
@@ -21,6 +22,7 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     override suspend fun loadMovies(): List<Movie> {
         loadConfiguration()
+
         val genres = api.loadGenres().genres
         // TODO пагинация
         return api.loadUpcoming(page = 1).results.map { movie ->
@@ -30,29 +32,24 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
                 imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
                 rating = movie.voteAverage.toInt(),
                 reviewCount = movie.voteCount,
-                pgAge = if (movie.adult) 16 else 13,
+                pgAge = movie.adult.toSpectatorAge(),
                 runningTime = 100,
                 isLiked = false,
                 genres = genres
-                    .filter { genreResponse ->
-                        movie.genreIds.contains(genreResponse.id)
-                    }
-                    .map { genre ->
-                        Genre(
-                            genre.id,
-                            genre.name
-                        )
-                    },
+                    .filter { genreResponse -> movie.genreIds.contains(genreResponse.id) }
+                    .map { genre -> Genre(genre.id, genre.name) },
             )
         }
     }
 
     override suspend fun loadMovie(movieId: Int): MovieDetails {
         loadConfiguration()
+
         val details = api.loadMovieDetails(movieId)
+
         return MovieDetails(
             id = details.id,
-            pgAge = if (details.adult) 16 else 13,
+            pgAge = details.adult.toSpectatorAge(),
             title = details.title,
             genres = details.genres.map { Genre(it.id, it.name) },
             reviewCount = details.revenue,
@@ -70,24 +67,27 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
         )
     }
 
+    private fun Boolean.toSpectatorAge(): Int = if (this) ADULT_AGE else CHILD_AGE
+
+    @Synchronized
     private suspend fun loadConfiguration() {
-        if (imageResponse == null) {
-            imageResponse = api.loadConfiguration().images
-            baseUrl = imageResponse?.secureBaseUrl
-            // TODO придумать более изящный вариант
-            posterSize = imageResponse?.posterSizes?.find { it == "w500" }
-            // TODO придумать более изящный вариант
-            backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
-            // TODO придумать более изящный вариант
-            profileSize = imageResponse?.profileSizes?.find { it == "w185" }
-        }
+        if (imageResponse != null) return
+
+        imageResponse = api.loadConfiguration().images
+        baseUrl = imageResponse?.secureBaseUrl
+        // TODO придумать более изящный вариант
+        posterSize = imageResponse?.posterSizes?.find { it == "w500" }
+        // TODO придумать более изящный вариант
+        backdropSize = imageResponse?.backdropSizes?.find { it == "w780" }
+        // TODO придумать более изящный вариант
+        profileSize = imageResponse?.profileSizes?.find { it == "w185" }
     }
 
-    private fun formingUrl(url: String?, size: String?, path: String?) : String? {
+    private fun formingUrl(url: String?, size: String?, path: String?): String? {
         return if (url == null || path == null) {
             null
         } else {
-            url.plus(size.takeUnless { it.isNullOrEmpty() }?: DEFAULT_SIZE)
+            url.plus(size.takeUnless { it.isNullOrEmpty() } ?: DEFAULT_SIZE)
                 .plus(path)
         }
     }

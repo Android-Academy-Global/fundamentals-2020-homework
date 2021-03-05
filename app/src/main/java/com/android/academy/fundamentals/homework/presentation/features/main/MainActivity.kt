@@ -8,10 +8,10 @@ import com.android.academy.fundamentals.homework.di.MovieRepositoryProvider
 import com.android.academy.fundamentals.homework.di.NetworkModule
 import com.android.academy.fundamentals.homework.presentation.features.moviedetails.view.MovieDetailsFragment
 import com.android.academy.fundamentals.homework.presentation.features.movies.view.MoviesListFragment
-import com.android.academy.fundamentals.homework.repository.MovieRepository
-import com.android.academy.fundamentals.homework.repository.MovieRepositoryImpl
+import com.android.academy.fundamentals.homework.domain.MovieRepository
+import com.android.academy.fundamentals.homework.data.MovieRepositoryImpl
 
-class MainActivity : AppCompatActivity(),
+internal class MainActivity : AppCompatActivity(),
                      MoviesListFragment.MoviesListItemClickListener,
                      MovieDetailsFragment.MovieDetailsBackClickListener,
                      MovieRepositoryProvider {
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity(),
                 MoviesListFragment.create(),
                 MoviesListFragment::class.java.simpleName
             )
-            .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
             .commit()
     }
 
