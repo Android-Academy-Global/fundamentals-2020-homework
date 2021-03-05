@@ -32,7 +32,7 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
                 imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
                 rating = movie.voteAverage.toInt(),
                 reviewCount = movie.voteCount,
-                pgAge = if (movie.adult) ADULT_AGE else CHILD_AGE,
+                pgAge = movie.adult.toSpectatorAge(),
                 runningTime = 100,
                 isLiked = false,
                 genres = genres
@@ -49,7 +49,7 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
         return MovieDetails(
             id = details.id,
-            pgAge = if (details.adult) ADULT_AGE else CHILD_AGE,
+            pgAge = details.adult.toSpectatorAge(),
             title = details.title,
             genres = details.genres.map { Genre(it.id, it.name) },
             reviewCount = details.revenue,
@@ -66,6 +66,8 @@ class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
             }
         )
     }
+
+    private fun Boolean.toSpectatorAge(): Int = if (this) ADULT_AGE else CHILD_AGE
 
     @Synchronized
     private suspend fun loadConfiguration() {
