@@ -20,18 +20,12 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * Первые тесты: отображение списка, ошибка
+ * Рефакторинг тестов
  *
- * Пишем просто в лоб, дорабатывать будем позже.
+ * Уменьшим количество мест, которые подвержены изменениям в коде.
  * Что можно продемонстрировать:
- * - junit4, сейчас актуален junit5 (но есть нюанс)
- * - Как добавить первый тест (директории)
- * - Правила именования класса для тестов
- * - Именование теста
- * - Структура теста G-W-T
- * - Тестировать тест (проверять на заведомо ложном значении)
- * - Тестироание корутин, переопределение диспетчера
- * - moviesStateOutput.postValue (InstantTaskExecutorRule)
+ * - Фабричные методы, чтобы упросить инициализацию и избавиться от дублирования.
+ * - Доработать стабы, убрать дублирование.
  */
 @ExperimentalCoroutinesApi
 internal class MoviesListViewModelImplTest {
@@ -55,26 +49,47 @@ internal class MoviesListViewModelImplTest {
     @Test
     fun `moviesStateOutput by default returns movies list`() = runBlockingTest {
         val movies = listOf(
-            Movie(id = 671039, title = "Bronx", reviewCount = 200, isLiked = false, rating = 0, pgAge = 0, genres = emptyList(), runningTime = 0, imageUrl = null),
-            Movie(id = 724989, title = "Hard Kill", reviewCount = 151, isLiked = false, rating = 0, pgAge = 0, genres = emptyList(), runningTime = 0, imageUrl = null),
-            Movie(id = 400160, title = "The SpongeBob Movie: Sponge on the Run", reviewCount = 1395, isLiked = false, rating = 0, pgAge = 0, genres = emptyList(), runningTime = 0, imageUrl = null),
+            createMovie(id = 671039, title = "Bronx", reviewCount = 200),
+            createMovie(id = 724989, title = "Hard Kill", reviewCount = 151),
+            createMovie(id = 400160, title = "The SpongeBob Movie: Sponge on the Run", reviewCount = 1395),
         )
         val repository = StubMovieRepository(movies = movies)
 
-        val viewModel = MoviesListViewModelImpl(repository)
+        val viewModel = createMoviesListViewModel(repository)
 
-        val state = viewModel.moviesStateOutput.value
-        assertThat((state as MoviesListViewState.MoviesLoaded).movies).isEqualTo(movies)
+        val state = viewModel.moviesStateOutput.value as MoviesListViewState.MoviesLoaded
+        assertThat(state.movies).isEqualTo(movies)
     }
 
     @Test
     fun `moviesStateOutput on error returns failure`() = runBlockingTest {
         val repository = FailureMovieRepository(IllegalStateException())
 
-        val viewModel = MoviesListViewModelImpl(repository)
+        val viewModel = createMoviesListViewModel(repository)
 
-        val state = viewModel.moviesStateOutput.value
-        assertThat((state as MoviesListViewState.FailedToLoad).exception).isInstanceOf(IllegalStateException::class.java)
+        val state = viewModel.moviesStateOutput.value as MoviesListViewState.FailedToLoad
+        assertThat(state.exception).isInstanceOf(IllegalStateException::class.java)
+    }
+
+    private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
+        MoviesListViewModelImpl(repository)
+
+    private fun createMovie(
+        id: Int = 0,
+        title: String = "",
+        reviewCount: Int = 0
+    ): Movie {
+        return Movie(
+            id = id,
+            title = title,
+            reviewCount = reviewCount,
+            isLiked = false,
+            rating = 0,
+            pgAge = 0,
+            genres = emptyList(),
+            runningTime = 0,
+            imageUrl = null
+        )
     }
 
     class StubMovieRepository(
@@ -85,9 +100,9 @@ internal class MoviesListViewModelImplTest {
     }
 
     class FailureMovieRepository(
-        val throwable: Throwable
-    ) : MovieRepository {
+        val throwable: Throwable,
+        private val origin: MovieRepository = StubMovieRepository()
+    ) : MovieRepository by origin {
         override suspend fun loadMovies(): Result<List<Movie>> = Failure(throwable)
-        override suspend fun loadMovie(movieId: Int): Result<MovieDetails> = TODO("Not yet implemented")
     }
 }
