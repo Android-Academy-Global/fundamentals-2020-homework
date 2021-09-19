@@ -20,12 +20,14 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * Рефакторинг тестов
+ * Сортировка
  *
- * Уменьшим количество мест, которые подвержены изменениям в коде.
+ * Покажем как реагирует тест на изменение требований. Добавим сортировку.
  * Что можно продемонстрировать:
- * - Фабричные методы, чтобы упросить инициализацию и избавиться от дублирования.
- * - Доработать стабы, убрать дублирование.
+ * - Доработаем метод, покажем, что сломался тест. Можно сделать наоборот и сперва модифицировать тест.
+ * - Можно сравнивать отдельные признаки объектов (вывести порядок имен)
+ * - Показать что возвращает assert функция
+ * - Показать разные варианты матчеров
  */
 @ExperimentalCoroutinesApi
 internal class MoviesListViewModelImplTest {
@@ -47,7 +49,7 @@ internal class MoviesListViewModelImplTest {
     }
 
     @Test
-    fun `moviesStateOutput by default returns movies list`() = runBlockingTest {
+    fun `moviesStateOutput by default returns movies sorted by reviewCount`() = runBlockingTest {
         val movies = listOf(
             createMovie(id = 671039, title = "Bronx", reviewCount = 200),
             createMovie(id = 724989, title = "Hard Kill", reviewCount = 151),
@@ -58,7 +60,11 @@ internal class MoviesListViewModelImplTest {
         val viewModel = createMoviesListViewModel(repository)
 
         val state = viewModel.moviesStateOutput.value as MoviesListViewState.MoviesLoaded
-        assertThat(state.movies).isEqualTo(movies)
+        assertThat(state.movies.map { it.title }).containsExactly(
+            "The SpongeBob Movie: Sponge on the Run",
+            "Bronx",
+            "Hard Kill",
+        )
     }
 
     @Test
