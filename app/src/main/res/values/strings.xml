@@ -20,4 +20,7 @@
     <string name="error_movie_not_found">Sorry! Something went wrong - we can not find this movie in the system.</string>
     <!-- Movie Details screen -->
 
+    <string name="movie_last_review_today">today</string>
+    <string name="movie_last_review_yesterday">yesterday</string>
+    <string name="movie_last_review_long_ago">long ago</string>
 </resources>
