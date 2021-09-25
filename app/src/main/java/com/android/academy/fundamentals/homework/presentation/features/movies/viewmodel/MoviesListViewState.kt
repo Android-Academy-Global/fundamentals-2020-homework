@@ -4,5 +4,5 @@ internal sealed class MoviesListViewState {
 
     data class MoviesLoaded(val movies: List<MoviesListItem>) : MoviesListViewState()
 
-    data class FailedToLoad(val exception: Throwable) : MoviesListViewState()
+    object FailedToLoad : MoviesListViewState()
 }
