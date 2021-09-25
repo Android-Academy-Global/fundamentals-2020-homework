@@ -26,6 +26,7 @@ import org.junit.Test
  * Что можно продемонстрировать:
  * - Фабричные методы, чтобы упросить инициализацию и избавиться от дублирования.
  * - Доработать стабы, убрать дублирование.
+ * - После рефакторинга легко добавить второй тест (Ctrl+C + Ctrl+V)
  */
 @ExperimentalCoroutinesApi
 internal class MoviesListViewModelImplTest {
