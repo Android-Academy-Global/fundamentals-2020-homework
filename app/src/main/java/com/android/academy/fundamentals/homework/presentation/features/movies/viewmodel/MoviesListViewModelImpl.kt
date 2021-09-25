@@ -28,4 +28,18 @@ internal class MoviesListViewModelImpl(private val repository: MovieRepository) 
             is Failure -> moviesStateOutput.postValue(MoviesListViewState.FailedToLoad(result.exception))
         }.exhaustive
     }
+
+    private fun Movie.toListItem(): MoviesListItem {
+        return MoviesListItem(
+            id = this.id,
+            pgAge = this.pgAge,
+            title = this.title,
+            genres = this.genres,
+            runningTime = this.runningTime,
+            reviewCount = this.reviewCount,
+            isLiked = this.isLiked,
+            rating = this.rating,
+            imageUrl = this.imageUrl,
+        )
+    }
 }
