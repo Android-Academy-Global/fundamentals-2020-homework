@@ -1,6 +1,7 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
 import com.android.academy.fundamentals.homework.domain.MovieRepository
@@ -66,10 +67,27 @@ internal class MoviesListViewModelImplTest {
         assertThat((state as MoviesListViewState.MoviesLoaded).movies).isEqualTo(movies)
     }
 
+    @Test
+    fun `moviesStateOutput on error returns failure`() = runBlockingTest {
+        val repository = FailureMovieRepository(IllegalStateException())
+
+        val viewModel = MoviesListViewModelImpl(repository)
+
+        val state = viewModel.moviesStateOutput.value
+        assertThat((state as MoviesListViewState.FailedToLoad).exception).isInstanceOf(IllegalStateException::class.java)
+    }
+
     class StubMovieRepository(
         val movies: List<Movie> = emptyList()
     ) : MovieRepository {
         override suspend fun loadMovies(): Result<List<Movie>> = Success(movies)
+        override suspend fun loadMovie(movieId: Int): Result<MovieDetails> = TODO("Not yet implemented")
+    }
+
+    class FailureMovieRepository(
+        val throwable: Throwable
+    ) : MovieRepository {
+        override suspend fun loadMovies(): Result<List<Movie>> = Failure(throwable)
         override suspend fun loadMovie(movieId: Int): Result<MovieDetails> = TODO("Not yet implemented")
     }
 }
