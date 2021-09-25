@@ -9,5 +9,7 @@ data class Movie(
     val reviewCount: Int,
     val isLiked: Boolean,
     val rating: Int,
-    val imageUrl: String?
+    val imageUrl: String?,
+    // TODO uncomment next line for workshop
+//    val releaseDate: DateTime
 )

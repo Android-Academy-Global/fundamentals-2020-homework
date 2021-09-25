@@ -30,6 +30,8 @@ internal class RetrofitDataSource(
                 genres = genres
                     .filter { genreResponse -> movie.genreIds.contains(genreResponse.id) }
                     .map { genre -> Genre(genre.id, genre.name) },
+                // TODO uncomment next line for workshop
+//                releaseDate = DateTime(movie.releaseDate)
             )
         }
     }

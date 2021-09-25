@@ -11,5 +11,6 @@ class MovieResponse(
     @SerialName("id") val id : Int,
     @SerialName("title") val title : String,
     @SerialName("vote_count") val voteCount : Int,
-    @SerialName("vote_average") val voteAverage : Double
+    @SerialName("vote_average") val voteAverage : Double,
+    @SerialName("release_date") val releaseDate: String
 )

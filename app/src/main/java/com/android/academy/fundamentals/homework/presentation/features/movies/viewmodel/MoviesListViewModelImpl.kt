@@ -24,7 +24,7 @@ internal class MoviesListViewModelImpl(private val repository: MovieRepository) 
 
     private fun handleResult(result: Result<List<Movie>>) {
         when (result) {
-            is Success -> moviesStateOutput.postValue(MoviesListViewState.MoviesLoaded(result.data))
+            is Success -> moviesStateOutput.postValue(MoviesListViewState.MoviesLoaded(result.data.map { it.toListItem() }))
             is Failure -> moviesStateOutput.postValue(MoviesListViewState.FailedToLoad(result.exception))
         }.exhaustive
     }
