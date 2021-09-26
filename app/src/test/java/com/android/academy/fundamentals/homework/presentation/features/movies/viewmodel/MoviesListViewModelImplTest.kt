@@ -117,7 +117,7 @@ class MoviesListViewModelImplTest {
 
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository)
+        MoviesListViewModelImpl(repository, currentTimeStub)
 
     private fun createMovie(
         id: Int = 0,
@@ -141,7 +141,7 @@ class MoviesListViewModelImplTest {
             genres = emptyList(),
             runningTime = 0,
             imageUrl = null,
-            releaseDate = LocalDate.now()
+            releaseDate = releaseDate
         )
     }
 
