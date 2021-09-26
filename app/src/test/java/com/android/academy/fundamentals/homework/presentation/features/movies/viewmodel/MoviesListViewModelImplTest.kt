@@ -43,7 +43,7 @@ class MoviesListViewModelImplTest {
                 reviewCount = 151,
                 genres = listOf(Genre(1, "test")),
                 rating = 55,
-                releaseDate = today.minusDays(2)
+                releaseDate = today.minusDays(66)
             )
         )
         val repository = StubMovieRepository()
@@ -78,6 +78,11 @@ class MoviesListViewModelImplTest {
                     reviewCount = 151,
                     genres = listOf(Genre(1, "test")),
                     rating = 55,
+                    releaseAt = NativeText.Plural(
+                        R.plurals.movies_list_days_after_release,
+                        66,
+                        listOf(66)
+                    )
                 ),
             ),
             state.movies
