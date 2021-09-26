@@ -10,6 +10,7 @@ import com.android.academy.fundamentals.homework.model.MovieDetails
 import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import org.junit.Rule
 import org.junit.Test
+import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -125,7 +126,8 @@ class MoviesListViewModelImplTest {
             pgAge = 0,
             genres = emptyList(),
             runningTime = 0,
-            imageUrl = null
+            imageUrl = null,
+            releaseDate = LocalDate.now()
         )
     }
 
