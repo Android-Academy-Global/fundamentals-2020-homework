@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import kotlinx.coroutines.launch
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Rule
 import org.junit.Test
 
 class SimpleViewModel : ViewModel() {
@@ -20,10 +22,13 @@ class SimpleViewModel : ViewModel() {
 }
 
 class SimpleViewModelTest {
+
+    @get:Rule
+    val viewModelRules = viewModelTestingRules()
+
     @Test
     fun `initialization flow`() {
         val simpleViewModel = SimpleViewModel()
         assertThat(simpleViewModel.example.value).isEqualTo(5)
     }
 }
-
