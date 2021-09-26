@@ -1,8 +1,11 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
+import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
+import com.android.academy.fundamentals.homework.common.text.NativeText
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProviderStub
 import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
@@ -18,6 +21,9 @@ class MoviesListViewModelImplTest {
     @get:Rule
     val viewModelRule = viewModelTestingRules()
 
+    private val today = LocalDate.of(2021, 5, 25)
+    private val currentTimeStub = CurrentTimeProviderStub(today.atTime(1, 1, 1))
+
     @Test
     fun `moviesStateOutput by default returns movies list`() {
         val movies = listOf(
@@ -29,6 +35,7 @@ class MoviesListViewModelImplTest {
                 pgAge = 15,
                 runningTime = 55,
                 imageUrl = "test url",
+                releaseDate = today.plusDays(2)
             ),
             createMovie(
                 id = 724989,
@@ -36,6 +43,7 @@ class MoviesListViewModelImplTest {
                 reviewCount = 151,
                 genres = listOf(Genre(1, "test")),
                 rating = 55,
+                releaseDate = today.minusDays(2)
             )
         )
         val repository = StubMovieRepository()
@@ -57,7 +65,12 @@ class MoviesListViewModelImplTest {
                     isLiked = true,
                     pgAge = 15,
                     runningTime = 55,
-                    imageUrl = "test url"
+                    imageUrl = "test url",
+                    releaseAt = NativeText.Plural(
+                        R.plurals.movies_list_days_before_release,
+                        2,
+                        listOf(2)
+                    )
                 ),
                 createMovieListItem(
                     id = 724989,
@@ -115,7 +128,8 @@ class MoviesListViewModelImplTest {
         pgAge: Int = 0,
         genres: List<Genre> = emptyList(),
         runningTime: Int = 0,
-        imageUrl: String? = null
+        imageUrl: String? = null,
+        releaseDate: LocalDate = LocalDate.of(2021, 1, 1)
     ): Movie {
         return Movie(
             id = id,
@@ -140,7 +154,8 @@ class MoviesListViewModelImplTest {
         pgAge: Int = 0,
         genres: List<Genre> = emptyList(),
         runningTime: Int = 0,
-        imageUrl: String? = null
+        imageUrl: String? = null,
+        releaseAt: NativeText = NativeText.Simple("")
     ): MoviesListItem {
         return MoviesListItem(
             id = id,
@@ -151,7 +166,8 @@ class MoviesListViewModelImplTest {
             pgAge = 0,
             genres = emptyList(),
             runningTime = 0,
-            imageUrl = null
+            imageUrl = null,
+            releaseAt = releaseAt
         )
     }
 }

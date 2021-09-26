@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
+import com.android.academy.fundamentals.homework.common.text.NativeText
 import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.Movie
@@ -40,6 +41,7 @@ internal class MoviesListViewModelImpl(private val repository: MovieRepository) 
             isLiked = this.isLiked,
             rating = this.rating,
             imageUrl = this.imageUrl,
+            releaseAt = NativeText.Simple(""),
         )
     }
 }
