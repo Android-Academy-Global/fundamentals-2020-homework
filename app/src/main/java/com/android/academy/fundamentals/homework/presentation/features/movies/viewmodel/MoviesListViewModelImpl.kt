@@ -64,6 +64,14 @@ internal class MoviesListViewModelImpl(
                     listOf(daysBeforeRelease)
                 )
             }
+            releaseDate.isBefore(currentDate) -> {
+                val daysAfterRelease = ChronoUnit.DAYS.between(releaseDate, currentDate).toInt()
+                NativeText.Plural(
+                    R.plurals.movies_list_days_after_release,
+                    daysAfterRelease,
+                    listOf(daysAfterRelease)
+                )
+            }
             else -> NativeText.Simple("")
         }
     }
