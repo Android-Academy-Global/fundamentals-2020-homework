@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.common.text.toCharSequence
 import com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel.MoviesListItem
 
 class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
@@ -46,6 +47,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
         private val reviewsText: TextView = itemView.findViewById(R.id.movie_reviews_count_text)
         private val titleText: TextView = itemView.findViewById(R.id.film_name_text)
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
+        private val releaseAt: TextView = itemView.findViewById(R.id.film_release_text)
 
         fun bind(item: MoviesListItem, onClickCard: (movieId: Int) -> Unit) {
 
@@ -61,6 +63,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
                 context.getString(R.string.movies_list_reviews_template, item.reviewCount)
             titleText.text = item.title
             movieLenText.text = context.getString(R.string.movies_list_film_time, item.runningTime)
+            releaseAt.text = item.releaseAt.toCharSequence(context)
 
             val likeColor = if (item.isLiked) {
                 R.color.pink_light
