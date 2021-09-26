@@ -57,7 +57,7 @@ internal class MoviesListViewModelImpl(
         val currentDate = currentTimeProvider.getCurrentTime().toLocalDate()
         return when {
             releaseDate.isAfter(currentDate) -> {
-                val daysBeforeRelease = ChronoUnit.DAYS.between(currentDate, releaseDate).toInt()
+                val daysBeforeRelease = daysBetween(currentDate, releaseDate)
                 NativeText.Plural(
                     R.plurals.movies_list_days_before_release,
                     daysBeforeRelease,
@@ -65,7 +65,7 @@ internal class MoviesListViewModelImpl(
                 )
             }
             releaseDate.isBefore(currentDate) -> {
-                val daysAfterRelease = ChronoUnit.DAYS.between(releaseDate, currentDate).toInt()
+                val daysAfterRelease = daysBetween(releaseDate, currentDate)
                 NativeText.Plural(
                     R.plurals.movies_list_days_after_release,
                     daysAfterRelease,
@@ -75,4 +75,9 @@ internal class MoviesListViewModelImpl(
             else -> NativeText.Resource(R.string.movies_list_released_today)
         }
     }
+
+    private fun daysBetween(
+        releaseDate: LocalDate,
+        currentDate: LocalDate
+    ) = ChronoUnit.DAYS.between(releaseDate, currentDate).toInt()
 }
