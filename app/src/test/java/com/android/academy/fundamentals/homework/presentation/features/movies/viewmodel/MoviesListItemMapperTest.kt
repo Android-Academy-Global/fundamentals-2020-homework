@@ -1,6 +1,6 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
-import com.android.academy.fundamentals.homework.model.Movie
+import com.android.academy.fundamentals.homework.model.createMovie
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -8,8 +8,8 @@ class MoviesListItemMapperTest {
 
     @Test
     fun `mapper maps some fields as is`() {
-        val mapper = MoviesListItemMapper()
-        val movie = Movie(
+        val mapper = createMapper()
+        val movie = createMovie(
             id = 671039,
             title = "Test 1",
             reviewCount = 200,
@@ -17,25 +17,18 @@ class MoviesListItemMapperTest {
             pgAge = 15,
             runningTime = 55,
             imageUrl = "test url",
-            genres = listOf(),
-            rating = 4
         )
 
         val listItem = mapper.map(movie)
 
-        assertEquals(
-            MoviesListItem(
-                id = 671039,
-                title = "Test 1",
-                reviewCount = 200,
-                isLiked = true,
-                pgAge = 15,
-                runningTime = 55,
-                imageUrl = "test url",
-                genres = listOf(),
-                rating = 4
-            ),
-            listItem
-        )
+        assertEquals(671039, listItem.id)
+        assertEquals("Test 1", listItem.title)
+        assertEquals(200, listItem.reviewCount)
+        assertEquals(true, listItem.isLiked)
+        assertEquals(15, listItem.pgAge)
+        assertEquals(55, listItem.runningTime)
+        assertEquals("test url", listItem.imageUrl)
     }
+
+    private fun createMapper() = MoviesListItemMapper()
 }
