@@ -72,7 +72,7 @@ internal class MoviesListViewModelImpl(
                     listOf(daysAfterRelease)
                 )
             }
-            else -> NativeText.Simple("")
+            else -> NativeText.Resource(R.string.movies_list_released_today)
         }
     }
 }

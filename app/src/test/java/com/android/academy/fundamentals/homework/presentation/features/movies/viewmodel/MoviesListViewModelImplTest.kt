@@ -13,6 +13,7 @@ import com.android.academy.fundamentals.homework.model.MovieDetails
 import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import org.junit.Rule
 import org.junit.Test
+import java.lang.annotation.Native
 import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -44,6 +45,10 @@ class MoviesListViewModelImplTest {
                 genres = listOf(Genre(1, "test")),
                 rating = 55,
                 releaseDate = today.minusDays(66)
+            ),
+            createMovie(
+                id = 2341234,
+                releaseDate = today
             )
         )
         val repository = StubMovieRepository()
@@ -84,6 +89,10 @@ class MoviesListViewModelImplTest {
                         listOf(66)
                     )
                 ),
+                createMovieListItem(
+                    id = 2341234,
+                    releaseAt = NativeText.Resource(R.string.movies_list_released_today)
+                )
             ),
             state.movies
         )
