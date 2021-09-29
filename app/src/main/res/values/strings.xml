@@ -11,6 +11,15 @@
     <string name="movies_list_reviews_template">%d REVIEWS</string>
     <string name="movies_list_rating_bar_description">Rating bar</string>
     <string name="movies_list_film_time">%d MIN</string>
+    <plurals name="movies_list_days_before_release">
+        <item quantity="one">%d day before release</item>
+        <item quantity="other">%d days before release</item>
+    </plurals>
+    <plurals name="movies_list_days_after_release">
+        <item quantity="one">Released %d day ago</item>
+        <item quantity="other">Released %d day ago</item>
+    </plurals>
+    <string name="movies_list_released_today">Released today!</string>
     <!-- Movies list screen -->
 
     <!-- Movie Details screen -->
