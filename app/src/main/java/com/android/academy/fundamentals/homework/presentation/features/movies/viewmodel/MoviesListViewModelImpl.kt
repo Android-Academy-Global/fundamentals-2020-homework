@@ -10,7 +10,10 @@ import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.launch
 
-internal class MoviesListViewModelImpl(private val repository: MovieRepository) : MoviesListViewModel() {
+internal class MoviesListViewModelImpl(
+    private val repository: MovieRepository,
+    private val moviesListItemMapper: MoviesListItemMapper = MoviesListItemMapper()
+) : MoviesListViewModel() {
 
     override val moviesStateOutput = MutableLiveData<MoviesListViewState>()
 
@@ -24,22 +27,8 @@ internal class MoviesListViewModelImpl(private val repository: MovieRepository) 
 
     private fun handleResult(result: Result<List<Movie>>) {
         when (result) {
-            is Success -> moviesStateOutput.postValue(MoviesListViewState.MoviesLoaded(result.data.map { it.toListItem() }))
+            is Success -> moviesStateOutput.postValue(MoviesListViewState.MoviesLoaded(result.data.map(moviesListItemMapper::map)))
             is Failure -> moviesStateOutput.postValue(MoviesListViewState.FailedToLoad)
         }.exhaustive
-    }
-
-    private fun Movie.toListItem(): MoviesListItem {
-        return MoviesListItem(
-            id = this.id,
-            pgAge = this.pgAge,
-            title = this.title,
-            genres = this.genres,
-            runningTime = this.runningTime,
-            reviewCount = this.reviewCount,
-            isLiked = this.isLiked,
-            rating = this.rating,
-            imageUrl = this.imageUrl,
-        )
     }
 }
