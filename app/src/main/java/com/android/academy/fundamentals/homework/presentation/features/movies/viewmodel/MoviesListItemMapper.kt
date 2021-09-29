@@ -1,5 +1,6 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
+import com.android.academy.fundamentals.homework.common.text.NativeText
 import com.android.academy.fundamentals.homework.model.Movie
 
 class MoviesListItemMapper {
@@ -14,6 +15,7 @@ class MoviesListItemMapper {
             isLiked = movie.isLiked,
             rating = movie.rating,
             imageUrl = movie.imageUrl,
+            release = NativeText.Simple("")
         )
     }
 }

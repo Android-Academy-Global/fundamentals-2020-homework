@@ -1,7 +1,10 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
+import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.common.text.NativeText
 import com.android.academy.fundamentals.homework.model.createMovie
 import org.junit.Test
+import java.time.LocalDate
 import kotlin.test.assertEquals
 
 class MoviesListItemMapperTest {
@@ -30,10 +33,15 @@ class MoviesListItemMapperTest {
         assertEquals("test url", listItem.imageUrl)
     }
 
+
     @Test
-    fun `map movie 3 days before release`() {
+    fun `map movie that's released today`() {
         val mapper = createMapper()
-        val movie = createMovie()
+        val movie = createMovie(releaseDate = LocalDate.of(2021, 10, 2))
+
+        val listItem = mapper.map(movie)
+
+        assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
     }
 
     private fun createMapper() = MoviesListItemMapper()
