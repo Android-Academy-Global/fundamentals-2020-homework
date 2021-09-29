@@ -1,7 +1,7 @@
 package com.android.academy.fundamentals.homework.model
 
 // TODO uncomment next line for workshop
-//import java.time.LocalDate
+import java.time.LocalDate
 
 data class Movie(
     val id: Int,
@@ -14,5 +14,5 @@ data class Movie(
     val rating: Int,
     val imageUrl: String?,
     // TODO uncomment next line for workshop
-    //val releaseDate: LocalDate
+    val releaseDate: LocalDate
 )

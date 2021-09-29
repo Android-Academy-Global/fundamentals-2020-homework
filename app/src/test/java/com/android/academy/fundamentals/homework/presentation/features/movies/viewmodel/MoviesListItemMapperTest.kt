@@ -30,5 +30,11 @@ class MoviesListItemMapperTest {
         assertEquals("test url", listItem.imageUrl)
     }
 
+    @Test
+    fun `map movie 3 days before release`() {
+        val mapper = createMapper()
+        val movie = createMovie()
+    }
+
     private fun createMapper() = MoviesListItemMapper()
 }
