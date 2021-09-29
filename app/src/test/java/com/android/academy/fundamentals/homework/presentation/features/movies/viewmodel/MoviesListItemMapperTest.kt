@@ -5,6 +5,7 @@ import com.android.academy.fundamentals.homework.common.text.NativeText
 import com.android.academy.fundamentals.homework.model.createMovie
 import org.junit.Test
 import java.time.LocalDate
+import java.time.Month
 import kotlin.test.assertEquals
 
 class MoviesListItemMapperTest {
@@ -37,11 +38,24 @@ class MoviesListItemMapperTest {
     @Test
     fun `map movie that's released today`() {
         val mapper = createMapper()
-        val movie = createMovie(releaseDate = LocalDate.of(2021, 10, 2))
+        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 2))
 
         val listItem = mapper.map(movie)
 
         assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
+    }
+
+    @Test
+    fun `map movie that's released 50 days ago`() {
+        val mapper = createMapper()
+        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.AUGUST, 10))
+
+        val listItem = mapper.map(movie)
+
+        assertEquals(
+            NativeText.Plural(R.plurals.movies_list_days_before_release, 50, listOf(50)),
+            listItem.release
+        )
     }
 
     private fun createMapper() = MoviesListItemMapper()

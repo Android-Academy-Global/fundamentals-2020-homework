@@ -3,6 +3,9 @@ package com.android.academy.fundamentals.homework.presentation.features.movies.v
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.common.text.NativeText
 import com.android.academy.fundamentals.homework.model.Movie
+import java.time.LocalDate
+import java.time.Period
+import java.time.temporal.ChronoUnit
 
 class MoviesListItemMapper {
     fun map(movie: Movie): MoviesListItem {
@@ -16,7 +19,12 @@ class MoviesListItemMapper {
             isLiked = movie.isLiked,
             rating = movie.rating,
             imageUrl = movie.imageUrl,
-            release = NativeText.Resource(R.string.movies_list_released_today)
-        )
+            release = when {
+                movie.releaseDate.isBefore(LocalDate.now()) -> {
+                    val period = ChronoUnit.DAYS.between(movie.releaseDate, LocalDate.now()).toInt()
+                    NativeText.Plural(R.plurals.movies_list_days_before_release, period, listOf(period))
+                }
+                else -> NativeText.Resource(R.string.movies_list_released_today)
+            })
     }
 }
