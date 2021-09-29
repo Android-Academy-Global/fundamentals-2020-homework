@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 internal class MoviesListViewModelImpl(
     private val repository: MovieRepository,
-    private val moviesListItemMapper: MoviesListItemMapper = MoviesListItemMapper()
+    private val moviesListItemMapper: MoviesListItemMapper
 ) : MoviesListViewModel() {
 
     override val moviesStateOutput = MutableLiveData<MoviesListViewState>()
