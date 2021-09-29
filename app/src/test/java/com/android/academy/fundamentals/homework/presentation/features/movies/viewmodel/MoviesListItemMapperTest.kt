@@ -69,7 +69,7 @@ class MoviesListItemMapperTest {
         val listItem = mapper.map(movie)
 
         assertEquals(
-            NativeText.Plural(R.plurals.movies_list_days_before_release, 50, listOf(50)),
+            NativeText.Plural(R.plurals.movies_list_days_after_release, 50, listOf(50)),
             listItem.release
         )
     }
