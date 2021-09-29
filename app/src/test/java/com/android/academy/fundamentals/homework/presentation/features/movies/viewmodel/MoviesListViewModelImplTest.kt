@@ -7,6 +7,7 @@ import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
+import com.android.academy.fundamentals.homework.model.createMovie
 import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import org.junit.Rule
 import org.junit.Test
@@ -104,30 +105,6 @@ class MoviesListViewModelImplTest {
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
         MoviesListViewModelImpl(repository)
-
-    private fun createMovie(
-        id: Int = 0,
-        title: String = "",
-        reviewCount: Int = 0,
-        isLiked: Boolean = false,
-        rating: Int = 0,
-        pgAge: Int = 0,
-        genres: List<Genre> = emptyList(),
-        runningTime: Int = 0,
-        imageUrl: String? = null
-    ): Movie {
-        return Movie(
-            id = id,
-            title = title,
-            reviewCount = reviewCount,
-            isLiked = false,
-            rating = 0,
-            pgAge = 0,
-            genres = emptyList(),
-            runningTime = 0,
-            imageUrl = null
-        )
-    }
 
     private fun createMovieListItem(
         id: Int = 0,
