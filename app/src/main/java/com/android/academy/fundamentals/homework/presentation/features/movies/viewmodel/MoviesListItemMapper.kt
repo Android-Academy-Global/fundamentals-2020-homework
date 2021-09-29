@@ -36,6 +36,14 @@ class MoviesListItemMapper(
                     listOf(period)
                 )
             }
+            movie.releaseDate.isAfter(today) -> {
+                val period = ChronoUnit.DAYS.between(today, movie.releaseDate).toInt()
+                NativeText.Plural(
+                    R.plurals.movies_list_days_before_release,
+                    period,
+                    listOf(period)
+                )
+            }
             else -> NativeText.Resource(R.string.movies_list_released_today)
         }
     }
