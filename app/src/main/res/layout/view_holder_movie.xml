@@ -165,8 +165,22 @@
         android:text="@string/movies_list_film_time"
         android:textColor="@color/gray_dark"
         android:textSize="@dimen/text_size_description"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/film_name_text" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/film_release_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical|start"
+        android:text="@string/movies_list_released_today"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/text_size_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/film_time_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
