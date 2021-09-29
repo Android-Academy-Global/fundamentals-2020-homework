@@ -6,6 +6,8 @@ import kotlin.test.assertEquals
 
 class MoviesListItemMapperTest {
 
+    private fun createMapper() = MoviesListItemMapper()
+
     @Test
     fun `mapper maps some fields as is`() {
         val mapper = createMapper()
@@ -40,5 +42,9 @@ class MoviesListItemMapperTest {
         assertEquals(null, listItem.imageUrl)
     }
 
-    private fun createMapper() = MoviesListItemMapper()
+    @Test
+    fun `map movie 3 days before release`() {
+        val mapper = createMapper()
+        val movie = createMovie()
+    }
 }

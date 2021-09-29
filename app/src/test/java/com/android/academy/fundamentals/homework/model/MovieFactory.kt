@@ -1,5 +1,7 @@
 package com.android.academy.fundamentals.homework.model
 
+import java.time.LocalDate
+
 fun createMovie(
     id: Int = 0,
     title: String = "",
@@ -9,7 +11,8 @@ fun createMovie(
     pgAge: Int = 0,
     genres: List<Genre> = emptyList(),
     runningTime: Int = 0,
-    imageUrl: String? = null
+    imageUrl: String? = null,
+    releaseDate: LocalDate = LocalDate.of(2021, 3, 8)
 ): Movie {
     return Movie(
         id = id,
@@ -20,6 +23,7 @@ fun createMovie(
         pgAge = pgAge,
         genres = genres,
         runningTime = runningTime,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        releaseDate = releaseDate
     )
 }

@@ -16,6 +16,7 @@ fun MovieResponse.toMovie(): Movie {
         pgAge = if (this.adult) ADULT_AGE else CHILD_AGE,
         runningTime = 100,
         isLiked = false,
-        genres = emptyList()
+        genres = emptyList(),
+        releaseDate = TODO()
     )
 }
