@@ -21,22 +21,8 @@ class MoviesListViewModelImplTest {
     @Test
     fun `moviesStateOutput by default returns movies list`() {
         val movies = listOf(
-            createMovie(
-                id = 671039,
-                title = "Test 1",
-                reviewCount = 200,
-                isLiked = true,
-                pgAge = 15,
-                runningTime = 55,
-                imageUrl = "test url",
-            ),
-            createMovie(
-                id = 724989,
-                title = "Hard Kill",
-                reviewCount = 151,
-                genres = listOf(Genre(1, "test")),
-                rating = 55,
-            )
+            createMovie(id = 1),
+            createMovie(id = 2)
         )
         val repository = StubMovieRepository()
         repository.setResult(movies)
@@ -48,27 +34,8 @@ class MoviesListViewModelImplTest {
             state is MoviesListViewState.MoviesLoaded,
             "state is $state"
         )
-        assertEquals(
-            listOf(
-                createMovieListItem(
-                    id = 671039,
-                    title = "Test 1",
-                    reviewCount = 200,
-                    isLiked = true,
-                    pgAge = 15,
-                    runningTime = 55,
-                    imageUrl = "test url"
-                ),
-                createMovieListItem(
-                    id = 724989,
-                    title = "Hard Kill",
-                    reviewCount = 151,
-                    genres = listOf(Genre(1, "test")),
-                    rating = 55,
-                ),
-            ),
-            state.movies
-        )
+        val loadedMovies = state.movies.map { it.id }
+        assertEquals(listOf(1, 2), loadedMovies)
     }
 
     @Test
@@ -105,28 +72,4 @@ class MoviesListViewModelImplTest {
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
         MoviesListViewModelImpl(repository)
-
-    private fun createMovieListItem(
-        id: Int = 0,
-        title: String = "",
-        reviewCount: Int = 0,
-        isLiked: Boolean = false,
-        rating: Int = 0,
-        pgAge: Int = 0,
-        genres: List<Genre> = emptyList(),
-        runningTime: Int = 0,
-        imageUrl: String? = null
-    ): MoviesListItem {
-        return MoviesListItem(
-            id = id,
-            title = title,
-            reviewCount = reviewCount,
-            isLiked = false,
-            rating = 0,
-            pgAge = 0,
-            genres = emptyList(),
-            runningTime = 0,
-            imageUrl = null
-        )
-    }
 }
