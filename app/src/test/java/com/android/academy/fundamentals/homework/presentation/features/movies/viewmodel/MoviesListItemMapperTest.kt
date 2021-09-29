@@ -64,4 +64,17 @@ class MoviesListItemMapperTest {
             listItem.release
         )
     }
+
+    @Test
+    fun `map movie that will be released tomorrow`() {
+        val mapper = createMapper()
+        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 30))
+
+        val listItem = mapper.map(movie)
+
+        assertEquals(
+            NativeText.Plural(R.plurals.movies_list_days_before_release, 1, listOf(1)),
+            listItem.release
+        )
+    }
 }
