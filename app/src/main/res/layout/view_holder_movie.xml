@@ -169,7 +169,6 @@
         app:layout_constraintTop_toBottomOf="@id/film_name_text" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/film_release_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
