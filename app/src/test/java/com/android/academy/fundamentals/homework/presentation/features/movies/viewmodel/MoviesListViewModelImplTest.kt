@@ -1,8 +1,12 @@
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
 
+import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
+import com.android.academy.fundamentals.homework.common.text.NativeText
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProvider
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProviderImpl
 import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
@@ -11,6 +15,8 @@ import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class MoviesListViewModelImplTest {
 
@@ -35,7 +41,7 @@ class MoviesListViewModelImplTest {
         val repository: MovieRepository = StubMovieRepository()
             .apply { setResult(movies) }
 
-        val viewModel = MoviesListViewModelImpl(repository)
+        val viewModel = createViewModel(repository)
 
         val state = viewModel.moviesStateOutput.value
         assertThat((state as MoviesListViewState.MoviesLoaded).movies)
@@ -49,7 +55,9 @@ class MoviesListViewModelImplTest {
                     pgAge = 13,
                     genres = emptyList(),
                     runningTime = 34,
-                    imageUrl = "test url"
+                    imageUrl = "test url",
+                    // TODO нужно было изначально сравнивать построчно
+                    release = NativeText.Simple("")
                 )
             )
     }
@@ -64,7 +72,7 @@ class MoviesListViewModelImplTest {
         val repository: MovieRepository = StubMovieRepository()
             .apply { setResult(movies) }
 
-        val viewModel = MoviesListViewModelImpl(repository)
+        val viewModel = createViewModel(repository)
 
         val state = viewModel.moviesStateOutput.value
         assertThat((state as MoviesListViewState.MoviesLoaded).movies.map { it.id })
@@ -72,15 +80,40 @@ class MoviesListViewModelImplTest {
     }
 
     @Test
+    fun `moviesStateOutput if movie released now returns released today`() {
+        val movies = listOf(
+            createMovie(releaseDate = LocalDate.of(2021, 4, 21)),
+        )
+        val repository: MovieRepository = StubMovieRepository()
+            .apply { setResult(movies) }
+        val timeProvider = object : CurrentTimeProvider {
+            override fun getCurrentTime(): LocalDateTime = LocalDateTime.of(2021, 4, 21, 15, 46)
+        }
+
+        val viewModel = createViewModel(repository, timeProvider)
+
+        val state = viewModel.moviesStateOutput.value
+        assertThat((state as MoviesListViewState.MoviesLoaded).movies.map { it.release })
+                // TODO выглядит гадко, нужно все таки сделать отдельный маппер
+            .contains(NativeText.Resource(R.string.movies_list_released_today))
+    }
+
+    @Test
     fun `moviesStateOutput in case of error returns failure`() {
         val repository = StubMovieRepository()
         repository.setErrorResult()
 
-        val viewModel = MoviesListViewModelImpl(repository)
+        val viewModel = createViewModel(repository)
 
         val state = viewModel.moviesStateOutput.value
         assertThat(state).isInstanceOf(MoviesListViewState.FailedToLoad::class.java)
     }
+
+    // TODO это нужно было сделать при рефаторинге тестов
+    private fun createViewModel(
+        repository: MovieRepository,
+        currentTimeProvider: CurrentTimeProvider = CurrentTimeProviderImpl()
+    ): MoviesListViewModel = MoviesListViewModelImpl(repository, currentTimeProvider)
 
     private fun createMovie(
         id: Int = 0,
@@ -92,6 +125,7 @@ class MoviesListViewModelImplTest {
         genres: List<Genre> = emptyList(),
         runningTime: Int = 0,
         imageUrl: String? = null,
+        releaseDate: LocalDate = LocalDate.now()
     ): Movie {
         return Movie(
             id = id,
@@ -102,7 +136,8 @@ class MoviesListViewModelImplTest {
             pgAge = pgAge,
             genres = genres,
             runningTime = runningTime,
-            imageUrl = imageUrl
+            imageUrl = imageUrl,
+            releaseDate = releaseDate
         )
     }
 

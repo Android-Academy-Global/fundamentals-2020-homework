@@ -2,6 +2,7 @@ package com.android.academy.fundamentals.homework.data.remote.retrofit
 
 import com.android.academy.fundamentals.homework.data.remote.retrofit.response.MovieResponse
 import com.android.academy.fundamentals.homework.model.Movie
+import java.time.LocalDate
 
 private const val ADULT_AGE = 16
 private const val CHILD_AGE = 13
@@ -16,6 +17,8 @@ fun MovieResponse.toMovie(): Movie {
         pgAge = if (this.adult) ADULT_AGE else CHILD_AGE,
         runningTime = 100,
         isLiked = false,
-        genres = emptyList()
+        genres = emptyList(),
+        // TODO Этот маппер стоит оставить толькот в первом воркшопе
+        releaseDate = LocalDate.now()
     )
 }

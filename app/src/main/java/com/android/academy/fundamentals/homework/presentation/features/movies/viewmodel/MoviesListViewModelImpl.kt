@@ -2,15 +2,23 @@ package com.android.academy.fundamentals.homework.presentation.features.movies.v
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
+import com.android.academy.fundamentals.homework.common.text.NativeText
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProvider
 import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.extensions.exhaustive
 import com.android.academy.fundamentals.homework.model.Movie
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
-internal class MoviesListViewModelImpl(private val repository: MovieRepository) : MoviesListViewModel() {
+internal class MoviesListViewModelImpl(
+    private val repository: MovieRepository,
+    private val currentTimeProvider: CurrentTimeProvider
+) : MoviesListViewModel() {
 
     override val moviesStateOutput = MutableLiveData<MoviesListViewState>()
 
@@ -40,6 +48,36 @@ internal class MoviesListViewModelImpl(private val repository: MovieRepository) 
             isLiked = this.isLiked,
             rating = this.rating,
             imageUrl = this.imageUrl,
+            release = calculateDaysBeforeRelease(this.releaseDate)
         )
     }
+
+    private fun calculateDaysBeforeRelease(releaseDate: LocalDate): NativeText {
+        val currentDate = currentTimeProvider.getCurrentTime().toLocalDate()
+        return when {
+            releaseDate.isAfter(currentDate) -> {
+                val daysBeforeRelease = daysBetween(currentDate, releaseDate)
+                NativeText.Plural(
+                    R.plurals.movies_list_days_before_release,
+                    daysBeforeRelease,
+                    listOf(daysBeforeRelease)
+                )
+            }
+            releaseDate.isBefore(currentDate) -> {
+                val daysAfterRelease = daysBetween(releaseDate, currentDate)
+                NativeText.Plural(
+                    R.plurals.movies_list_days_after_release,
+                    daysAfterRelease,
+                    listOf(daysAfterRelease)
+                )
+            }
+            else -> NativeText.Resource(R.string.movies_list_released_today)
+        }
+    }
+
+    private fun daysBetween(
+        releaseDate: LocalDate,
+        currentDate: LocalDate
+    ) = ChronoUnit.DAYS.between(releaseDate, currentDate).toInt()
+
 }
