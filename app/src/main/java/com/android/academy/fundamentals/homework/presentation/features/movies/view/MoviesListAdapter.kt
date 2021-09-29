@@ -46,6 +46,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
         private val reviewsText: TextView = itemView.findViewById(R.id.movie_reviews_count_text)
         private val titleText: TextView = itemView.findViewById(R.id.film_name_text)
         private val movieLenText: TextView = itemView.findViewById(R.id.film_time_text)
+        private val movieRelease: TextView = itemView.findViewById(R.id.film_release_text)
 
         fun bind(item: MoviesListItem, onClickCard: (movieId: Int) -> Unit) {
 
@@ -72,6 +73,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
                     ContextCompat.getColor(likeImage.context, likeColor)
                 )
             )
+
 
             //set stars tint
             starsImages.forEachIndexed { index, imageView ->
