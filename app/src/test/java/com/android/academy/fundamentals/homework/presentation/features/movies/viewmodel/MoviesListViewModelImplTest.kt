@@ -3,6 +3,7 @@ package com.android.academy.fundamentals.homework.presentation.features.movies.v
 import com.android.academy.fundamentals.homework.common.model.Failure
 import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProviderStub
 import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
@@ -10,6 +11,8 @@ import com.android.academy.fundamentals.homework.model.createMovie
 import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
 import org.junit.Rule
 import org.junit.Test
+import java.time.LocalDateTime
+import java.time.Month
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -69,5 +72,19 @@ class MoviesListViewModelImplTest {
 
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository, MoviesListItemMapper())
+        MoviesListViewModelImpl(
+            repository,
+            MoviesListItemMapper(
+                CurrentTimeProviderStub(
+                    LocalDateTime.of(
+                        2021,
+                        Month.SEPTEMBER,
+                        29,
+                        12,
+                        0,
+                        0
+                    )
+                )
+            )
+        )
 }

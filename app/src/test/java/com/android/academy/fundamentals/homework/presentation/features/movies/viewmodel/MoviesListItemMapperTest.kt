@@ -2,13 +2,20 @@ package com.android.academy.fundamentals.homework.presentation.features.movies.v
 
 import com.android.academy.fundamentals.homework.R
 import com.android.academy.fundamentals.homework.common.text.NativeText
+import com.android.academy.fundamentals.homework.common.time.CurrentTimeProviderStub
 import com.android.academy.fundamentals.homework.model.createMovie
 import org.junit.Test
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Month
 import kotlin.test.assertEquals
 
 class MoviesListItemMapperTest {
+
+    private val testToday = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
+    private val currentTimeProviderStub = CurrentTimeProviderStub(testToday)
+
+    private fun createMapper() = MoviesListItemMapper(currentTimeProviderStub)
 
     @Test
     fun `mapper maps some fields as is`() {
@@ -38,7 +45,7 @@ class MoviesListItemMapperTest {
     @Test
     fun `map movie that's released today`() {
         val mapper = createMapper()
-        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 2))
+        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 29))
 
         val listItem = mapper.map(movie)
 
@@ -57,6 +64,4 @@ class MoviesListItemMapperTest {
             listItem.release
         )
     }
-
-    private fun createMapper() = MoviesListItemMapper()
 }
