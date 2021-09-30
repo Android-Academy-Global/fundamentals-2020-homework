@@ -65,9 +65,6 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
             movieLenText.text = context.getString(R.string.movies_list_film_time, item.runningTime)
             movieRelease.text = item.release.toCharSequence(context)
 
-            //TODO comment following line
-            movieRelease.visibility = View.GONE
-
             val likeColor = if (item.isLiked) {
                 R.color.pink_light
             } else {
