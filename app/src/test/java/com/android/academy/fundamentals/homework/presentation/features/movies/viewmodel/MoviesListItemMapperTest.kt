@@ -12,10 +12,9 @@ import kotlin.test.assertEquals
 
 class MoviesListItemMapperTest {
 
-    private val testToday = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
-    private val currentTimeProviderStub = CurrentTimeProviderStub(testToday)
-
-    private fun createMapper() = MoviesListItemMapper(currentTimeProviderStub)
+    private fun createMapper(
+        currentTime: LocalDateTime = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
+    ) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
 
     @Test
     fun `mapper maps some fields as is`() {
@@ -44,7 +43,8 @@ class MoviesListItemMapperTest {
 
     @Test
     fun `map movie that's released today`() {
-        val mapper = createMapper()
+        val today = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
+        val mapper = createMapper(currentTime = today)
         val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 29))
 
         val listItem = mapper.map(movie)
@@ -54,7 +54,8 @@ class MoviesListItemMapperTest {
 
     @Test
     fun `map movie that's released 50 days ago`() {
-        val mapper = createMapper()
+        val today = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
+        val mapper = createMapper(currentTime = today)
         val movie = createMovie(releaseDate = LocalDate.of(2021, Month.AUGUST, 10))
 
         val listItem = mapper.map(movie)
@@ -67,7 +68,8 @@ class MoviesListItemMapperTest {
 
     @Test
     fun `map movie that will be released tomorrow`() {
-        val mapper = createMapper()
+        val today = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
+        val mapper = createMapper(currentTime = today)
         val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 30))
 
         val listItem = mapper.map(movie)
