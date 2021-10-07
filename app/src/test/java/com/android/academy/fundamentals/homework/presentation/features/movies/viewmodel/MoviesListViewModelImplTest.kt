@@ -47,10 +47,7 @@ class MoviesListViewModelImplTest {
         val viewModel = createMoviesListViewModel(repository)
 
         val state = viewModel.moviesStateOutput.value
-        assertTrue(
-            state is MoviesListViewState.FailedToLoad,
-            "state is $state"
-        )
+        assertEquals(MoviesListViewState.FailedToLoad, state)
     }
 
     internal class StubMovieRepository : MovieRepository {
