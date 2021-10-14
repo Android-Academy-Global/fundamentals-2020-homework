@@ -51,5 +51,38 @@ assertEquals(mappedMovieList, movieLoadedState)
 val viewModelRule = viewModelTestingRules()
 ```
 
+## TODO 2.7
 
+You need to refactor `StubMovieRepository` to give you ability to set different results in different
+test cases
 
+- Remove `val movies: List<Movie> = emptyList()` from `StubMovieRepository` constuctor
+- Add next code to Repository:
+
+```kotlin
+private var result: Result<List<Movie>> = Success(emptyList())
+
+fun setResult(movies: List<Movie>) {
+    result = Success(movies)
+}
+
+fun setErrorResult() {
+    result = Failure(Throwable())
+}
+```
+
+- Fix first test: use `setResult()` method on `StubMovieRepository`
+
+## TODO 2.8
+
+- Use `setErrorResult()` to repository and create `MoviesListViewModelImpl` same way as in first
+  test
+
+## TODO 2.9
+
+- Use `assertEquals` to check that value of `viewModel.moviesStateOutput`
+  is `MoviesListViewState.FailedToLoad`
+
+## TODO 2.10
+
+- Run test

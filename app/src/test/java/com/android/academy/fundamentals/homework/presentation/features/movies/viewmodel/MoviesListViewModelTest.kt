@@ -6,10 +6,6 @@ import com.android.academy.fundamentals.homework.domain.MovieRepository
 import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
-import com.android.academy.fundamentals.homework.utils.viewModelTestingRules
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.Assert.assertEquals
-import org.junit.Rule
 import org.junit.Test
 
 class MoviesListViewModelImplTest {
@@ -104,11 +100,37 @@ class MoviesListViewModelImplTest {
         //TODO 2.5 Run Test and after you see the result, proceed to the next step.
     }
 
+    @Test
+    fun `moviesStateOutput on error returns failure`() {
+        val repository = StubMovieRepository()
+        // TODO 2.8 Use setErrorResult() to repository and create MoviesListViewModelImpl same way as in first test
+
+        // TODO 2.9 Use assertEquals to check that value of viewModel.moviesStateOutput is MoviesListViewState.FailedToLoad
+
+        // TODO 2.10 Run Test
+    }
+
     private class StubMovieRepository(
-        val movies: List<Movie>
+        val movies: List<Movie> = emptyList()
     ) : MovieRepository {
         override suspend fun loadMovies(): Result<List<Movie>> = Success(movies)
         override suspend fun loadMovie(movieId: Int): Result<MovieDetails> =
             TODO("Stub repository doesn't implement loadMovie method")
+
+        //TODO 2.7 Remove 'val movies' from StubMovieRepository constructor
+        //TODO 2.7 Uncomment code below
+        //TODO 2.7 Also fix first test: Use setResult() method on StubMovieRepository
+        /*
+        private var result: Result<List<Movie>> = Success(emptyList())
+
+        fun setResult(movies: List<Movie>) {
+            result = Success(movies)
+        }
+
+        fun setErrorResult() {
+            result = Failure(Throwable())
+        }
+         */
+
     }
 }
