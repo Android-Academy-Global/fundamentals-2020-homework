@@ -11,6 +11,8 @@ class MoviesListItemMapperTest {
     fun `mapper maps some fields as is`() {
         //TODO 1.1 Arrange: Create instance of MovieListItemMapper
 
+        //TODO 3.2 Use createMovie() factory method instead of Movie constructor
+
         /* TODO 1.2 Arrange: Uncomment Movie instance
         val movie = Movie(
             id = 671039,
@@ -32,5 +34,20 @@ class MoviesListItemMapperTest {
         //TODO 1.5 Assert: Use assertEquals([expected], [actual]) to check equality of objects
         // [expected] - model, you've created in step 1.4
         // [actual] - mapped model, you've got in step 1.3
+
+        /* TODO 3.3 Instead of assertEquals for whole model use one assertEquals for each parameter:
+        assertEquals(671039, mappedItem.id)
+        assertEquals("Test 1", mappedItem.title)
+        assertEquals(200, mappedItem.reviewCount)
+        assertEquals(true, mappedItem.isLiked)
+        assertEquals(15, mappedItem.pgAge)
+        assertEquals(55, mappedItem.runningTime)
+        assertEquals("test url", mappedItem.imageUrl)
+        */
+
     }
+
+    /*TODO 3.4 Uncomment createMapper() factory method and use it instead of MoviesListItemMapper constructor
+       private fun createMapper() = MoviesListItemMapper()
+     */
 }

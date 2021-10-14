@@ -17,6 +17,9 @@ class MoviesListViewModelImplTest {
 
     @Test
     fun `moviesStateOutput by default returns movies list`() {
+        //TODO 3.5 Because we already tested mapping and created factory method,
+        //TODO 3.5 we can simplify this code for creating model only with id's.
+        //TODO 3.5 Instead of Movie constructors use createMovie(id = [1]) factory methods
         val movies = listOf(
             Movie(
                 id = 671039,
@@ -91,9 +94,16 @@ class MoviesListViewModelImplTest {
                 imageUrl = null
             )
         )
+        //TODO 3.6 Remove mappedMovieList - now, when we check only id's, whole models are not needed
 
         //TODO 2.3 Get moviesStateOutput from viewModel and cast it to MoviesListViewState.MoviesLoaded
         // val movieLoadedState = viewModel.moviesStateOutput.value as MoviesListViewState.MoviesLoaded
+
+        /* TODO 3.7 Now we can check only id's from viewmodel's output and remove previous assertEquals
+
+         val loadedIds = movieLoadedState.movies.map { it.id }
+         assertEquals(listOf(1, 2, ...), loadedIds)
+         */
 
         //TODO 2.4 Use assertEquals to check movies from movieLoadedState and mappedMovieList
 
@@ -133,4 +143,9 @@ class MoviesListViewModelImplTest {
          */
 
     }
+
+    /* TODO 3.8 Uncomment this factory method for ViewModel and use it instead of constructor
+     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
+         MoviesListViewModelImpl(repository, MoviesListItemMapper())
+     */
 }
