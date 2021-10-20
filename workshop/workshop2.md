@@ -6,6 +6,7 @@ In this workshop we will test `ViewModel` and `LiveData`
 
 - Open `MoviesListViewModel.kt`
 - Press `Cmd+Shift+T` or `Ctrl+Shift+T` and press `Select new test...`
+- Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
 - Create empty  `MoviesListViewModelTest` (maybe you will need to remove some unnecesary code)
 - Also create `Rule` (use already created `viewModelTestingRules()`) for running code in single
@@ -29,11 +30,9 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-- Put code from **TODO 2.2-2.8** into this method
-
 ## TODO 2.2
 
-- Create or copy-paste list of `Movie`
+- Create or copy-paste list of `Movie` into created test:
 
 ```kotlin
 val movies = listOf(
@@ -73,12 +72,25 @@ val movies = listOf(
 )
 ```
 
-## TODO 2.3
-
-- Create instance of `StubMovieRepository` and provide created `Movie` list
+So method will look like this:
 
 ```kotlin
-val repository = StubMovieRepository(movies = movies)
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    val movies = listOf(...)
+}
+```
+
+## TODO 2.3
+
+- Create instance of `StubMovieRepository` with created `Movie` list
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    val movies = ...
+    val repository = StubMovieRepository(movies = movies)
+}
 ```
 
 ## TODO 2.4
@@ -87,7 +99,12 @@ val repository = StubMovieRepository(movies = movies)
   constructor.
 
 ```kotlin
-val viewModel = MoviesListViewModelImpl(repository, MoviesListItemMapper())
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    val movies = ...
+    val repository = ...
+    val viewModel = MoviesListViewModelImpl(repository, MoviesListItemMapper())
+}
 ```
 
 ## TODO 2.5
@@ -132,14 +149,28 @@ val mappedMovieList = listOf(
 )
 ```
 
+So method will look like this:
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val mappedMovieList = listOf(...)
+}
+```
+
 ## TODO 2.6
 
 - Get `movieLoadedState` from our `ViewModel`
 - Create `expectedState` from created `Movie` list
 
 ```kotlin
- val movieLoadedState = viewModel.moviesStateOutput.value
-val expectedState = MoviesListViewState.MoviesLoaded(mappedMovieList)       
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val movieLoadedState = viewModel.moviesStateOutput.value
+    val expectedState = MoviesListViewState.MoviesLoaded(mappedMovieList)
+}
 ```
 
 ## TODO 2.7
@@ -147,7 +178,11 @@ val expectedState = MoviesListViewState.MoviesLoaded(mappedMovieList)
 - Use `assertEquals` to check `expectedState` and `movieLoadedState` equality
 
 ```kotlin
-assertEquals(expectedState, movieLoadedState)
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    assertEquals(expectedState, movieLoadedState)
+}
 ```
 
 ## TODO 2.8
@@ -177,39 +212,75 @@ different test cases
 - Add next code to `StubMovieRepository`:
 
 ```kotlin
-private var result: Result<List<Movie>> = Success(emptyList())
+internal class StubMovieRepository() : MovieRepository {
+    ...
+    private var result: Result<List<Movie>> = Success(emptyList())
 
-fun setResult(movies: List<Movie>) {
-    result = Success(movies)
-}
+    fun setResult(movies: List<Movie>) {
+        result = Success(movies)
+    }
 
-fun setErrorResult() {
-    result = Failure(Throwable())
+    fun setErrorResult() {
+        result = Failure(Throwable())
+    }
 }
 ```
 
-- Change
+- Change `loadMovies()` return value from `Success(movies)`
 
 ```kotlin
-override suspend fun loadMovies(): Result<List<Movie>> = Success(movies)
+internal class StubMovieRepository() : MovieRepository {
+    ...
+    override suspend fun loadMovies(): Result<List<Movie>> = Success(movies)
+    ...
+}
+```
+
+to `result`
+
+```kotlin
+internal class StubMovieRepository() : MovieRepository {
+    ...
+    override suspend fun loadMovies(): Result<List<Movie>> = result
+    ...
+}
+```
+
+## TODO 2.11
+
+Now we need to fix first test: Remove `movies` from constructor and use `setResult(movies)` method
+on `StubMovieRepository`
+
+- Change next code
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val repository = StubMovieRepository(movies = movies)
+    ...
+}
 ```
 
 to
 
 ```kotlin
-override suspend fun loadMovies(): Result<List<Movie>> = result
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val repository = StubMovieRepository()
+    repository.setResult(movies)
+    ...
+}
 ```
 
-- Fix first test: remove `movies` from constructor and use `setResult(movies)` method
-  on `StubMovieRepository`
-
-## TODO 2.11
+## TODO 2.12
 
 - Return back to new test in `MoviesListViewModelTest`
 - Add `setErrorResult()` to repository
 - Create `MoviesListViewModelImpl` same way you did in previous test
 
-## TODO 2.12
+## TODO 2.13
 
 - Use `assertEquals` to check that value of `viewModel.moviesStateOutput`
   is `MoviesListViewState.FailedToLoad`
@@ -222,18 +293,20 @@ assertEquals(
 
 ```
 
-## TODO 2.13
+## TODO 2.14
 
 - Run test and see green result
 
-## TODO 2.14: Test your tests
+## TODO 2.15: Test your tests
 
 - Try breaking something in the implementation to see that tests became red.
 - If the tests stay green when the implementation is broken then you have an error in tests.
 
 # Summary
 
-- `MoviesListViewModelTest.kt`
+Finally, you should see something like that:
+
+### `MoviesListViewModelTest.kt`
 
 ```kotlin
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
@@ -344,13 +417,12 @@ class MoviesListViewModelTest {
 }
 ```
 
-- `StubMovieRepository.kt`
+### `StubMovieRepository.kt`
 
 ```kotlin
 package com.android.academy.fundamentals.homework.domain
 
 import com.android.academy.fundamentals.homework.common.model.Failure
-import com.android.academy.fundamentals.homework.common.model.Result
 import com.android.academy.fundamentals.homework.common.model.Success
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails

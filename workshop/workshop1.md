@@ -116,8 +116,8 @@ fun `mapper maps some fields as is`() {
 ## TODO 1.6
 
 - Use `assertEquals([expected], [actual])`  method to check equality of objects
-- `expected` - model, you've created in `TODO 1.5`
-- `actual` - mapped model, you've got in `TODO 1.4`
+  `expected` - model, you've created in `TODO 1.5`
+  `actual` - mapped model, you've got in `TODO 1.4`
 
 ```kotlin
 @Test
