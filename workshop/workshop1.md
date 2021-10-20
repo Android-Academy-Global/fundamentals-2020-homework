@@ -6,6 +6,7 @@ In first workshop we will create simple test for `MoviesListItemMapper`
 
 - Open `MoviesListItemMapper.kt`
 - Press `Cmd+Shift+T` or `Ctrl+Shift+T` and press `Select new test...`
+- Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
 - Create empty  `MoviesListItemMapperTest`
 
@@ -27,19 +28,20 @@ fun `mapper maps some fields as is`() {
 }
 ```
 
-- Put code from next **TODO's** into this method
-
 ## TODO 1.2
 
-- Create instance of `MoviesListItemMapper`:
+- Create instance of `MoviesListItemMapper` in created test method:
 
 ```kotlin 
- val mapper = MoviesListItemMapper()
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = MoviesListItemMapper()
+}
  ```
 
 ## TODO 1.3
 
-- Create `Movie` instance:
+- Create `Movie` instance in test method:
 
 ```kotlin
 val movie = Movie(
@@ -55,12 +57,28 @@ val movie = Movie(
 )
 ```
 
+So method will look like this:
+
+```kotlin
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = ...
+    val movie = Movie(...)
+}
+```
+
 ## TODO 1.4
 
 - Use created `MovieListItemMapper` to map `Movie` into `MoviesListItem`
 
 ```kotlin
-val listItem = mapper.map(movie)
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = ...
+    val movie = ...
+
+    val listItem = mapper.map(movie)
+}
 ```
 
 ## TODO 1.5
@@ -81,6 +99,20 @@ val expectedMovieListItem = MoviesListItem(
 )
 ```
 
+So method will look like this:
+
+```kotlin
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = ...
+    val movie = ...
+
+    val listItem = ...
+
+    val expectedMovieListItem = MoviesListItem(...)
+}
+```
+
 ## TODO 1.6
 
 - Use `assertEquals([expected], [actual])`  method to check equality of objects
@@ -88,7 +120,12 @@ val expectedMovieListItem = MoviesListItem(
 - `actual` - mapped model, you've got in `TODO 1.4`
 
 ```kotlin
-assertEquals(expectedMovieListItem, listItem)
+@Test
+fun `mapper maps some fields as is`() {
+    ...
+    val expectedMovieListItem = ...
+    assertEquals(expectedMovieListItem, listItem)
+}
 ```
 
 ## TODO 1.7
@@ -102,6 +139,8 @@ assertEquals(expectedMovieListItem, listItem)
 - Do not forget to fix  `MoviesListItemMapper` to see green result again
 
 # Summary
+
+Finally, you should see something like that:
 
 ```kotlin
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
@@ -140,7 +179,6 @@ class MoviesListItemMapperTest {
             genres = listOf(),
             rating = 4
         )
-
         assertEquals(expectedMovieListItem, listItem)
     }
 }
