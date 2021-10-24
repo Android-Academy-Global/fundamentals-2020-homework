@@ -5,7 +5,8 @@ In this workshop we will test `ViewModel` and `LiveData`
 ## TODO 2.0
 
 - Open `MoviesListViewModel.kt`
-- Press `Cmd+Shift+T` or `Ctrl+Shift+T` and press `Select new test...`
+- Move the cursor to the class name
+- Press on a yellow bulb and select `Create test`
 - Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
 - Create empty  `MoviesListViewModelTest` (maybe you will need to remove some unnecesary code)

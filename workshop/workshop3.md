@@ -4,8 +4,9 @@
 
 ## TODO 3.1
 
-- Create `MovieFactory.kt` file in `test/****/utils` package
-- Create or copy-paste `createMovie(...)` factory method
+- Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
+- Create `MovieFactory.kt` file in this package
+- Create or copy-paste `createMovie(...)` factory method in `MovieFactory.kt` file
 
 ```kotlin
 fun createMovie(
@@ -101,8 +102,6 @@ fun `mapper maps some fields as is`() {
     assertEquals("test url", mappedItem.imageUrl)
 }
 ```
-
-It lets you add new fields easier in the future.
 
 ## TODO 3.4 MoviesListViewModelTest
 
