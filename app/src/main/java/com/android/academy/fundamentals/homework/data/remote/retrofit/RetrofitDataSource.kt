@@ -18,7 +18,6 @@ internal class RetrofitDataSource(
 
     override suspend fun loadMovies(): List<Movie> {
         val genres = api.loadGenres().genres
-        // TODO пагинация
         return api.loadUpcoming(page = 1).results.map { movie ->
             Movie(
                 id = movie.id,
