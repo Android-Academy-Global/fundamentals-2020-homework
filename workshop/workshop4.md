@@ -1,11 +1,11 @@
-# Workshop 2
+# Workshop 4
 
 WIP In this workshop we will test ------
 
 ## TODO 4.0
 
 - Open `MoviesListItemMapperTest.kt`
-- Create new empty test method inside of `MoviesListViewModelTest`
+- Create new empty test method inside of `MoviesListItemMapperTest`
 - Create `mapper` and `movie` model
 
 ```kotlin
@@ -118,7 +118,7 @@ to
 ```kotlin
 fun `map movie that's released today`() {
     ...
-    val movie = createMovie(releaseDate = LocalDate.of(2021, 10, 2))
+    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
     ...
 }
 ```
@@ -132,7 +132,7 @@ So method will look like:
 ```kotlin
 fun `map movie that's released today`() {
     ...
-    val movie = createMovie(releaseDate = LocalDate.of(2021, 10, 2))
+    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
     ...
 	val listItem = mapper.map(movie)
     assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
@@ -186,7 +186,7 @@ class MoviesListItemMapper {
  @Test
 fun `map movie that's released 50 days ago`() {
     val mapper = createMapper()
-    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.AUGUST, 10))
+    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 12))
 
     val listItem = mapper.map(movie)
 
@@ -349,12 +349,12 @@ internal class MovieListViewModelFactory(...) : ViewModelProvider.Factory {
 
 ## TODO 4.17
 
-- Open `MoviesListViewModelImplTest.kt`
+- Open `MoviesListViewModelTest.kt`
 
 Change
 
 ```kotlin
-class MoviesListViewModelImplTest {
+class MoviesListViewModelTest {
     ...
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
         MoviesListViewModelImpl(repository, MoviesListItemMapper())
@@ -364,7 +364,7 @@ class MoviesListViewModelImplTest {
 to
 
 ```kotlin
-class MoviesListViewModelImplTest {
+class MoviesListViewModelTest {
     ...
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
         MoviesListViewModelImpl(
@@ -386,7 +386,7 @@ class MoviesListViewModelImplTest {
 @Test
 fun `map movie that will be released tomorrow`() {
     val mapper = createMapper()
-    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.SEPTEMBER, 30))
+    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 2))
 
     val listItem = mapper.map(movie)
 
