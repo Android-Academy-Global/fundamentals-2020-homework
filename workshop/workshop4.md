@@ -2,24 +2,9 @@
 
 WIP In this workshop we will test ------
 
-## TODO 4.0
+# TODO 4.0 Let's add `releaseDate` field to `Movie` model
 
-- Open `MoviesListItemMapperTest.kt`
-- Create new empty test method inside of `MoviesListItemMapperTest`
-- Create `mapper` and `movie` model
-
-```kotlin
-class MoviesListItemMapperTest {
-	@Test
-	fun `map movie that's released today`() {
-		val mapper = createMapper()
-
-		val movie = createMovie()
-	}
-}
-```
-
-## TODO 4.1
+## TODO 4.0.0
 
 - Open `Movie.kt`
 - Uncomment all code marked with TODO comments So class will look like this:
@@ -31,7 +16,7 @@ data class Movie(
 )
 ```
 
-## TODO 4.2
+## TODO 4.0.1
 
 - Open `RetrofitDataSource.kt`
 - Uncomment all code marked with TODO comments
@@ -50,7 +35,7 @@ override suspend fun loadMovies(): List<Movie> {
 }
 ```
 
-## TODO 4.3
+## TODO 4.0.2
 
 - Open `MoviesListItem.kt`
 - Add `val release: NativeText` to constructor of `MoviesListItem`
@@ -63,7 +48,7 @@ data class MoviesListItem(
 )
 ```
 
-## TODO 4.4
+## TODO 4.0.3
 
 - Open `MoviesListItemMapper.kt`
 - Add mapping of `release` field to hardcoded `NativeText.Simple("")`
@@ -80,7 +65,8 @@ class MoviesListItemMapper {
 } 
 ```
 
-## TODO 4.5
+## TODO 4.0.4
+
 - Open `MovieFactory.kt`
 - Add parameter to factory method
 
@@ -89,7 +75,7 @@ So method will look like:
 ```kotlin
 fun createMovie(
     ...
-    releaseDate : LocalDate = LocalDate.now()
+    releaseDate: LocalDate = LocalDate.now()
 ): Movie {
     return Movie(
         ...
@@ -98,54 +84,57 @@ fun createMovie(
 }
 ```
 
-## TODO 4.6
+# TODO 4.1 Let's create test to test mapping of released today movie
+
+## TODO 4.1.0
 
 - Open `MoviesListItemMapperTest.kt`
-- Modify `map movie that’s released today` test method to
+- Create new empty test method inside of `MoviesListItemMapperTest`
+- Create `mapper` and `movie` model
 
-Change
+```kotlin
+class MoviesListItemMapperTest {
+    @Test
+    fun `map movie that's released today`() {
+        val today = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
+        val mapper = createMapper(currentTime = today)
+
+        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
+    }
+}
+```
+
+## TODO 4.1.1
+
+- Map `movie` with `mapper` 
 
 ```kotlin
 fun `map movie that's released today`() {
     ...
-    val movie = createMovie()
-    ...
+    val listItem = mapper.map(movie)
 }
 ```
 
-to
+## TODO 4.1.2
 
-```kotlin
-fun `map movie that's released today`() {
-    ...
-    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
-    ...
-}
-```
-
-- Map `movie` with `mapper` : `val listItem = mapper.map(movie)`
 - Add assertEquals to check `listItem.release` for equality
   with `NativeText.Resource(R.string.movies_list_released_today)`
 
-So method will look like:
-
 ```kotlin
 fun `map movie that's released today`() {
     ...
-    val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
-    ...
-	val listItem = mapper.map(movie)
+    val listItem = mapper.map(movie)
     assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
 }
 ```
 
-## TODO 4.7
+## TODO 4.1.3
 
 - Run test and see result. Proceed to next step.
 
-## TODO 4.8
+## TODO 4.1.4
 
-- Open `MoviesListItemMapper .kt`
+- Open `MoviesListItemMapper.kt`
 
 Change:
 
@@ -173,11 +162,13 @@ class MoviesListItemMapper {
 } 
 ```
 
-## TODO 4.9
+## TODO 4.1.5
 
 - Run test again to ensure everything works now.
 
-## TODO 4.10
+# TODO 4.2 Let's create test to test mapping of movie, released 50 days ago
+
+## TODO 4.2.0
 
 - Open `MoviesListItemMapperTest.kt`
 - Create new test method
@@ -197,7 +188,7 @@ fun `map movie that's released 50 days ago`() {
 }
 ```
 
-## TODO 4.11
+## TODO 4.2.1
 
 - Open `MoviesListItemMapper.kt`
 - Add logic to mapping `release` field:
@@ -232,11 +223,13 @@ class MoviesListItemMapper {
 }
 ```
 
-## TODO 4.12
+## TODO 4.2.2
 
 - Run test again to ensure everything works now.
 
-## TODO 4.13 Refactor
+# TODO 4.3 Let's refactor some previous code
+
+## TODO 4.3.0
 
 - Open `MoviesListItemMapper.kt`
 - Add `private val currentTimeProvider: CurrentTimeProvider` to constructor:
@@ -249,7 +242,7 @@ class MoviesListItemMapper(
 }
 ```
 
-## TODO 4.14
+## TODO 4.3.1
 
 - Extract logic of mapping to `release` field into method:
 
@@ -284,42 +277,25 @@ class MoviesListItemMapper(
     }
 ```
 
-## TODO 4.15
+## TODO 4.3.2
 
-- Open `MoviesListItemMapperTest.kt`
-- Create `CurrentTimeProviderStub`:
-
-```kotlin
-class MoviesListItemMapperTest {
-    private val testToday = LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0, 0)
-    private val currentTimeProviderStub = CurrentTimeProviderStub(testToday)
-    ...
-}
-```
-
-- Provide `CurrentTimeProviderStub` into `MoviesListItemMapper` constructor:
+- Change `createMapper()` method to provide `LocalDateTime`
 
 Change
 
 ```kotlin
-class MoviesListItemMapperTest {
-    ...
     private fun createMapper() = MoviesListItemMapper()
-    ...
-}
 ```
 
 to
 
 ```kotlin
-class MoviesListItemMapperTest {
-    ...
-    private fun createMapper() = MoviesListItemMapper(currentTimeProviderStub)
-    ...
-}
+    private fun createMapper(
+        currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
+    ) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
 ```
 
-## TODO 4.16
+## TODO 4.3.3
 
 - Open `MovieListViewModelFactory.kt`
 
@@ -347,9 +323,10 @@ internal class MovieListViewModelFactory(...) : ViewModelProvider.Factory {
 }
 ```
 
-## TODO 4.17
+## TODO 4.3.4
 
 - Open `MoviesListViewModelTest.kt`
+- Provide `CurrentTimeProviderImpl()` into `createMoviesListViewModel()` factory method:
 
 Change
 
@@ -366,17 +343,20 @@ to
 ```kotlin
 class MoviesListViewModelTest {
     ...
-    private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
+    private fun createMoviesListViewModel(
+        repository: MovieRepository,
+        currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0)
+    ): MoviesListViewModel =
         MoviesListViewModelImpl(
             repository,
-            MoviesListItemMapper(
-                CurrentTimeProviderStub(LocalDateTime.of(2021, Month.SEPTEMBER, 29, 12, 0, 0))
-            )
+            MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
         )
 }
 ```
 
-## TODO 4.18
+# TODO 4.4 Let's create test to check mapping of movie, released tomorrow
+
+## TODO 4.4.0
 
 - Open `MoviesListItemMapperTest.kt`
 
@@ -385,7 +365,7 @@ class MoviesListViewModelTest {
 ```kotlin
 @Test
 fun `map movie that will be released tomorrow`() {
-    val mapper = createMapper()
+    val mapper = createMapper(LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0))
     val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 2))
 
     val listItem = mapper.map(movie)
@@ -397,10 +377,10 @@ fun `map movie that will be released tomorrow`() {
 }
 ```
 
-## TODO 4.19
+## TODO 4.4.1
 
 - Open `MoviesListItemMapper.kt`
-- Process check when date is after today:
+- Add case when `movie.releaseDate` is after `today` parameter
 
 ```kotlin
 private fun mapReleaseDate(movie: Movie): NativeText {
@@ -422,7 +402,7 @@ private fun mapReleaseDate(movie: Movie): NativeText {
 }
 ```
 
-## TODO 4.20
+## TODO 4.4.2
 
 - Open `MoviesListAdapter`
 
