@@ -96,10 +96,9 @@ fun createMovie(
 class MoviesListItemMapperTest {
     @Test
     fun `map movie that's released today`() {
-        val today = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
-        val mapper = createMapper(currentTime = today)
+        val mapper = createMapper()
 
-        val movie = createMovie(releaseDate = LocalDate.of(2021, Month.NOVEMBER, 1))
+        val movie = createMovie()
     }
 }
 ```
