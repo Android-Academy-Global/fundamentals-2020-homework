@@ -7,9 +7,11 @@ In first workshop we will create simple test for `MoviesListItemMapper`
 - Open `MoviesListItemMapper.kt`
 - Move the cursor to the class name
 - Press on a yellow bulb and select `Create test`
-  ![Press on a yellow bulb and select `Create test`](images/w1-p1-bulb.png)
+![Create test](images/w1-p1-bulb.png)
 - Select `JUnit4` in `Testing library:` field
+![Select JUnit4](images/w1-p2-juni4.png)
 - Select `/test/` directory, not `/androidTest/`
+![Select test directory](images/w1-p3-test-package.png)
 - Create empty  `MoviesListItemMapperTest`
 
 ```kotlin 
@@ -131,13 +133,17 @@ fun `mapper maps some fields as is`() {
 
 ## TODO 1.7
 
-- Run test to see green result
-
+- Run test:
+![Run test](images/w1-p4-run-test.png)
+- And see green result:
+![Green result](images/w1-p5-green.png)
+  
 ## TODO 1.8
 
 - Try to break something in the  `MoviesListItemMapper`.
 - Run the test and check how an error message looks
-- Do not forget to fix  `MoviesListItemMapper` to see green result again
+![Red result](images/w1-p6-red.png)
+- Do not forget to fix `MoviesListItemMapper` to see green result again
 
 # Summary
 

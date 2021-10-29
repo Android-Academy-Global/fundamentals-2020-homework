@@ -7,6 +7,7 @@
 ## TODO 3.0.0
 
 - Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
+![Correct package](images/w3-p1-packages.png)
 - Create `MovieFactory.kt` file in this package
 - Create or copy-paste `createMovie(...)` factory method
 
