@@ -417,6 +417,12 @@ private fun mapReleaseDate(movie: Movie): NativeText {
 
 ## TODO 4.4.3
 
+- Run test to ensure everything is working.
+
+# TODO 4.5 Feature is ready! You only need to show it on UI
+
+## TODO 4.5.0
+
 - Open `MoviesListAdapter`
 
 - Set `item.release` value to `movieRelease.text`:
@@ -439,3 +445,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
     }
 }
 ```
+
+## TODO 4.5.1
+
+- Run application and check new test-driven-developed feature
