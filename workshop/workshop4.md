@@ -382,6 +382,10 @@ fun `map movie that will be released tomorrow`() {
 
 ## TODO 4.4.1
 
+- Run test and see result. Proceed to next step.
+
+## TODO 4.4.2
+
 - Open `MoviesListItemMapper.kt`
 - Add case when `movie.releaseDate` is after `today` parameter
 
@@ -405,7 +409,7 @@ private fun mapReleaseDate(movie: Movie): NativeText {
 }
 ```
 
-## TODO 4.4.2
+## TODO 4.4.3
 
 - Open `MoviesListAdapter`
 
