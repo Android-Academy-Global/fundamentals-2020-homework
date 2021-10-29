@@ -181,13 +181,16 @@ fun `map movie that's released 50 days ago`() {
     val listItem = mapper.map(movie)
 
     assertEquals(
-        NativeText.Plural(R.plurals.movies_list_days_before_release, 50, listOf(50)),
+        NativeText.Plural(R.plurals.movies_list_days_after_release, 50, listOf(50)),
         listItem.release
     )
 }
 ```
-
 ## TODO 4.2.1
+
+- Run test and see result. Proceed to next step.
+
+## TODO 4.2.2
 
 - Open `MoviesListItemMapper.kt`
 - Add logic to mapping `release` field:
@@ -217,12 +220,13 @@ class MoviesListItemMapper {
                     NativeText.Plural(R.plurals.movies_list_days_after_release, period, listOf(period))
                 }
                 else -> NativeText.Resource(R.string.movies_list_released_today)
-            })
+            }
+        )
     }
 }
 ```
 
-## TODO 4.2.2
+## TODO 4.2.3
 
 - Run test again to ensure everything works now.
 
