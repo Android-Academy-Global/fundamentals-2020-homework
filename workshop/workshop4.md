@@ -194,7 +194,8 @@ fun `map movie that's released 50 days ago`() {
 
 - Open `MoviesListItemMapper.kt`
 - Add logic to mapping `release` field:
-  Change
+  
+Change
 
 ```kotlin
 class MoviesListItemMapper {
@@ -282,8 +283,9 @@ class MoviesListItemMapper(
 
 ## TODO 4.3.2
 
+- Open `MoviesListItemMapperTest.kt`
 - Change `createMapper()` method to provide `LocalDateTime`
-
+  
 Change
 
 ```kotlin
