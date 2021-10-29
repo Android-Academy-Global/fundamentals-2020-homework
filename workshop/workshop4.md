@@ -359,6 +359,10 @@ class MoviesListViewModelTest {
 }
 ```
 
+## TODO 4.3.5
+
+- Run tests again to ensure everything still works
+
 # TODO 4.4 Let's create test to check mapping of movie, released tomorrow
 
 ## TODO 4.4.0
