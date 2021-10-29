@@ -7,6 +7,7 @@ In first workshop we will create simple test for `MoviesListItemMapper`
 - Open `MoviesListItemMapper.kt`
 - Move the cursor to the class name
 - Press on a yellow bulb and select `Create test`
+  ![Press on a yellow bulb and select `Create test`](images/w1-p1-bulb.png)
 - Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
 - Create empty  `MoviesListItemMapperTest`
