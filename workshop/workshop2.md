@@ -14,6 +14,8 @@ In this workshop we will test `ViewModel` and `LiveData`
 - Create empty  `MoviesListViewModelTest` (maybe you will need to remove some unnecesary code)
 - Also create `Rule` (use already created `viewModelTestingRules()`) for running code in single
   thread
+  
+- If you have some troubles with these steps, refer to images from Workshop 1
 
 ```kotlin
 class MoviesListViewModelTest {
@@ -198,24 +200,11 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ## TODO 2.2.0
 
-Now let's add new test for Failure scenario:
-
-- Create new test and new instance of ```StubMovieRepository```
-
-```kotlin
-@Test
-fun `moviesStateOutput on error returns failure`() {
-    val repository = StubMovieRepository()
-}
-```
-
-## TODO 2.2.1
-
 Now wee need to refactor `StubMovieRepository` to give us ability to set different results in
 different test cases
 
 - Open `StubMovieRepository.kt`
-- Remove `val movies: List<Movie> = emptyList()` from `StubMovieRepository` constuctor
+- Remove `val movies: List<Movie> = emptyList()` from `StubMovieRepository` constructor
 - Add next code to `StubMovieRepository`:
 
 ```kotlin
@@ -253,7 +242,9 @@ internal class StubMovieRepository() : MovieRepository {
 }
 ```
 
-## TODO 2.2.2
+## TODO 2.2.1
+
+- Run tests to see red light. This means that something is broken
 
 Now we need to fix first test: Remove `movies` from constructor and use `setResult(movies)` method
 on `StubMovieRepository`
@@ -282,9 +273,11 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.2.3
+## TODO 2.2.2
 
-- Return back to new test in `MoviesListViewModelTest`
+Now let's add new test for Failure scenario:
+
+- Create new test and new instance of `StubMovieRepository`
 - Add `setErrorResult()` to repository
 - Create `MoviesListViewModelImpl` same way you did in previous test
 
@@ -299,7 +292,7 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.2.4
+## TODO 2.2.3
 
 - Use `assertEquals` to check that value of `viewModel.moviesStateOutput` is `MoviesListViewState.FailedToLoad`
 
@@ -314,7 +307,7 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.2.5
+## TODO 2.2.4
 
 - Run test and see green result
 

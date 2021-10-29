@@ -173,13 +173,13 @@ use
 @Test
 fun `mapper maps some fields as is`() {
     ...
-    assertEquals(671039, mappedItem.id)
-    assertEquals("Test 1", mappedItem.title)
-    assertEquals(200, mappedItem.reviewCount)
-    assertEquals(true, mappedItem.isLiked)
-    assertEquals(15, mappedItem.pgAge)
-    assertEquals(55, mappedItem.runningTime)
-    assertEquals("test url", mappedItem.imageUrl)
+    assertEquals(671039, listItem.id)
+    assertEquals("Test 1", listItem.title)
+    assertEquals(200, listItem.reviewCount)
+    assertEquals(true, listItem.isLiked)
+    assertEquals(15, listItem.pgAge)
+    assertEquals(55, listItem.runningTime)
+    assertEquals("test url", listItem.imageUrl)
 }
 ```
 
@@ -200,6 +200,7 @@ Change
 fun `moviesStateOutput by default returns movies list`() {
     val movies = listOf(
         Movie(...),
+        Movie(...),
         Movie(...)
     )
     ...
@@ -213,7 +214,8 @@ to
 fun `moviesStateOutput by default returns movies list`() {
     val movies = listOf(
         createMovie(id = 1),
-        createMovie(id = 2)
+        createMovie(id = 2),
+        createMovie(id = 3)
     )
     ...
 }
@@ -229,7 +231,23 @@ fun `moviesStateOutput by default returns movies list`() {
 
 Now we can check only `id`'s from viewmodel's output and remove previous `assertEquals()` method:
 
+- Delete `val expectedState = ...` - we don't need it anymore
+  
 - Safely cast viewmodel's output to `MoviesListViewState.MoviesLoaded`
+
+Change 
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val movieLoadedState = viewModel.moviesStateOutput.value
+    ...
+}
+
+```
+
+to
 
 ```kotlin
 @Test
@@ -242,14 +260,14 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ```
 
-- Map `movieLoadedState` to it `id`'s and then use `assertEquals` with simple `listOf(1,2)`
+- Map `movieLoadedState` to it `id`'s and then use `assertEquals` with simple `listOf(1,2)` (you can remove previous `assertEquals`)
 
 ```kotlin
 @Test
 fun `moviesStateOutput by default returns movies list`() {
     ...
     assertEquals(
-        listOf(1, 2),
+        listOf(1, 2, 3),
         movieLoadedState?.movies?.map { it.id }
     )
 }
@@ -286,6 +304,28 @@ to
 ```kotlin
 @Test
 fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val viewModel = createMoviesListViewModel(repository)
+    ...
+}
+```
+
+Also change 
+
+```kotlin
+@Test
+fun `moviesStateOutput on error returns failure`() {
+    ...
+    val viewModel = MoviesListViewModelImpl(repository, createMapper())
+    ...
+}
+```
+
+to
+
+```kotlin
+@Test
+fun `moviesStateOutput on error returns failure`() {
     ...
     val viewModel = createMoviesListViewModel(repository)
     ...
@@ -393,7 +433,8 @@ class MoviesListViewModelTest {
     fun `moviesStateOutput by default returns movies list`() {
         val movies = listOf(
             createMovie(id = 1),
-            createMovie(id = 2)
+            createMovie(id = 2),
+            createMovie(id = 3)
         )
 
         val repository = StubMovieRepository()
@@ -404,7 +445,7 @@ class MoviesListViewModelTest {
             viewModel.moviesStateOutput.value as? MoviesListViewState.MoviesLoaded
 
         assertEquals(
-            listOf(1, 2),
+            listOf(1, 2, 3),
             movieLoadedState?.movies?.map { it.id }
         )
     }
