@@ -2,7 +2,9 @@
 
 In this workshop we will test `ViewModel` and `LiveData`
 
-## TODO 2.0
+# TODO 2.0 Let's create test for ViewModel
+
+## TODO 2.0.0
 
 - Open `MoviesListViewModel.kt`
 - Move the cursor to the class name
@@ -20,7 +22,9 @@ class MoviesListViewModelTest {
 }
 ```
 
-## TODO 2.1: Success Test Case
+# TODO 2.1 Add Success Test Case
+
+## TODO 2.1.0
 
 - Create new empty test method inside of `MoviesListViewModelTest`:
 
@@ -31,7 +35,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.2
+## TODO 2.1.1
 
 - Create or copy-paste list of `Movie` into created test:
 
@@ -82,7 +86,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.3
+## TODO 2.1.2
 
 - Create instance of `StubMovieRepository` with created `Movie` list
 
@@ -94,7 +98,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.4
+## TODO 2.1.3
 
 - Create `MoviesListViewModelImpl` and provide `Movie` list and `MoviesListItemMapper ` into
   constructor.
@@ -108,7 +112,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.5
+## TODO 2.1.4
 
 - Create or copy-paste list of expected `MoviesListItem`
 
@@ -160,7 +164,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.6
+## TODO 2.1.5
 
 - Get `movieLoadedState` from our `ViewModel`
 - Create `expectedState` from created `Movie` list
@@ -174,7 +178,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.7
+## TODO 2.1.6
 
 - Use `assertEquals` to check `expectedState` and `movieLoadedState` equality
 
@@ -186,11 +190,13 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.8
+## TODO 2.1.7
 
 - Run Test and see green result. Then proceed to next step.
 
-## TODO 2.9: Failure Test Case
+# TODO 2.2 Add Failure Test Case
+
+## TODO 2.2.0
 
 Now let's add new test for Failure scenario:
 
@@ -203,7 +209,7 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.10
+## TODO 2.2.1
 
 Now wee need to refactor `StubMovieRepository` to give us ability to set different results in
 different test cases
@@ -247,7 +253,7 @@ internal class StubMovieRepository() : MovieRepository {
 }
 ```
 
-## TODO 2.11
+## TODO 2.2.2
 
 Now we need to fix first test: Remove `movies` from constructor and use `setResult(movies)` method
 on `StubMovieRepository`
@@ -276,7 +282,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 2.12
+## TODO 2.2.3
 
 - Return back to new test in `MoviesListViewModelTest`
 - Add `setErrorResult()` to repository
@@ -293,7 +299,7 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.13
+## TODO 2.2.4
 
 - Use `assertEquals` to check that value of `viewModel.moviesStateOutput` is `MoviesListViewState.FailedToLoad`
 
@@ -308,11 +314,11 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.14
+## TODO 2.2.5
 
 - Run test and see green result
 
-## TODO 2.15: Test your tests
+# TODO 2.3 Test your tests
 
 - Try breaking something in the implementation to see that tests became red.
 - If the tests stay green when the implementation is broken then you have an error in tests.
