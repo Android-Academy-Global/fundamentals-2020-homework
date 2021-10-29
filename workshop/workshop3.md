@@ -2,7 +2,9 @@
 
 - Now we can refactor and simplify code from Workshop 1-2
 
-## TODO 3.1
+# TODO 3.0 Let's add some factory methods
+
+## TODO 3.0.0
 
 - Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
 - Create `MovieFactory.kt` file in this package
@@ -34,7 +36,9 @@ fun createMovie(
 }
 ```
 
-## TODO 3.2 MoviesListItemMapperTest
+# TODO 3.1 Refactor `MoviesListItemMapperTest`
+
+## TODO 3.1.0
 
 - Open `MoviesListItemMapperTest.kt`
 - Replace the class name `Movie` with factory method call `createMovie`
@@ -61,7 +65,7 @@ fun `mapper maps some fields as is`() {
 }
 ```
 
-## TODO 3.3
+## TODO 3.1.1
 
 - Instead of `assertEquals` for whole `MoviesListItem` model use one `assertEquals()` for each
   parameter:
@@ -103,7 +107,9 @@ fun `mapper maps some fields as is`() {
 }
 ```
 
-## TODO 3.4 MoviesListViewModelTest
+# TODO 3.2 Refactor `MoviesListViewModelTest`
+
+## TODO 3.2.0
 
 Because we already tested `MoviesListItemMapper` and created `createMovie(...)` factory method, we
 can simplify this code for creating `Movie`'s model only with id.
@@ -138,12 +144,12 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ```
 
-## TODO 3.5
+## TODO 3.2.1
 
 - Remove `val mappedMovieList = listOf(...)` from first test - now, when we check only `id`'s, whole
   list creation is not needed
 
-## TODO 3.6
+## TODO 3.2.2
 
 Now we can check only `id`'s from viewmodel's output and remove previous `assertEquals()` method:
 
@@ -173,7 +179,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 3.7
+## TODO 3.2.3
 
 - Create factory method for `MoviesListViewModelImpl`
 
@@ -210,7 +216,7 @@ fun `moviesStateOutput by default returns movies list`() {
 }
 ```
 
-## TODO 3.8
+## TODO 3.2.4
 
 - Run all refactored tests to check them works
 
