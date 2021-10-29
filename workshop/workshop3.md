@@ -8,7 +8,7 @@
 
 - Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
 - Create `MovieFactory.kt` file in this package
-- Create or copy-paste `createMovie(...)` factory method in `MovieFactory.kt` file
+- Create or copy-paste `createMovie(...)` factory method
 
 ```kotlin
 fun createMovie(
@@ -33,6 +33,81 @@ fun createMovie(
         runningTime = runningTime,
         imageUrl = imageUrl
     )
+}
+```
+
+## TODO 3.0.1
+
+- Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
+- Create `MapperFactory.kt` file in this package
+- Create or copy-paste `createMapper(...)` factory method
+
+```kotlin
+fun createMapper() = MoviesListItemMapper()
+```
+
+## TODO 3.0.2
+
+- Open `MoviesListItemMapperTest.kt`
+- Use mapper factory method instead of constructor:
+
+Change
+
+```kotlin
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = MoviesListItemMapper()
+    ...
+}
+```
+
+to
+
+```kotlin
+@Test
+fun `mapper maps some fields as is`() {
+    val mapper = createMapper()
+    ...
+}
+```
+
+## TODO 3.0.3
+
+- Open `MoviesListViewModelTest.kt`
+- Use mapper factory method instead of constructor:
+
+Change
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val viewModel = MoviesListViewModelImpl(repository, MoviesListItemMapper())
+    ...
+}
+```
+
+to
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    val viewModel = MoviesListViewModelImpl(repository, createMapper())
+    ...
+}
+```
+
+- Also use mapper factory method in `moviesStateOutput on error returns failure` test method:
+
+So method will look like this:
+
+```kotlin
+@Test
+fun `moviesStateOutput on error returns failure`() {
+    ...
+    val viewModel = MoviesListViewModelImpl(repository, createMapper())
+    ...
 }
 ```
 
@@ -188,7 +263,7 @@ class MoviesListViewModelTest {
     ...
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository, MoviesListItemMapper())
+        MoviesListViewModelImpl(repository, createMapper())
 }
 ```
 
@@ -200,7 +275,7 @@ Change
 @Test
 fun `moviesStateOutput by default returns movies list`() {
     ...
-    val viewModel = MoviesListViewModelImpl(repository, MoviesListItemMapper())
+    val viewModel = MoviesListViewModelImpl(repository, createMapper())
     ...
 }
 ```
@@ -270,7 +345,7 @@ class MoviesListItemMapperTest {
 
     @Test
     fun `mapper maps some fields as is`() {
-        val mapper = MoviesListItemMapper()
+        val mapper = createMapper()
         val movie = createMovie(
             id = 671039,
             title = "Test 1",
@@ -342,7 +417,7 @@ class MoviesListViewModelTest {
     }
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository, MoviesListItemMapper())
+        MoviesListViewModelImpl(repository, createMapper())
 }
 ```
 

@@ -12,7 +12,6 @@ In first workshop we will create simple test for `MoviesListItemMapper`
 - Create empty  `MoviesListItemMapperTest`
 
 ```kotlin 
-@Test
 class MoviesListItemMapperTest {
 
 }

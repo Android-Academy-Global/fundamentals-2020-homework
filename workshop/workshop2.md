@@ -227,7 +227,7 @@ internal class StubMovieRepository() : MovieRepository {
 }
 ```
 
-- Change `loadMovies()` return value from `Success(movies)`
+Change `loadMovies()` return value from `Success(movies)`
 
 ```kotlin
 internal class StubMovieRepository() : MovieRepository {
@@ -252,6 +252,7 @@ internal class StubMovieRepository() : MovieRepository {
 Now we need to fix first test: Remove `movies` from constructor and use `setResult(movies)` method
 on `StubMovieRepository`
 
+- Open `MoviesListViewModelTest.kt`
 - Change next code
 
 ```kotlin
@@ -281,17 +282,30 @@ fun `moviesStateOutput by default returns movies list`() {
 - Add `setErrorResult()` to repository
 - Create `MoviesListViewModelImpl` same way you did in previous test
 
-## TODO 2.13
-
-- Use `assertEquals` to check that value of `viewModel.moviesStateOutput`
-  is `MoviesListViewState.FailedToLoad`
+So method will look like:
 
 ```kotlin
-assertEquals(
-    MoviesListViewState.FailedToLoad,
-    viewModel.moviesStateOutput.value
-)
+@Test
+fun `moviesStateOutput on error returns failure`() {
+    val repository = StubMovieRepository()
+    repository.setErrorResult()
+    val viewModel = MoviesListViewModelImpl(repository, MoviesListItemMapper())
+}
+```
 
+## TODO 2.13
+
+- Use `assertEquals` to check that value of `viewModel.moviesStateOutput` is `MoviesListViewState.FailedToLoad`
+
+```kotlin
+@Test
+fun `moviesStateOutput on error returns failure`() {
+    ...
+    assertEquals(
+        MoviesListViewState.FailedToLoad,
+        viewModel.moviesStateOutput.value
+    )
+}
 ```
 
 ## TODO 2.14
