@@ -11,7 +11,7 @@ In this workshop we will test `ViewModel` and `LiveData`
 - Press on a yellow bulb and select `Create test`
 - Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
-- Create empty  `MoviesListViewModelTest` (maybe you will need to remove some unnecesary code)
+- Create empty  `MoviesListViewModelTest`
 - Also create `Rule` (use already created `viewModelTestingRules()`) for running code in single
   thread
   
@@ -200,7 +200,7 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ## TODO 2.2.0
 
-Now wee need to refactor `StubMovieRepository` to give us ability to set different results in
+Now we need to refactor `StubMovieRepository` to give us ability to set different results in
 different test cases
 
 - Open `StubMovieRepository.kt`
@@ -222,7 +222,7 @@ internal class StubMovieRepository() : MovieRepository {
 }
 ```
 
-Change `loadMovies()` return value from `Success(movies)`
+- Change `loadMovies()` return value from `Success(movies)`
 
 ```kotlin
 internal class StubMovieRepository() : MovieRepository {
@@ -244,10 +244,14 @@ internal class StubMovieRepository() : MovieRepository {
 
 ## TODO 2.2.1
 
-- Run tests to see red light. This means that something is broken
+- Run tests to see something like this:
 
-Now we need to fix first test: Remove `movies` from constructor and use `setResult(movies)` method
-on `StubMovieRepository`
+![Events not received](images/w2-p1-events-not-received.png)
+
+This means that something is broken
+
+Now we need to fix the first test by removing `movies` from `StubMovieRepository` constructor and use `setResult(movies)` method
+instead
 
 - Open `MoviesListViewModelTest.kt`
 - Change next code
@@ -275,6 +279,10 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ## TODO 2.2.2
 
+- Run tests again to see green result
+
+## TODO 2.2.3
+
 Now let's add new test for Failure scenario:
 
 - Create new test and new instance of `StubMovieRepository`
@@ -292,7 +300,7 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.2.3
+## TODO 2.2.4
 
 - Use `assertEquals` to check that value of `viewModel.moviesStateOutput` is `MoviesListViewState.FailedToLoad`
 
@@ -307,13 +315,16 @@ fun `moviesStateOutput on error returns failure`() {
 }
 ```
 
-## TODO 2.2.4
+## TODO 2.2.5
 
 - Run test and see green result
 
 # TODO 2.3 Test your tests
 
-- Try breaking something in the implementation to see that tests became red.
+- Try breaking something in the implementation to see that tests became red:
+
+![Broken implementation breaks tests](images/w2-p2-broken-implementation.png)
+
 - If the tests stay green when the implementation is broken then you have an error in tests.
 
 # Summary
