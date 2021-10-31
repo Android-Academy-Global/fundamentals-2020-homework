@@ -4,6 +4,9 @@ In this workshop we will implement the "Days before/after release" feature using
 
 # TODO 4.0 Add `releaseDate` field to `Movie` model
 
+The `movie` model needs more data to support the feature.
+We will add the relese date field in this section.
+
 ## TODO 4.0.0
 
 - Open `Movie.kt`
