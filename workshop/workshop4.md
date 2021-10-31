@@ -1,8 +1,8 @@
 # Workshop 4
 
-WIP In this workshop we will test ------
+In this workshop we will implement the "Days before/after release" feature using the Test Driven Development.
 
-# TODO 4.0 Let's add `releaseDate` field to `Movie` model
+# TODO 4.0 Add `releaseDate` field to `Movie` model
 
 ## TODO 4.0.0
 
@@ -86,9 +86,11 @@ fun createMovie(
 
 ## TODO 4.0.5 
 
-Run all unit tests to make sure everyting works.
+Run all unit tests to make sure that everyting works.
 
-# TODO 4.1 Let's create test to test mapping of released today movie
+# TODO 4.1 Handle a movie that is released today
+
+We're on a red stage. Our goal is to create a test that tests today's movie mapping. The test should fail because the case isn't implemented yet.
 
 ## TODO 4.1.0
 
@@ -98,10 +100,12 @@ Run all unit tests to make sure everyting works.
 
 ```kotlin
 class MoviesListItemMapperTest {
+    
+    ...
+
     @Test
     fun `map movie that's released today`() {
         val mapper = createMapper()
-
         val movie = createMovie()
     }
 }
@@ -109,11 +113,12 @@ class MoviesListItemMapperTest {
 
 ## TODO 4.1.1
 
-- Map `movie` with `mapper` 
+- Map the `movie` with the `mapper` 
 
 ```kotlin
 fun `map movie that's released today`() {
     ...
+
     val listItem = mapper.map(movie)
 }
 ```
@@ -126,14 +131,18 @@ fun `map movie that's released today`() {
 ```kotlin
 fun `map movie that's released today`() {
     ...
+
     val listItem = mapper.map(movie)
+
     assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
 }
 ```
 
 ## TODO 4.1.3
 
-- Run test and see result. Proceed to next step.
+- Run the test and see the result.
+The test should fail.
+Now you can move from a Red to a Green stage.
 
 ## TODO 4.1.4
 
