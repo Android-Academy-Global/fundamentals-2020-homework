@@ -144,6 +144,7 @@ fun `map movie that's released today`() {
 ## TODO 4.1.3
 
 - Run the test and see the result.
+
 The test should fail.
 Now you can move from a Red to a Green stage.
 
@@ -181,12 +182,20 @@ class MoviesListItemMapper {
 
 - Run test again to ensure everything works now.
 
-# TODO 4.2 Let's create test to test mapping of movie, released 50 days ago
+# TODO 4.2 Create test to test a movie from the past
+
+We start from the most primitive implementation.
+It's okay to hardcode dates for now.
+We will use `CurrentTimeProvider` later.
 
 ## TODO 4.2.0
 
 - Open `MoviesListItemMapperTest.kt`
-- Create new test method
+- Create test that checks mapping of 50 days old movie.
+
+Today is 1 November, so 50 days ago was 12 September.
+Hardcode this date for now.
+*(Hardcode a different date if today isn't 1 November.)*
 
 ```kotlin
  @Test
@@ -204,7 +213,11 @@ fun `map movie that's released 50 days ago`() {
 ```
 ## TODO 4.2.1
 
-- Run test and see result. Proceed to next step.
+- Run test and see result.
+
+The test should fail.
+The red stage is completed.
+Proceed to the Green stage.
 
 ## TODO 4.2.2
 
