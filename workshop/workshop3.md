@@ -260,7 +260,19 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ```
 
-- Map `movieLoadedState` to it `id`'s and then use `assertEquals` with simple `listOf(1,2)` (you can remove previous `assertEquals`)
+- Map `movieLoadedState` to it `id`'s and then use `assertEquals` with simple `listOf(1,2,3)` (you can remove previous `assertEquals`)
+
+Change 
+
+```kotlin
+@Test
+fun `moviesStateOutput by default returns movies list`() {
+    ...
+    assertEquals(expectedState, movieLoadedState)
+}
+```
+
+to 
 
 ```kotlin
 @Test
@@ -275,6 +287,7 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ## TODO 3.2.3
 
+- Open `MoviesListViewModelTest.kt`
 - Create factory method for `MoviesListViewModelImpl`
 
 ```kotlin
