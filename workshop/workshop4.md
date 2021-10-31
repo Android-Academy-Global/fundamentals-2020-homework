@@ -329,6 +329,8 @@ to
     ) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
 ```
 
+***Note**: we used 1 November as default argument because today is 1 November. Hardcode current date if today isn't the 1 November.*
+
 ## TODO 4.3.3
 
 - Open `MovieListViewModelFactory.kt`
@@ -359,38 +361,53 @@ internal class MovieListViewModelFactory(...) : ViewModelProvider.Factory {
 
 ## TODO 4.3.4
 
-- Open `MoviesListViewModelTest.kt`
-- Provide `CurrentTimeProviderImpl()` into `createMoviesListViewModel()` factory method:
-
-Change
-
-```kotlin
-class MoviesListViewModelTest {
-    ...
-    private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository, MoviesListItemMapper())
-}
-```
-
-to
-
-```kotlin
-class MoviesListViewModelTest {
-    ...
-    private fun createMoviesListViewModel(
-        repository: MovieRepository,
-        currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0)
-    ): MoviesListViewModel =
-        MoviesListViewModelImpl(
-            repository,
-            MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
-        )
-}
-```
-
-## TODO 4.3.5
-
 - Run tests again to ensure everything still works
+
+## TODO 4.3.5 Define current date explicitly
+
+Tests where current date is important precondition should state it explicitly.
+
+- Change default date in `createMapper` factory method
+
+from 1 November
+```
+fun createMapper(
+    currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
+) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
+```
+
+to any random date:
+```
+fun createMapper(
+    currentTime: LocalDateTime = LocalDateTime.of(2021, Month.OCTOBER, 20, 12, 0, 0, 0)
+) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
+```
+
+### TODO 4.3.6 Pass current date
+
+Hardcode time in the `map movie that's released today`:
+
+So it looks like this:
+```
+ @Test
+    fun `map movie that's released today`() {
+        val mapper = createMapper(currentTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0))
+        ...
+    }
+```
+
+Hardcode time in the `map movie that's released 50 days ago`:
+
+So it looks like this:
+```
+fun `map movie that's released 50 days ago`() {
+    val mapper = createMapper(currentTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0))
+    ...
+```
+
+### TODO 4.3.7
+
+- Run all tests to see if everyting works fine.
 
 # TODO 4.4 Let's create test to check mapping of movie, released tomorrow
 
