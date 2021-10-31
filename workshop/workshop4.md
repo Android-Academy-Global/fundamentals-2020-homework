@@ -1,8 +1,11 @@
 # Workshop 4
 
-WIP In this workshop we will test ------
+In this workshop we will implement the "Days before/after release" feature using the Test Driven Development.
 
-# TODO 4.0 Let's add `releaseDate` field to `Movie` model
+# TODO 4.0 Add `releaseDate` field to `Movie` model
+
+The `movie` model needs more data to support the feature.
+We will add the relese date field in this section.
 
 ## TODO 4.0.0
 
@@ -84,7 +87,13 @@ fun createMovie(
 }
 ```
 
-# TODO 4.1 Let's create test to test mapping of released today movie
+## TODO 4.0.5 
+
+Run all unit tests to make sure that everyting works.
+
+# TODO 4.1 Handle a movie that is released today
+
+We're on a red stage. Our goal is to create a test that tests today's movie mapping. The test should fail because the case isn't implemented yet.
 
 ## TODO 4.1.0
 
@@ -94,10 +103,12 @@ fun createMovie(
 
 ```kotlin
 class MoviesListItemMapperTest {
+    
+    ...
+
     @Test
     fun `map movie that's released today`() {
         val mapper = createMapper()
-
         val movie = createMovie()
     }
 }
@@ -105,11 +116,12 @@ class MoviesListItemMapperTest {
 
 ## TODO 4.1.1
 
-- Map `movie` with `mapper` 
+- Map the `movie` with the `mapper` 
 
 ```kotlin
 fun `map movie that's released today`() {
     ...
+
     val listItem = mapper.map(movie)
 }
 ```
@@ -122,14 +134,19 @@ fun `map movie that's released today`() {
 ```kotlin
 fun `map movie that's released today`() {
     ...
+
     val listItem = mapper.map(movie)
+
     assertEquals(NativeText.Resource(R.string.movies_list_released_today), listItem.release)
 }
 ```
 
 ## TODO 4.1.3
 
-- Run test and see result. Proceed to next step.
+- Run the test and see the result.
+
+The test should fail.
+Now you can move from a Red to a Green stage.
 
 ## TODO 4.1.4
 
@@ -165,12 +182,20 @@ class MoviesListItemMapper {
 
 - Run test again to ensure everything works now.
 
-# TODO 4.2 Let's create test to test mapping of movie, released 50 days ago
+# TODO 4.2 Create test to test a movie from the past
+
+We start from the most primitive implementation.
+It's okay to hardcode dates for now.
+We will use `CurrentTimeProvider` later.
 
 ## TODO 4.2.0
 
 - Open `MoviesListItemMapperTest.kt`
-- Create new test method
+- Create test that checks mapping of 50 days old movie.
+
+Today is 1 November, so 50 days ago was 12 September.
+Hardcode this date for now.
+*(Hardcode a different date if today isn't 1 November.)*
 
 ```kotlin
  @Test
@@ -188,7 +213,11 @@ fun `map movie that's released 50 days ago`() {
 ```
 ## TODO 4.2.1
 
-- Run test and see result. Proceed to next step.
+- Run test and see result.
+
+The test should fail.
+The red stage is completed.
+Proceed to the Green stage.
 
 ## TODO 4.2.2
 
@@ -231,12 +260,12 @@ class MoviesListItemMapper {
 
 - Run test again to ensure everything works now.
 
-# TODO 4.3 Let's refactor some previous code
+# TODO 4.3 Fake current date
 
 ## TODO 4.3.0
 
 - Open `MoviesListItemMapper.kt`
-- Add `private val currentTimeProvider: CurrentTimeProvider` to constructor:
+- Add `private val currentTimeProvider: CurrentTimeProvider` to the constructor:
 
 ```kotlin
 class MoviesListItemMapper(
@@ -289,16 +318,18 @@ class MoviesListItemMapper(
 Change
 
 ```kotlin
-    private fun createMapper() = MoviesListItemMapper()
+    fun createMapper() = MoviesListItemMapper()
 ```
 
 to
 
 ```kotlin
-    private fun createMapper(
+    fun createMapper(
         currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
     ) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
 ```
+
+***Note**: we used 1 November as default argument because today is 1 November. Hardcode current date if today isn't the 1 November.*
 
 ## TODO 4.3.3
 
@@ -330,40 +361,55 @@ internal class MovieListViewModelFactory(...) : ViewModelProvider.Factory {
 
 ## TODO 4.3.4
 
-- Open `MoviesListViewModelTest.kt`
-- Provide `CurrentTimeProviderImpl()` into `createMoviesListViewModel()` factory method:
-
-Change
-
-```kotlin
-class MoviesListViewModelTest {
-    ...
-    private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
-        MoviesListViewModelImpl(repository, MoviesListItemMapper())
-}
-```
-
-to
-
-```kotlin
-class MoviesListViewModelTest {
-    ...
-    private fun createMoviesListViewModel(
-        repository: MovieRepository,
-        currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0)
-    ): MoviesListViewModel =
-        MoviesListViewModelImpl(
-            repository,
-            MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
-        )
-}
-```
-
-## TODO 4.3.5
-
 - Run tests again to ensure everything still works
 
-# TODO 4.4 Let's create test to check mapping of movie, released tomorrow
+## TODO 4.3.5 Define current date explicitly
+
+Tests where current date is important precondition should state it explicitly.
+
+- Change default date in `createMapper` factory method
+
+from 1 November
+```
+fun createMapper(
+    currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
+) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
+```
+
+to any random date:
+```
+fun createMapper(
+    currentTime: LocalDateTime = LocalDateTime.of(2021, Month.OCTOBER, 20, 12, 0, 0, 0)
+) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
+```
+
+### TODO 4.3.6 Pass current date
+
+Hardcode time in the `map movie that's released today`:
+
+So it looks like this:
+```
+ @Test
+    fun `map movie that's released today`() {
+        val mapper = createMapper(currentTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0))
+        ...
+    }
+```
+
+Hardcode time in the `map movie that's released 50 days ago`:
+
+So it looks like this:
+```
+fun `map movie that's released 50 days ago`() {
+    val mapper = createMapper(currentTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0))
+    ...
+```
+
+### TODO 4.3.7
+
+- Run all tests to see if everyting works fine.
+
+# TODO 4.4 Create test that checks mapping of a movie, released tomorrow
 
 ## TODO 4.4.0
 
@@ -388,7 +434,7 @@ fun `map movie that will be released tomorrow`() {
 
 ## TODO 4.4.1
 
-- Run test and see result. Proceed to next step.
+- Run test and see result. The test should fail. Proceed to next step.
 
 ## TODO 4.4.2
 
