@@ -260,12 +260,12 @@ class MoviesListItemMapper {
 
 - Run test again to ensure everything works now.
 
-# TODO 4.3 Let's refactor some previous code
+# TODO 4.3 Fake current date
 
 ## TODO 4.3.0
 
 - Open `MoviesListItemMapper.kt`
-- Add `private val currentTimeProvider: CurrentTimeProvider` to constructor:
+- Add `private val currentTimeProvider: CurrentTimeProvider` to the constructor:
 
 ```kotlin
 class MoviesListItemMapper(
@@ -318,13 +318,13 @@ class MoviesListItemMapper(
 Change
 
 ```kotlin
-    private fun createMapper() = MoviesListItemMapper()
+    fun createMapper() = MoviesListItemMapper()
 ```
 
 to
 
 ```kotlin
-    private fun createMapper(
+    fun createMapper(
         currentTime: LocalDateTime = LocalDateTime.of(2021, Month.NOVEMBER, 1, 12, 0, 0, 0)
     ) = MoviesListItemMapper(CurrentTimeProviderStub(currentTime))
 ```
