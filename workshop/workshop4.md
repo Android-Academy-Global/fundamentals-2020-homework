@@ -409,7 +409,7 @@ fun `map movie that's released 50 days ago`() {
 
 - Run all tests to see if everyting works fine.
 
-# TODO 4.4 Let's create test to check mapping of movie, released tomorrow
+# TODO 4.4 Create test that checks mapping of a movie, released tomorrow
 
 ## TODO 4.4.0
 
@@ -434,7 +434,7 @@ fun `map movie that will be released tomorrow`() {
 
 ## TODO 4.4.1
 
-- Run test and see result. Proceed to next step.
+- Run test and see result. The test should fail. Proceed to next step.
 
 ## TODO 4.4.2
 
