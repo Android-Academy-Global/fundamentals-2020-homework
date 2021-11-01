@@ -13,6 +13,9 @@ We will add the relese date field in this section.
 - Uncomment all code marked with TODO comments So class will look like this:
 
 ```kotlin
+import java.time.LocalDate
+...
+
 data class Movie(
     ...
     val releaseDate: LocalDate
@@ -72,6 +75,7 @@ class MoviesListItemMapper {
 
 - Open `MovieFactory.kt`
 - Add parameter to factory method
+- Provide `releaseDate` into `Movie` constructor
 
 So method will look like:
 
@@ -89,7 +93,8 @@ fun createMovie(
 
 ## TODO 4.0.5 
 
-Run all unit tests to make sure that everyting works.
+Run all unit tests to make sure that everyting works. (Open context menu for `test` folder and run or debug tests)
+![Launch all the tests](images/launch-all-tests.png)
 
 # TODO 4.1 Handle a movie that is released today
 
@@ -308,11 +313,14 @@ class MoviesListItemMapper(
             release = mapReleaseDate(movie)
         )
     }
+
+    private fun mapReleaseDate(movie: Movie): NativeText { ... }
+}
 ```
 
 ## TODO 4.3.2
 
-- Open `MoviesListItemMapperTest.kt`
+- Open `MapperFactory.kt`
 - Change `createMapper()` method to provide `LocalDateTime`
   
 Change
@@ -367,6 +375,7 @@ internal class MovieListViewModelFactory(...) : ViewModelProvider.Factory {
 
 Tests where current date is important precondition should state it explicitly.
 
+- Open `MapperFactory.kt`
 - Change default date in `createMapper` factory method
 
 from 1 November
@@ -384,6 +393,8 @@ fun createMapper(
 ```
 
 ### TODO 4.3.6 Pass current date
+
+Open `MoviesListItemMapperTest.kt`
 
 Hardcode time in the `map movie that's released today`:
 
@@ -469,11 +480,13 @@ private fun mapReleaseDate(movie: Movie): NativeText {
 
 ## TODO 4.5.0
 
-- Open `MoviesListAdapter`
-
-- Set `item.release` value to `movieRelease.text`:
-
-- Delete or comment `movieRelease.visibility = View.GONE`
+- Open `MoviesListAdapter.kt`
+- Modify `ViewHolder.bind(...)` method.
+    - Set `item.release` value to `movieRelease.text`:
+        ```kotlin
+        movieRelease.text = item.release.toCharSequence(context)
+        ```
+    - Delete or comment `movieRelease.visibility = View.GONE`
 
 ```kotlin
 class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :

@@ -74,7 +74,7 @@ fun `mapper maps some fields as is`() {
 
 ## TODO 3.0.3
 
-- Open `MoviesListViewModelTest.kt`
+- Open `MoviesListViewModelImplTest.kt`
 - Use mapper factory method instead of constructor:
 
 Change
@@ -183,14 +183,18 @@ fun `mapper maps some fields as is`() {
 }
 ```
 
-# TODO 3.2 Refactor `MoviesListViewModelTest`
+## TODO 3.1.2
+
+- Run the test to check the changes.
+
+# TODO 3.2 Refactor `MoviesListViewModelImplTest`
 
 ## TODO 3.2.0
 
 Because we already tested `MoviesListItemMapper` and created `createMovie(...)` factory method, we
 can simplify this code for creating `Movie`'s model only with id.
 
-- Open `MoviesListViewModelTest.kt`
+- Open `MoviesListViewModelImplTest.kt`
 - Instead of `Movie` constructors use `createMovie(id = [1,2,...])` factory methods
 
 Change
@@ -287,11 +291,11 @@ fun `moviesStateOutput by default returns movies list`() {
 
 ## TODO 3.2.3
 
-- Open `MoviesListViewModelTest.kt`
+- Open `MoviesListViewModelImplTest.kt`
 - Create factory method for `MoviesListViewModelImpl`
 
 ```kotlin
-class MoviesListViewModelTest {
+class MoviesListViewModelImplTest {
     ...
 
     private fun createMoviesListViewModel(repository: MovieRepository): MoviesListViewModel =
@@ -425,7 +429,7 @@ class MoviesListItemMapperTest {
 }
 ```
 
-### `MoviesListViewModelTest.kt`
+### `MoviesListViewModelImplTest.kt`
 
 ```kotlin
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
@@ -438,7 +442,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-class MoviesListViewModelTest {
+class MoviesListViewModelImplTest {
     @get:Rule
     val viewModelRule = viewModelTestingRules()
 
