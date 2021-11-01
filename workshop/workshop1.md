@@ -5,6 +5,11 @@ In first workshop we will create simple test for `MoviesListItemMapper`
 ## TODO 1.0
 
 - Open `MoviesListItemMapper.kt`
+
+    You can use the navigation tools to find it.
+
+![Project navigation](images/navigation-tip.png)
+
 - Move the cursor to the class name
 - Press on a yellow bulb and select `Create test`
 ![Create test](images/w1-p1-bulb.png)
@@ -143,8 +148,12 @@ fun `mapper maps some fields as is`() {
 ## TODO 1.8
 
 - Try to break something in the  `MoviesListItemMapper`.
+- Replace `title = movie.title` with `title = "Incorrect hardcoded title"` for example.
 - Run the test and check how an error message looks
 ![Red result](images/w1-p6-red.png)
+
+## TODO 1.9
+
 - Do not forget to fix `MoviesListItemMapper` to see green result again
 
 # Summary

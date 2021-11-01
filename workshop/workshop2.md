@@ -6,19 +6,19 @@ In this workshop we will test `ViewModel` and `LiveData`
 
 ## TODO 2.0.0
 
-- Open `MoviesListViewModel.kt`
+- Open `MoviesListViewModelImpl.kt`
 - Move the cursor to the class name
 - Press on a yellow bulb and select `Create test`
 - Select `JUnit4` in `Testing library:` field
 - Select `/test/` directory, not `/androidTest/`
-- Create empty  `MoviesListViewModelTest`
+- Create empty  `MoviesListViewModelImplTest`
 - Also create `Rule` (use already created `viewModelTestingRules()`) for running code in single
   thread
   
 - If you have some troubles with these steps, refer to images from Workshop 1
 
 ```kotlin
-class MoviesListViewModelTest {
+class MoviesListViewModelImplTest {
     @get:Rule
     val viewModelRule = viewModelTestingRules()
 }
@@ -28,7 +28,7 @@ class MoviesListViewModelTest {
 
 ## TODO 2.1.0
 
-- Create new empty test method inside of `MoviesListViewModelTest`:
+- Create new empty test method inside of `MoviesListViewModelImplTest`:
 
 ```kotlin
 @Test
@@ -162,6 +162,8 @@ So method will look like this:
 @Test
 fun `moviesStateOutput by default returns movies list`() {
     ...
+    val viewModel = ...
+
     val mappedMovieList = listOf(...)
 }
 ```
@@ -253,7 +255,7 @@ This means that something is broken
 Now we need to fix the first test by removing `movies` from `StubMovieRepository` constructor and use `setResult(movies)` method
 instead
 
-- Open `MoviesListViewModelTest.kt`
+- Open `MoviesListViewModelImplTest.kt`
 - Change next code
 
 ```kotlin
@@ -322,16 +324,21 @@ fun `moviesStateOutput on error returns failure`() {
 # TODO 2.3 Test your tests
 
 - Try breaking something in the implementation to see that tests became red:
+    (Comment the line `viewModelScope.launch { ... }` for example.)
 
 ![Broken implementation breaks tests](images/w2-p2-broken-implementation.png)
 
 - If the tests stay green when the implementation is broken then you have an error in tests.
 
+## TODO 2.4
+
+- Do not forget to fix `MoviesListViewModelImpl`
+
 # Summary
 
 Finally, you should see something like that:
 
-### `MoviesListViewModelTest.kt`
+### `MoviesListViewModelImplTest.kt`
 
 ```kotlin
 package com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel
@@ -344,7 +351,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-class MoviesListViewModelTest {
+class MoviesListViewModelImplTest {
     @get:Rule
     val viewModelRule = viewModelTestingRules()
 
