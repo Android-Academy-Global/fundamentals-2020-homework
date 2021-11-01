@@ -39,8 +39,7 @@ fun createMovie(
 
 ## TODO 3.0.1
 
-- Open package `com.android.academy.fundamentals.homework.utils` in `test` directory
-- Create `MapperFactory.kt` file in this package
+- Create `MapperFactory.kt` file in the same `/utils` package
 - Create or copy-paste `createMapper(...)` factory method
 
 ```kotlin
