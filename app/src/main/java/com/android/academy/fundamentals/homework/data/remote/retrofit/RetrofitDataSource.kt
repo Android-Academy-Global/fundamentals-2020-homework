@@ -6,7 +6,7 @@ import com.android.academy.fundamentals.homework.model.Genre
 import com.android.academy.fundamentals.homework.model.Movie
 import com.android.academy.fundamentals.homework.model.MovieDetails
 // TODO uncomment next line for workshop
-//import java.time.LocalDate
+import java.time.LocalDate
 
 private const val ADULT_AGE = 16
 private const val CHILD_AGE = 13
@@ -32,7 +32,7 @@ internal class RetrofitDataSource(
                     .filter { genreResponse -> movie.genreIds.contains(genreResponse.id) }
                     .map { genre -> Genre(genre.id, genre.name) },
                 // TODO uncomment next line for workshop
-//                releaseDate = LocalDate.parse(movie.releaseDate)
+                releaseDate = LocalDate.parse(movie.releaseDate)
             )
         }
     }

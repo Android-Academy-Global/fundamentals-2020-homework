@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.academy.fundamentals.homework.R
+import com.android.academy.fundamentals.homework.common.text.toCharSequence
 import com.android.academy.fundamentals.homework.presentation.features.movies.viewmodel.MoviesListItem
 
 class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
@@ -62,9 +63,7 @@ class MoviesListAdapter(private val onClickCard: (movieId: Int) -> Unit) :
                 context.getString(R.string.movies_list_reviews_template, item.reviewCount)
             titleText.text = item.title
             movieLenText.text = context.getString(R.string.movies_list_film_time, item.runningTime)
-
-            //TODO comment following line
-            movieRelease.visibility = View.GONE
+            movieRelease.text = item.release.toCharSequence(context)
 
             val likeColor = if (item.isLiked) {
                 R.color.pink_light
